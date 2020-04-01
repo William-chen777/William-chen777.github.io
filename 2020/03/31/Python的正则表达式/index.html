@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="William Chen">
 <meta property="og:description" content="虽然在 Python 中使用正则表达式有几个步骤，但是每一步都相当简单  用 import re 导入正则表达式模块 用 re.compile()函数创建一个Regex对象（原始字符） 向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象 调用Match对象的group()方法,返回实际匹配文本的字符串 举例说明： 12345&amp;gt;&amp;gt;phone_numb">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-01T12:39:22.523Z">
+<meta property="og:updated_time" content="2020-04-01T12:41:22.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python的正则表达式">
 <meta name="twitter:description" content="虽然在 Python 中使用正则表达式有几个步骤，但是每一步都相当简单  用 import re 导入正则表达式模块 用 re.compile()函数创建一个Regex对象（原始字符） 向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象 调用Match对象的group()方法,返回实际匹配文本的字符串 举例说明： 12345&amp;gt;&amp;gt;phone_numb">
@@ -396,7 +396,7 @@
 </ol>
 </blockquote>
 <hr>
-<p>###关于正则表达式的22个问题<br>1.创建Regex对象的函数是什么？</p>
+<p>###关于正则表达式的18个问题<br>1.创建Regex对象的函数是什么？</p>
 <blockquote>
 <p><code>re.compile()</code>返回Regex对象  </p>
 </blockquote>
@@ -480,6 +480,7 @@
 <blockquote>
 <p><code>re.compile(r&#39;[A-Z][a-z]*\sNakamoto&#39;)</code></p>
 </blockquote>
+<p>===</p>
 <p>18.编写一个正则表达式匹配一个句子，第一个单词是Alice, Bob或者Carol， 第二个单词是eats, pets, throws, 第三个单词是apples, cats, baseballs，<br>该剧自以句点结束。这个正则表达式不区分大小写。</p>
 <blockquote>
 <p><code>re.compile(r&#39;(Alice|Bob|Carol)\s(eats|pets|throws)\s(apples|cats|baseballs)\.&#39;, re.IGNRECASE)</code></p>
