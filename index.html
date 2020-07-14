@@ -273,6 +273,520 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/07/14/将excel表格批量整合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/14/将excel表格批量整合/" itemprop="url">将excel表格批量整合</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-14T23:09:52+08:00">2020-07-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="整合excel文档"><a href="#整合excel文档" class="headerlink" title="整合excel文档"></a>整合excel文档</h2><h4 id="该程序用于整合excel到一个表格"><a href="#该程序用于整合excel到一个表格" class="headerlink" title="该程序用于整合excel到一个表格"></a>该程序用于整合excel到一个表格</h4><pre><code>import xlwt
+import numpy as np
+import os
+import re
+
+filePath = &apos;C:\\Users\\ALIENWARE\\Desktop\\slide.window.dot-line.figure\\plot\\ros1&apos;      #在路径中要使用双斜杠
+name_list = os.listdir(filePath)
+#print(name_list)
+
+excel_name =[]
+for i in name_list:
+    r = i.replace(&apos;txt&apos;, &apos;xlsx&apos;)
+    excel_name.append(r)
+
+
+def txt_xls(filename,xlsname):
+    try:
+        f=open(&apos;C:\\Users\\ALIENWARE\\Desktop\\slide.window.dot-line.figure\\plot\\ros1\\&apos;+filename)
+        xlsx= xlwt.Workbook()
+        sheet = xlsx.add_sheet(&apos;sheet&apos;, cell_overwrite_ok=True)
+        x=0
+
+        while True:
+            line = f.readline()
+            if not line:
+                break
+            line = line.split(&apos;\t&apos;)
+            length = len(line)
+            for i in range(length):
+                item = line[i]
+                #item = np.float(item)
+                sheet.write(x, i, item)
+            x += 1
+        f.close()
+        xlsx.save(&apos;C:\\Users\\ALIENWARE\\Desktop\\slide.window.dot-line.figure\\plot\\ros1\\excel\\&apos;+xlsname)
+    except:
+        raise
+
+for m in range(0,9):
+    txt_xls(name_list[m], excel_name[m])
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/07/14/将txt文档批量整合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/14/将txt文档批量整合/" itemprop="url">将txt文档批量整合</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-14T23:06:39+08:00">2020-07-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="批量读取txt文档整合到一个里面"><a href="#批量读取txt文档整合到一个里面" class="headerlink" title="批量读取txt文档整合到一个里面"></a>批量读取txt文档整合到一个里面</h2><pre><code>import os
+import re
+filePath = &apos;C:\\Users\\ALIENWARE\\Desktop\\slide.window.dot-line.figure\\slide.window.dot-line.figure\\wt_for_cmt_ddm_drm_met\\wt_for_cmt_ddm_drm_met-rep3&apos;      #在路径中要使用双斜杠
+name_list = os.listdir(filePath)
+up_list = []
+mid_list = []
+down_list = []                                  #定义三个列表
+
+for i in name_list:
+    if re.match(&apos;.*上.*&apos;, i) != None:
+        up_list.append(i)
+
+    elif re.match(&apos;.*中.*&apos;,i) !=None:
+        mid_list.append(i)
+
+    elif re.match(&apos;.*下.*&apos;, i) !=None:         #将txt文件按照上中下区别分开
+        down_list.append(i)
+
+#
+
+name = []
+for i in up_list:
+    n_i = i[:25] + i[26:]
+    name.append(n_i)                      #获取最终输出的文件名
+
+#
+
+for m in range(0,18):
+    filename = name[m]
+
+    f1 = open(up_list[m], &apos;r&apos;)
+    f2 = open(mid_list[m], &apos;r&apos;)
+    f3 = open(down_list[m], &apos;r&apos;)
+
+    contents1 = f1.read()
+    contents2 = f2.read()
+    contents3 = f3.read()
+
+    with open(&apos;C:\\Users\\ALIENWARE\\Desktop\\slide.window.dot-line.figure\\slide.window.dot-line.figure\\wt_for_cmt_ddm_drm_met\\wt_for_cmt_ddm_drm_met-rep3\\txt\\&apos;+filename, &quot;a&quot;) as f:
+        f.write(contents1)
+        f.write(contents2)
+        f.write(contents3)
+
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/07/14/批量修改后缀/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/14/批量修改后缀/" itemprop="url">批量修改后缀</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-14T23:03:05+08:00">2020-07-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="修改后缀名"><a href="#修改后缀名" class="headerlink" title="修改后缀名"></a>修改后缀名</h2><h4 id="该程序用于批量修改文件格式"><a href="#该程序用于批量修改文件格式" class="headerlink" title="该程序用于批量修改文件格式"></a>该程序用于批量修改文件格式</h4><blockquote>
+<pre><code>import sys
+import os
+def Rename():
+ #Path = &quot;F:\\test\\&quot;  # windows下的文件目录
+ Path = input(&quot;请输入你需要操作的目录(格式如&apos;F:\\test&apos;)：&quot;)
+ filelist = os.listdir(Path)
+ for files in filelist:
+   Olddir = os.path.join(Path,files)
+   print(files)  #打印出老的文件夹里的目录和文件
+   if os.path.isdir(Olddir):  #判断是否是文件，是文件，跳过
+     continue
+   filename = os.path.splitext(files)[0]
+   #filetype = os.path.splitext(files)[1]
+   Newdir = os.path.join(Path,filename + &apos;.txt&apos;)  #只要修改后缀名就可以更改成任意想要的格式
+   os.rename(Olddir,Newdir)
+Rename()</code></pre></blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1358,7 +1872,7 @@ clf.predict(Xtest)
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1394,7 +1908,9 @@ clf.predict(Xtest)
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
