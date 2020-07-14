@@ -100,27 +100,28 @@
 
 
   
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="-python -Excel,">
 
 
-<meta name="description" content="创建了自己的blog，希望能在这里记录下我学到的点点滴滴，分享我的经验。 -END">
+<meta name="description" content="简单梳理一下Python简单处理Excel的步骤和方法1.检查当前工作路径2.导入openpyxl模块3.调用openpyxl.load_workbook()函数，以打开工作簿4.通过xx.worksheets[n] 取得工作表     123456789&amp;gt;&amp;gt;import os                                           #导入os模块&amp;gt;">
+<meta name="keywords" content="-python -Excel">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的第一篇博客文章">
-<meta property="og:url" content="https://william-chen777.github.io/2019/09/05/我的第一篇博客文章/index.html">
+<meta property="og:title" content="Python简单处理Excel的方法">
+<meta property="og:url" content="https://william-chen777.github.io/2020/04/06/Python简单处理Excel的方法/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="创建了自己的blog，希望能在这里记录下我学到的点点滴滴，分享我的经验。 -END">
+<meta property="og:description" content="简单梳理一下Python简单处理Excel的步骤和方法1.检查当前工作路径2.导入openpyxl模块3.调用openpyxl.load_workbook()函数，以打开工作簿4.通过xx.worksheets[n] 取得工作表     123456789&amp;gt;&amp;gt;import os                                           #导入os模块&amp;gt;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-31T06:19:37.929Z">
+<meta property="og:updated_time" content="2020-07-14T07:28:14.080Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的第一篇博客文章">
-<meta name="twitter:description" content="创建了自己的blog，希望能在这里记录下我学到的点点滴滴，分享我的经验。 -END">
+<meta name="twitter:title" content="Python简单处理Excel的方法">
+<meta name="twitter:description" content="简单梳理一下Python简单处理Excel的步骤和方法1.检查当前工作路径2.导入openpyxl模块3.调用openpyxl.load_workbook()函数，以打开工作簿4.通过xx.worksheets[n] 取得工作表     123456789&amp;gt;&amp;gt;import os                                           #导入os模块&amp;gt;">
 
 
 
 
 
 
-  <link rel="canonical" href="https://william-chen777.github.io/2019/09/05/我的第一篇博客文章/">
+  <link rel="canonical" href="https://william-chen777.github.io/2020/04/06/Python简单处理Excel的方法/">
 
 
 
@@ -129,7 +130,7 @@
     sidebar: "",
   };
 </script>
-  <title>我的第一篇博客文章 | William Chen</title>
+  <title>Python简单处理Excel的方法 | William Chen</title>
   
 
 
@@ -276,7 +277,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2019/09/05/我的第一篇博客文章/">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/04/06/Python简单处理Excel的方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen kun">
@@ -293,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">我的第一篇博客文章</h1>
+          <h1 class="post-title" itemprop="name headline">Python简单处理Excel的方法</h1>
         
 
         <div class="post-meta">
@@ -305,7 +306,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-05T12:50:00+08:00">2019-09-05</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-06T21:46:09+08:00">2020-04-06</time>
             
 
             
@@ -314,6 +315,24 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -342,8 +361,21 @@
       
 
       
-        <p>创建了自己的blog，希望能在这里记录下我学到的点点滴滴，分享我的经验。</p>
-<p>-END</p>
+        <blockquote>
+<p>简单梳理一下Python简单处理Excel的步骤和方法<br>1.检查当前工作路径<br>2.导入openpyxl模块<br>3.调用openpyxl.load_workbook()函数，以打开工作簿<br>4.通过xx.worksheets[n] 取得工作表   </p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;import os                                           #导入os模块</span><br><span class="line">&gt;&gt;print(os.getcwd())                                  #显示当前工作模块</span><br><span class="line">&gt;&gt;os.chdir(&quot;E:\\untitled\\exercise&quot;)                  #更改当前工作模块</span><br><span class="line">&gt;&gt;</span><br><span class="line">&gt;&gt;import openpyxl                                     #导入openpyxl模块</span><br><span class="line">&gt;&gt;print(&apos;Opening workbook...&apos;)</span><br><span class="line">&gt;&gt;wb = openpyxl.load_workbook(&apos;censuspopdata.xlsx&apos;)   #打开工作簿</span><br><span class="line">&gt;&gt;sheet = wb.worksheets[0]                            #取得工作表</span><br><span class="line">&gt;&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</blockquote>
+<hr>
+<p>###从表格中读取数据    </p>
+<blockquote>
+<p>程序需要做的事情：<br>·从Excel中读取数据<br>·计算每个县中普查区的数目<br>·计算每个县的总人数<br>·打印结果   </p>
+<p>代码需要完成下列任务：<br>·用 openpyxl 模块打开Excel文档并读取单元格<br>·计算普查区和人口数，将他保存到一个数据结构中<br>·利用 pprint 模块，将该数据结构写入一个扩展名为 .py 的文本文件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import openpyxl</span><br><span class="line">import pprint</span><br><span class="line">print(&apos;Opening workbook...&apos;)</span><br><span class="line">wb = openpyxl.load_workbook(&apos;censuspopdata.xlsx&apos;)   #打开工作簿</span><br><span class="line">sheet = wb.worksheets[0]  </span><br><span class="line">countyData = &#123;&#125;                                     #创建变量</span><br><span class="line"></span><br><span class="line">print(&apos;Reading row...&apos;)</span><br><span class="line">for row in range(2, sheet.max_row + 1):             #迭代行数据</span><br><span class="line">    #每一行都有一个普查区数据</span><br><span class="line">    State = sheet[&apos;B&apos; + str(row)].value</span><br><span class="line">    county = sheet[&apos;C&apos; + str(row)].value</span><br><span class="line">    pop = sheet[&apos;D&apos; + str(row)].value</span><br><span class="line"></span><br><span class="line">    # 确保洲简称的键存在</span><br><span class="line">    countyData.setdefault(&quot;state&quot;, &#123;&#125;)              #设置默认值，确保键存在</span><br><span class="line"></span><br><span class="line">    # 确保县对应的键存在</span><br><span class="line">    countyData[&quot;state&quot;].setdefault(&quot;county&quot;, &#123;&apos;tracts&apos;:0, &apos;pop&apos;:0&#125;)</span><br><span class="line"></span><br><span class="line">    # 每一行都是一个人口普查区，所以需要+1</span><br><span class="line">    countyData[&quot;state&quot;][&quot;county&quot;][&apos;tracts&apos;] += 1</span><br><span class="line">    # 增加人口数量</span><br><span class="line">    countyData[&quot;state&quot;][&quot;county&quot;][&apos;pop&apos;] += int(pop)</span><br><span class="line"></span><br><span class="line">#打开一个新的文本并且写入数据</span><br><span class="line">print(&apos;Writing results...&apos;)</span><br><span class="line">result_file = open(&apos;census2010.py&apos;, &apos;w&apos;)</span><br><span class="line">result_file.write(&apos;allData= &apos; + pprint.pformat(countyData))</span><br><span class="line">result_file.close()</span><br><span class="line">print(&apos;Done.&apos;)</span><br></pre></td></tr></table></figure>
+
+<p>对于excel的处理还有大量的方法，在接下来的一段时间中，我会学习Pandas 和 Numpy 的使用方法，届时整理上传。</p>
 
       
     </div>
@@ -359,6 +391,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/python-Excel/" rel="tag"># -python -Excel</a>
+          
+        </div>
+      
 
       
       
@@ -368,14 +406,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2020/03/31/Python的正则表达式/" rel="next" title="Python的正则表达式">
+                <i class="fa fa-chevron-left"></i> Python的正则表达式
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/31/Python的正则表达式/" rel="prev" title="Python的正则表达式">
-                Python的正则表达式 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/04/07/Matplotlib相关语法及实例/" rel="prev" title="Matplotlib相关语法及实例">
+                Matplotlib相关语法及实例 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

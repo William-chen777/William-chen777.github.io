@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.3" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="-sklearn,">
+
+
+<meta name="description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
+<meta name="keywords" content="-sklearn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sklearn-DecisionTreeClassifier">
+<meta property="og:url" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/index.html">
+<meta property="og:site_name" content="William Chen">
+<meta property="og:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/%5CE:%5CBlog%5Cimage%5Cwine%E8%A1%A8%E6%A0%BC.png">
+<meta property="og:updated_time" content="2020-07-14T07:29:27.678Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sklearn-DecisionTreeClassifier">
+<meta name="twitter:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
+<meta name="twitter:image" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/%5CE:%5CBlog%5Cimage%5Cwine%E8%A1%A8%E6%A0%BC.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>sklearn-DecisionTreeClassifier | William Chen</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">William Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sklearn-DecisionTreeClassifier</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-14T10:16:34+08:00">2020-07-14</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python-Machine-learning/" itemprop="url" rel="index"><span itemprop="name">-Python -Machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="sklearn-DecisionTreeClassifier的基本用法"><a href="#sklearn-DecisionTreeClassifier的基本用法" class="headerlink" title="sklearn-DecisionTreeClassifier的基本用法"></a>sklearn-DecisionTreeClassifier的基本用法</h1><h3 id="决策树的流程"><a href="#决策树的流程" class="headerlink" title="决策树的流程"></a>决策树的流程</h3><p>计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支</p>
+<blockquote>
+<p>DecisionTreeClassifier的核心参数：<code>criterion</code> </p>
+<blockquote>
+<p>为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指标<br>叫做“不纯度”。通常来说，不纯度越低，决策树对训练集的拟合越好。现在使用的决策树算法在分枝方法上的核心<br>大多是围绕在对某个不纯度相关指标的最优化上。</p>
+</blockquote>
+<ul>
+<li><code>entropy</code>   信息熵</li>
+<li><code>gini</code>      基尼系数    </li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="建树"><a href="#建树" class="headerlink" title="建树"></a>建树</h2><h3 id="1-导入需要的算法库和模块"><a href="#1-导入需要的算法库和模块" class="headerlink" title="1.导入需要的算法库和模块"></a>1.导入需要的算法库和模块</h3><blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">from</span> sklearn <span class="keyword">import</span> tree    </span><br><span class="line">&gt;<span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_wine    </span><br><span class="line">&gt;<span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split      </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+</blockquote>
+<h3 id="2-探索数据"><a href="#2-探索数据" class="headerlink" title="2.探索数据"></a>2.探索数据</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;wine = load_wine()                  #将数据库中的练习数据导入       </span><br><span class="line">&gt;wine.data.shape                     #获取数据结构——178行，13列，即13个特征</span><br><span class="line">&gt;&gt;(178,13)     </span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br><span class="line">&gt;wine.target                         #因为wine是一个字典，所以我们可以通过键来获取对于的值     </span><br><span class="line">&gt;&gt;array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span><br><span class="line">&gt;       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span><br><span class="line">&gt;       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1,</span><br><span class="line">&gt;       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span><br><span class="line">&gt;       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span><br><span class="line">&gt;       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2,</span><br><span class="line">&gt;       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,</span><br><span class="line">&gt;       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,</span><br><span class="line">&gt;       2, 2])</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;import pandas as pd</span><br><span class="line">&gt;pd.concat([pd.DataFrame(wine.data), pd.DataFrame(wine.target)], axis=1)        #将数据和标签都传入pd.DataFrame，生成表格,更方便的查看数据结构                              </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><img src="%5CE:%5CBlog%5Cimage%5Cwine%E8%A1%A8%E6%A0%BC.png" alt> </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;wine.feature_names                  #查看特征名              </span><br><span class="line">&gt;&gt;[&apos;alcohol&apos;,</span><br><span class="line">&gt; &apos;malic_acid&apos;,</span><br><span class="line">&gt; &apos;ash&apos;,</span><br><span class="line">&gt; &apos;alcalinity_of_ash&apos;,</span><br><span class="line">&gt; &apos;magnesium&apos;,</span><br><span class="line">&gt; &apos;total_phenols&apos;,</span><br><span class="line">&gt; &apos;flavanoids&apos;,</span><br><span class="line">&gt; &apos;nonflavanoid_phenols&apos;,</span><br><span class="line">&gt; &apos;proanthocyanins&apos;,</span><br><span class="line">&gt; &apos;color_intensity&apos;,</span><br><span class="line">&gt; &apos;hue&apos;,</span><br><span class="line">&gt; &apos;od280/od315_of_diluted_wines&apos;,</span><br><span class="line">&gt; &apos;proline&apos;]                </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;wine.targets_names                #查看标签名</span><br><span class="line">&gt;&gt;array([&apos;class_0&apos;, &apos;class_1&apos;, &apos;class_2&apos;], dtype=&apos;&lt;U7&apos;)           </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="3-将数据划分为训练集和测试集"><a href="#3-将数据划分为训练集和测试集" class="headerlink" title="3.将数据划分为训练集和测试集"></a>3.将数据划分为训练集和测试集</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;Xtrain,Xtest,Ytrain,Ytest = train_test_split(wine.data, wine.target, test_size=0.3) </span><br><span class="line">&gt;#给出数据和标签，test_size是指30%做测试集，剩下的70%做训练集</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;Xtrain.shape</span><br><span class="line">&gt;&gt;(124, 13)</span><br><span class="line">&gt;</span><br><span class="line">&gt;Xtest.shape</span><br><span class="line">&gt;&gt;(54, 13)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>查看数据结构，确认原始数据已经被分成70%和30%两部分       </p>
+</blockquote>
+<hr>
+<hr>
+<p>##建模三部曲</p>
+<h3 id="第一步：-实例化"><a href="#第一步：-实例化" class="headerlink" title="第一步： 实例化"></a>第一步： 实例化</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;clf = tree.DecisionTreeClassifier(criterion=&quot;entropy&quot;)     #criterion 默认是基尼系数，此处我们选择使用信息熵</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="第二部：-训练模型"><a href="#第二部：-训练模型" class="headerlink" title="第二部： 训练模型"></a>第二部： 训练模型</h3><blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;clf = clf.fit(Xtrain, Ytrain)</span><br><span class="line">&gt;```  </span><br><span class="line"></span><br><span class="line">### 第三步： 打分</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>score = clf.score(Xtest, Ytest)   #用测试集来打分，返回的是一个准确度accuracy</p>
+<p>score</p>
+<blockquote>
+<blockquote>
+<p>0.9259259259259259              #在此处每次打分的结果都可能不一样</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br><span class="line">---</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 画图</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>feature_name = [‘酒精’,’苹果酸’,’灰’,’灰的碱性’,’镁’,’总酚’,’类黄酮’,’非黄烷类酚类’,’花青素’,’颜色强度’,’色调’,’od280/od315稀释葡萄酒’,’脯氨酸’]<br>import graphviz<br>dot_data = tree.export_graphviz(clf,<br>                               feature_names=feature_name,<br>                               class_names=[‘琴酒’,’雪莉’, ‘贝尔摩德’],<br>                               filled=True,<br>                               rounded=True<br>)</p>
+<h1 id="分别传入模型-clf-；特征名-；-标签名"><a href="#分别传入模型-clf-；特征名-；-标签名" class="headerlink" title="分别传入模型 clf ；特征名 ； 标签名"></a>分别传入模型 clf ；特征名 ； 标签名</h1><h1 id="filled表示是否填充颜色，不纯度越低，颜色越深"><a href="#filled表示是否填充颜色，不纯度越低，颜色越深" class="headerlink" title="filled表示是否填充颜色，不纯度越低，颜色越深"></a>filled表示是否填充颜色，不纯度越低，颜色越深</h1><h1 id="rounded表示方框的圆度"><a href="#rounded表示方框的圆度" class="headerlink" title="rounded表示方框的圆度"></a>rounded表示方框的圆度</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>graph = graphviz.Source(dot_data)<br>graph</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;![](\E:\Blog\image\分类树1.png) </span><br><span class="line">&gt;</span><br><span class="line">&gt;  </span><br><span class="line">&gt;接下来查看我们感兴趣的数值，并针对性的分析</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>clf.feature_importances_             #虽然返回了数值，但是看不懂，需要连接前面的特征       </p>
+<blockquote>
+<blockquote>
+<p>array([0.        , 0.        , 0.        , 0.01424694, 0.        ,<br>        0.        , 0.47329119, 0.        , 0.02568071, 0.31227528,<br>        0.        , 0.        , 0.17450589])</p>
+</blockquote>
+</blockquote>
+<h1 id="此处返回的是特征值的权重"><a href="#此处返回的是特征值的权重" class="headerlink" title="此处返回的是特征值的权重"></a>此处返回的是特征值的权重</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>[*zip(feature_name, clf.feature_importances_)]      #用 *zip 连接特征名和对于数值</p>
+<blockquote>
+<blockquote>
+<p>[(‘酒精’, 0.0),<br>(‘苹果酸’, 0.0),<br>(‘灰’, 0.0),<br>(‘灰的碱性’, 0.01424693586672224),<br>(‘镁’, 0.0),<br>(‘总酚’, 0.0),<br>(‘类黄酮’, 0.4732911864435072),<br>(‘非黄烷类酚类’, 0.0),<br>(‘花青素’, 0.02568070945422599),<br>(‘颜色强度’, 0.31227528031774815),<br>(‘色调’, 0.0),<br>(‘od280/od315稀释葡萄酒’, 0.0),<br>(‘脯氨酸’, 0.17450588791779637)]</p>
+</blockquote>
+</blockquote>
+<p>可以看到 类黄酮 的数值最高，所以在决策树的顶端作为根结点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;---</span><br><span class="line">&gt;### 模型的分值随机变化，那么我们如何获得稳定的模型呢？</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>clf = tree.DecisionTreeClassifier(criterion=”entropy”,random_state=20)<br>clf = clf.fit(Xtrain, Ytrain)<br>score = clf.score(Xtest, Ytest)</p>
+<p>score</p>
+<blockquote>
+<blockquote>
+<p>0.8888888888888888</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;#### 在模型中加入`random_state`参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入`splitter=“random”`可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。</span><br><span class="line">&gt;#### 可以说 `criterion` 用来规定不纯度的计算，`random_state`和`splitter`用来控制决策树的随机度           </span><br><span class="line">&gt;</span><br><span class="line">&gt;---</span><br><span class="line">&gt;</span><br><span class="line">&gt;### 最后我们对训练集的拟合程度怎么样呢？</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>score_train = clf.score(Xtrain,Ytrain)</p>
+<p>score_train</p>
+<blockquote>
+<blockquote>
+<p>1.0</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;#### 因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。</span><br><span class="line">&gt;</span><br><span class="line">---</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 剪枝策略-剪枝参数调优</span><br><span class="line">剪枝策略对决策树有巨大的影响，正确的剪枝策略是优化决策树算法的核心。        </span><br><span class="line">&gt;</span><br><span class="line">&gt;### max_depth</span><br><span class="line">&gt;限制树的最大深度，超过设定深度的树枝全部剪掉，能够有效的控制过拟合，通常从3开始。</span><br><span class="line">&gt;</span><br><span class="line">&gt;### min_samples_leaf &amp; min_samples_split                 </span><br><span class="line">&gt;`min_samples_leaf`限定，一个节点在分枝后的每个子节点都必须包含至少min_samples_leaf个训练样本，否则分 枝就不会发生，或者，分枝会朝着满足每个子节点都包含min_samples_leaf个样本的方向去发生,一般搭配max_depth使用，在回归树中有神奇的效果，可以让模型变得更加平滑。这个参数的数量设置得太小会引起过拟合，设置得太大就会阻止模型学习数据。一般来说，建议从=5开始使用。如果叶节点中含有的样本量变化很 大，建议输入浮点数作为样本量的百分比来使用。同时，这个参数可以保证每个叶子的最小尺寸，可以在回归问题 中避免低方差，过拟合的叶子节点出现。对于类别不多的分类问题，=1通常就是最佳选择.</span><br><span class="line">&gt;</span><br><span class="line">&gt;`min_samples_split`限定，一个节点必须要包含至少min_samples_split个训练样本，这个节点才允许被分枝，否则 分枝就不会发生。</span><br><span class="line">&gt;</span><br><span class="line">&gt;### max_features &amp; min_impurity_decrease     </span><br><span class="line">&gt;一般max_depth使用，用作树的”精修“               </span><br><span class="line">&gt;`max_features`限制分枝时考虑的特征个数，超过限制个数的特征都会被舍弃。和max_depth异曲同工，max_features是用来限制高维度数据的过拟合的剪枝参数，但其方法比较暴力，是直接限制可以使用的特征数量而强行使决策树停下的参数，在不知道决策树中的各个特征的重要性的情况下，强行设定这个参数可能会导致模型学习不足。如果希望通过降维的方式防止过拟合，建议使用PCA，ICA或者特征选择模块中的降维算法。</span><br><span class="line">&gt;</span><br><span class="line">&gt;`min_impurity_decrease`限制信息增益的大小，信息增益小于设定数值的分枝不会发生。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>clf = tree.DecisionTreeClassifier(criterion=”entropy”<br>                                  ,random_state=20<br>                                  ,splitter=’random’<br>                                  ,max_depth=4</p>
+</blockquote>
+<pre><code>#    ,min_samples_leaf=10
+#    ,min_samples_split=10
+   )</code></pre><p>clf = clf.fit(Xtrain, Ytrain)<br>dot_data = tree.export_graphviz(clf<br>                               ,feature_names=feature_name<br>                               ,class_names=[‘琴酒’,’雪莉’,’贝尔摩德’]<br>                               ,filled=True<br>                               ,rounded=True<br>)<br>graph = graphviz.Source(dot_data)<br>graph</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>score_train = clf.score(Xtrain,Ytrain)</p>
+<p>score_train</p>
+<blockquote>
+<blockquote>
+<p>0.9758064516129032</p>
+</blockquote>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;可以看出通过剪枝后的模型，比原来分值更高</span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br><span class="line">--------</span><br><span class="line">## 那么如何确定最优的剪枝参数呢？</span><br><span class="line">使用确定超参数的曲线来进行判断，继续使用我们已经训练好的决策树模型clf。超参数的学习曲线，是一条以超参数的取值为横坐标，模型的度量指标为纵坐标的曲线，它是用来衡量不同超参数取值下模型的表现的线。在我们建好的决策树里，我们的模型度量指标就是score。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>import matplotlib.pyplot as plt<br>test = []<br>for i in range(10):<br>   clf = tree.DecisionTreeClassifier(max_depth=i+1,criterion=”entropy”,random_state=30,splitter=”random”)<br>   clf = clf.fit(Xtrain, Ytrain)<br>   score = clf.score(Xtest, Ytest)<br>   test.append(score)<br>plt.plot(range(1,11),test,color=”red”,label=”max_depth”)<br>plt.legend()<br>plt.show()</p>
+<pre><code>![](\E:\Blog\image\确定最优参数.png)
+图中可得当 `max_depth=4`时最优 </code></pre></blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sklearn/" rel="tag"># -sklearn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/07/Matplotlib相关语法及实例/" rel="next" title="Matplotlib相关语法及实例">
+                <i class="fa fa-chevron-left"></i> Matplotlib相关语法及实例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Chen kun">
+            
+              <p class="site-author-name" itemprop="name">Chen kun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sklearn-DecisionTreeClassifier的基本用法"><span class="nav-number">1.</span> <span class="nav-text">sklearn-DecisionTreeClassifier的基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树的流程"><span class="nav-number">1.0.1.</span> <span class="nav-text">决策树的流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建树"><span class="nav-number">1.1.</span> <span class="nav-text">建树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-导入需要的算法库和模块"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.导入需要的算法库和模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-探索数据"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.探索数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-将数据划分为训练集和测试集"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.将数据划分为训练集和测试集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：-实例化"><span class="nav-number">1.1.4.</span> <span class="nav-text">第一步： 实例化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部：-训练模型"><span class="nav-number">1.1.5.</span> <span class="nav-text">第二部： 训练模型</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#分别传入模型-clf-；特征名-；-标签名"><span class="nav-number">2.</span> <span class="nav-text">分别传入模型 clf ；特征名 ； 标签名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#filled表示是否填充颜色，不纯度越低，颜色越深"><span class="nav-number">3.</span> <span class="nav-text">filled表示是否填充颜色，不纯度越低，颜色越深</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rounded表示方框的圆度"><span class="nav-number">4.</span> <span class="nav-text">rounded表示方框的圆度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#此处返回的是特征值的权重"><span class="nav-number">5.</span> <span class="nav-text">此处返回的是特征值的权重</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen kun</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
