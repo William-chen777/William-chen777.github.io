@@ -111,14 +111,14 @@
 <meta property="og:site_name" content="William Chen">
 <meta property="og:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/%5CE:%5CBlog%5Cimage%5Cwine%E8%A1%A8%E6%A0%BC.png">
-<meta property="og:image" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/%5CE:%5CBlog%5Cimage%5C%E5%88%86%E7%B1%BB%E6%A0%911.png">
-<meta property="og:image" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/%5CE:%5CBlog%5Cimage%5C%E7%A1%AE%E5%AE%9A%E6%9C%80%E4%BC%98%E5%8F%82%E6%95%B0.png">
-<meta property="og:updated_time" content="2020-07-14T07:37:08.813Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020071415511693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200714155232534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2020-07-14T07:53:15.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sklearn-DecisionTreeClassifier">
 <meta name="twitter:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
-<meta name="twitter:image" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/%5CE:%5CBlog%5Cimage%5Cwine%E8%A1%A8%E6%A0%BC.png">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
 
 
 
@@ -390,7 +390,7 @@
 </blockquote>
 <blockquote>
 <blockquote>
-<p><img src="%5CE:%5CBlog%5Cimage%5Cwine%E8%A1%A8%E6%A0%BC.png" alt> </p>
+<p><img src="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述">                    </p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;wine.feature_names                  #查看特征名              </span><br><span class="line">&gt;&gt;[&apos;alcohol&apos;,</span><br><span class="line">&gt; &apos;malic_acid&apos;,</span><br><span class="line">&gt; &apos;ash&apos;,</span><br><span class="line">&gt; &apos;alcalinity_of_ash&apos;,</span><br><span class="line">&gt; &apos;magnesium&apos;,</span><br><span class="line">&gt; &apos;total_phenols&apos;,</span><br><span class="line">&gt; &apos;flavanoids&apos;,</span><br><span class="line">&gt; &apos;nonflavanoid_phenols&apos;,</span><br><span class="line">&gt; &apos;proanthocyanins&apos;,</span><br><span class="line">&gt; &apos;color_intensity&apos;,</span><br><span class="line">&gt; &apos;hue&apos;,</span><br><span class="line">&gt; &apos;od280/od315_of_diluted_wines&apos;,</span><br><span class="line">&gt; &apos;proline&apos;]                </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
@@ -433,7 +433,7 @@ dot_data = tree.export_graphviz(clf,
 #   filled表示是否填充颜色，不纯度越低，颜色越深
 #   rounded表示方框的圆度</code></pre><pre><code>graph = graphviz.Source(dot_data)
 graph</code></pre><blockquote>
-<p><img src="%5CE:%5CBlog%5Cimage%5C%E5%88%86%E7%B1%BB%E6%A0%911.png" alt>                          </p>
+<p><img src="https://img-blog.csdnimg.cn/2020071415511693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述">                          </p>
 </blockquote>
 <p>接下来查看我们感兴趣的数值，并针对性的分析                   </p>
 <pre><code>clf.feature_importances_             #虽然返回了数值，但是看不懂，需要连接前面的特征       
@@ -508,7 +508,9 @@ for i in range(10):
    test.append(score)
 plt.plot(range(1,11),test,color=&quot;red&quot;,label=&quot;max_depth&quot;)
 plt.legend()
-plt.show()</code></pre><p><img src="%5CE:%5CBlog%5Cimage%5C%E7%A1%AE%E5%AE%9A%E6%9C%80%E4%BC%98%E5%8F%82%E6%95%B0.png" alt><br>图中可得当 <code>max_depth=4</code>时最优                      </p>
+plt.show()</code></pre><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200714155232534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述">&gt;图中可得当 <code>max_depth=4</code>时最优                      </p>
+</blockquote>
 </blockquote>
 
       
