@@ -404,93 +404,108 @@
 </blockquote>
 <hr>
 <hr>
-<p>##建模三部曲</p>
-<h3 id="第一步：-实例化"><a href="#第一步：-实例化" class="headerlink" title="第一步： 实例化"></a>第一步： 实例化</h3><blockquote>
+<h2 id="建模三部曲"><a href="#建模三部曲" class="headerlink" title="建模三部曲"></a>建模三部曲</h2><h3 id="第一步：-实例化"><a href="#第一步：-实例化" class="headerlink" title="第一步： 实例化"></a>第一步： 实例化</h3><blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;clf = tree.DecisionTreeClassifier(criterion=&quot;entropy&quot;)     #criterion 默认是基尼系数，此处我们选择使用信息熵</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
 <h3 id="第二部：-训练模型"><a href="#第二部：-训练模型" class="headerlink" title="第二部： 训练模型"></a>第二部： 训练模型</h3><blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;clf = clf.fit(Xtrain, Ytrain)</span><br><span class="line">&gt;```  </span><br><span class="line"></span><br><span class="line">### 第三步： 打分</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>clf = clf.fit(Xtrain, Ytrain)</code></pre></blockquote>
+<h3 id="第三步：-打分"><a href="#第三步：-打分" class="headerlink" title="第三步： 打分"></a>第三步： 打分</h3><blockquote>
+<pre><code>score = clf.score(Xtest, Ytest)   #用测试集来打分，返回的是一个准确度accuracy                 
+
+score                 
+&gt;&gt;0.9259259259259259              #在此处每次打分的结果都可能不一样</code></pre></blockquote>
+<hr>
+<hr>
+<h2 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h2><blockquote>
+<pre><code>feature_name = [&apos;酒精&apos;,&apos;苹果酸&apos;,&apos;灰&apos;,&apos;灰的碱性&apos;,&apos;镁&apos;,&apos;总酚&apos;,&apos;类黄酮&apos;,&apos;非黄烷类酚类&apos;,&apos;花青素&apos;,&apos;颜色强度&apos;,&apos;色调&apos;,&apos;od280/od315稀释葡萄酒&apos;,&apos;脯氨酸&apos;]
+import graphviz
+dot_data = tree.export_graphviz(clf, 
+                               feature_names=feature_name, 
+                               class_names=[&apos;琴酒&apos;,&apos;雪莉&apos;, &apos;贝尔摩德&apos;], 
+                               filled=True, 
+                               rounded=True
+)
+#   分别传入模型 clf ；特征名 ； 标签名
+#   filled表示是否填充颜色，不纯度越低，颜色越深
+#   rounded表示方框的圆度</code></pre><pre><code>graph = graphviz.Source(dot_data)
+graph</code></pre><blockquote>
+<p><img src="%5CE:%5CBlog%5Cimage%5C%E5%88%86%E7%B1%BB%E6%A0%911.png" alt>                          </p>
 </blockquote>
+<p>接下来查看我们感兴趣的数值，并针对性的分析                   </p>
+<pre><code>clf.feature_importances_             #虽然返回了数值，但是看不懂，需要连接前面的特征       
+&gt;&gt;array([0.        , 0.        , 0.        , 0.01424694, 0.        ,
+        0.        , 0.47329119, 0.        , 0.02568071, 0.31227528,
+        0.        , 0.        , 0.17450589])
+
+# 此处返回的是特征值的权重</code></pre><pre><code>[*zip(feature_name, clf.feature_importances_)]      #用 *zip 连接特征名和对于数值
+&gt;&gt;[(&apos;酒精&apos;, 0.0),
+(&apos;苹果酸&apos;, 0.0),
+(&apos;灰&apos;, 0.0),
+(&apos;灰的碱性&apos;, 0.01424693586672224),
+(&apos;镁&apos;, 0.0),
+(&apos;总酚&apos;, 0.0),
+(&apos;类黄酮&apos;, 0.4732911864435072),
+(&apos;非黄烷类酚类&apos;, 0.0),
+(&apos;花青素&apos;, 0.02568070945422599),
+(&apos;颜色强度&apos;, 0.31227528031774815),
+(&apos;色调&apos;, 0.0),
+(&apos;od280/od315稀释葡萄酒&apos;, 0.0),
+(&apos;脯氨酸&apos;, 0.17450588791779637)]
+
+可以看到 类黄酮 的数值最高，所以在决策树的顶端作为根结点</code></pre><hr>
+<h3 id="模型的分值随机变化，那么我们如何获得稳定的模型呢？"><a href="#模型的分值随机变化，那么我们如何获得稳定的模型呢？" class="headerlink" title="模型的分值随机变化，那么我们如何获得稳定的模型呢？"></a>模型的分值随机变化，那么我们如何获得稳定的模型呢？</h3><pre><code>clf = tree.DecisionTreeClassifier(criterion=&quot;entropy&quot;,random_state=20)
+clf = clf.fit(Xtrain, Ytrain)
+score = clf.score(Xtest, Ytest)
+
+score
+&gt;&gt;0.8888888888888888</code></pre><h4 id="在模型中加入random-state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter-“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。"><a href="#在模型中加入random-state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter-“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。" class="headerlink" title="在模型中加入random_state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter=“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。"></a>在模型中加入<code>random_state</code>参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入<code>splitter=“random”</code>可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。</h4><h4 id="可以说-criterion-用来规定不纯度的计算，random-state和splitter用来控制决策树的随机度"><a href="#可以说-criterion-用来规定不纯度的计算，random-state和splitter用来控制决策树的随机度" class="headerlink" title="可以说 criterion 用来规定不纯度的计算，random_state和splitter用来控制决策树的随机度"></a>可以说 <code>criterion</code> 用来规定不纯度的计算，<code>random_state</code>和<code>splitter</code>用来控制决策树的随机度</h4><hr>
+<h3 id="最后我们对训练集的拟合程度怎么样呢？"><a href="#最后我们对训练集的拟合程度怎么样呢？" class="headerlink" title="最后我们对训练集的拟合程度怎么样呢？"></a>最后我们对训练集的拟合程度怎么样呢？</h3><pre><code>score_train = clf.score(Xtrain,Ytrain)         
+
+score_train            
+&gt;&gt;1.0               </code></pre><h4 id="因为训练集的精准度在92-，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80-，则考虑模型过拟合。"><a href="#因为训练集的精准度在92-，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80-，则考虑模型过拟合。" class="headerlink" title="因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。"></a>因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。</h4></blockquote>
+<hr>
+<hr>
+<h2 id="剪枝策略-剪枝参数调优"><a href="#剪枝策略-剪枝参数调优" class="headerlink" title="剪枝策略-剪枝参数调优"></a>剪枝策略-剪枝参数调优</h2><p>剪枝策略对决策树有巨大的影响，正确的剪枝策略是优化决策树算法的核心。                       </p>
 <blockquote>
-<p>score = clf.score(Xtest, Ytest)   #用测试集来打分，返回的是一个准确度accuracy</p>
-<p>score</p>
-<blockquote>
-<blockquote>
-<p>0.9259259259259259              #在此处每次打分的结果都可能不一样</p>
+<h3 id="max-depth"><a href="#max-depth" class="headerlink" title="max_depth"></a>max_depth</h3><p>限制树的最大深度，超过设定深度的树枝全部剪掉，能够有效的控制过拟合，通常从3开始。            </p>
+<h3 id="min-samples-leaf-amp-min-samples-split"><a href="#min-samples-leaf-amp-min-samples-split" class="headerlink" title="min_samples_leaf &amp; min_samples_split"></a>min_samples_leaf &amp; min_samples_split</h3><p><code>min_samples_leaf</code>限定，一个节点在分枝后的每个子节点都必须包含至少min_samples_leaf个训练样本，否则分 枝就不会发生，或者，分枝会朝着满足每个子节点都包含min_samples_leaf个样本的方向去发生,一般搭配max_depth使用，在回归树中有神奇的效果，可以让模型变得更加平滑。这个参数的数量设置得太小会引起过拟合，设置得太大就会阻止模型学习数据。一般来说，建议从=5开始使用。如果叶节点中含有的样本量变化很 大，建议输入浮点数作为样本量的百分比来使用。同时，这个参数可以保证每个叶子的最小尺寸，可以在回归问题 中避免低方差，过拟合的叶子节点出现。对于类别不多的分类问题，=1通常就是最佳选择.</p>
+<p><code>min_samples_split</code>限定，一个节点必须要包含至少min_samples_split个训练样本，这个节点才允许被分枝，否则 分枝就不会发生。</p>
+<h3 id="max-features-amp-min-impurity-decrease"><a href="#max-features-amp-min-impurity-decrease" class="headerlink" title="max_features &amp; min_impurity_decrease"></a>max_features &amp; min_impurity_decrease</h3><p>一般max_depth使用，用作树的”精修“<br><code>max_features</code>限制分枝时考虑的特征个数，超过限制个数的特征都会被舍弃。和max_depth异曲同工，max_features是用来限制高维度数据的过拟合的剪枝参数，但其方法比较暴力，是直接限制可以使用的特征数量而强行使决策树停下的参数，在不知道决策树中的各个特征的重要性的情况下，强行设定这个参数可能会导致模型学习不足。如果希望通过降维的方式防止过拟合，建议使用PCA，ICA或者特征选择模块中的降维算法。</p>
+<p><code>min_impurity_decrease</code>限制信息增益的大小，信息增益小于设定数值的分枝不会发生。</p>
+<pre><code>&gt;clf = tree.DecisionTreeClassifier(criterion=&quot;entropy&quot;
+                                  ,random_state=20
+                                  ,splitter=&apos;random&apos;
+                                  ,max_depth=4
+                             #    ,min_samples_leaf=10
+                             #    ,min_samples_split=10
+                                )
+clf = clf.fit(Xtrain, Ytrain)
+dot_data = tree.export_graphviz(clf
+                               ,feature_names=feature_name
+                               ,class_names=[&apos;琴酒&apos;,&apos;雪莉&apos;,&apos;贝尔摩德&apos;]
+                               ,filled=True
+                               ,rounded=True
+)
+graph = graphviz.Source(dot_data)
+graph     </code></pre><pre><code>score_train = clf.score(Xtrain,Ytrain)
+
+score_train
+&gt;&gt;0.9758064516129032</code></pre><p>可以看出通过剪枝后的模型，比原来分值更高</p>
 </blockquote>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br><span class="line">---</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 画图</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
+<hr>
+<h2 id="那么如何确定最优的剪枝参数呢？"><a href="#那么如何确定最优的剪枝参数呢？" class="headerlink" title="那么如何确定最优的剪枝参数呢？"></a>那么如何确定最优的剪枝参数呢？</h2><p>使用确定超参数的曲线来进行判断，继续使用我们已经训练好的决策树模型clf。超参数的学习曲线，是一条以超参数的取值为横坐标，模型的度量指标为纵坐标的曲线，它是用来衡量不同超参数取值下模型的表现的线。在我们建好的决策树里，我们的模型度量指标就是score。</p>
 <blockquote>
-<p>feature_name = [‘酒精’,’苹果酸’,’灰’,’灰的碱性’,’镁’,’总酚’,’类黄酮’,’非黄烷类酚类’,’花青素’,’颜色强度’,’色调’,’od280/od315稀释葡萄酒’,’脯氨酸’]<br>import graphviz<br>dot_data = tree.export_graphviz(clf,<br>                               feature_names=feature_name,<br>                               class_names=[‘琴酒’,’雪莉’, ‘贝尔摩德’],<br>                               filled=True,<br>                               rounded=True<br>)</p>
-<h1 id="分别传入模型-clf-；特征名-；-标签名"><a href="#分别传入模型-clf-；特征名-；-标签名" class="headerlink" title="分别传入模型 clf ；特征名 ； 标签名"></a>分别传入模型 clf ；特征名 ； 标签名</h1><h1 id="filled表示是否填充颜色，不纯度越低，颜色越深"><a href="#filled表示是否填充颜色，不纯度越低，颜色越深" class="headerlink" title="filled表示是否填充颜色，不纯度越低，颜色越深"></a>filled表示是否填充颜色，不纯度越低，颜色越深</h1><h1 id="rounded表示方框的圆度"><a href="#rounded表示方框的圆度" class="headerlink" title="rounded表示方框的圆度"></a>rounded表示方框的圆度</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+<pre><code>import matplotlib.pyplot as plt
+test = []
+for i in range(10):
+   clf = tree.DecisionTreeClassifier(max_depth=i+1,criterion=&quot;entropy&quot;,random_state=30,splitter=&quot;random&quot;)
+   clf = clf.fit(Xtrain, Ytrain)
+   score = clf.score(Xtest, Ytest)
+   test.append(score)
+plt.plot(range(1,11),test,color=&quot;red&quot;,label=&quot;max_depth&quot;)
+plt.legend()
+plt.show()</code></pre><p><img src="%5CE:%5CBlog%5Cimage%5C%E7%A1%AE%E5%AE%9A%E6%9C%80%E4%BC%98%E5%8F%82%E6%95%B0.png" alt><br>图中可得当 <code>max_depth=4</code>时最优                      </p>
 </blockquote>
-<blockquote>
-<p>graph = graphviz.Source(dot_data)<br>graph</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;![](\E:\Blog\image\分类树1.png) </span><br><span class="line">&gt;</span><br><span class="line">&gt;  </span><br><span class="line">&gt;接下来查看我们感兴趣的数值，并针对性的分析</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>clf.feature_importances_             #虽然返回了数值，但是看不懂，需要连接前面的特征       </p>
-<blockquote>
-<blockquote>
-<p>array([0.        , 0.        , 0.        , 0.01424694, 0.        ,<br>        0.        , 0.47329119, 0.        , 0.02568071, 0.31227528,<br>        0.        , 0.        , 0.17450589])</p>
-</blockquote>
-</blockquote>
-<h1 id="此处返回的是特征值的权重"><a href="#此处返回的是特征值的权重" class="headerlink" title="此处返回的是特征值的权重"></a>此处返回的是特征值的权重</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>[*zip(feature_name, clf.feature_importances_)]      #用 *zip 连接特征名和对于数值</p>
-<blockquote>
-<blockquote>
-<p>[(‘酒精’, 0.0),<br>(‘苹果酸’, 0.0),<br>(‘灰’, 0.0),<br>(‘灰的碱性’, 0.01424693586672224),<br>(‘镁’, 0.0),<br>(‘总酚’, 0.0),<br>(‘类黄酮’, 0.4732911864435072),<br>(‘非黄烷类酚类’, 0.0),<br>(‘花青素’, 0.02568070945422599),<br>(‘颜色强度’, 0.31227528031774815),<br>(‘色调’, 0.0),<br>(‘od280/od315稀释葡萄酒’, 0.0),<br>(‘脯氨酸’, 0.17450588791779637)]</p>
-</blockquote>
-</blockquote>
-<p>可以看到 类黄酮 的数值最高，所以在决策树的顶端作为根结点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;---</span><br><span class="line">&gt;### 模型的分值随机变化，那么我们如何获得稳定的模型呢？</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>clf = tree.DecisionTreeClassifier(criterion=”entropy”,random_state=20)<br>clf = clf.fit(Xtrain, Ytrain)<br>score = clf.score(Xtest, Ytest)</p>
-<p>score</p>
-<blockquote>
-<blockquote>
-<p>0.8888888888888888</p>
-</blockquote>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;#### 在模型中加入`random_state`参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入`splitter=“random”`可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。</span><br><span class="line">&gt;#### 可以说 `criterion` 用来规定不纯度的计算，`random_state`和`splitter`用来控制决策树的随机度           </span><br><span class="line">&gt;</span><br><span class="line">&gt;---</span><br><span class="line">&gt;</span><br><span class="line">&gt;### 最后我们对训练集的拟合程度怎么样呢？</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>score_train = clf.score(Xtrain,Ytrain)</p>
-<p>score_train</p>
-<blockquote>
-<blockquote>
-<p>1.0</p>
-</blockquote>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;#### 因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。</span><br><span class="line">&gt;</span><br><span class="line">---</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 剪枝策略-剪枝参数调优</span><br><span class="line">剪枝策略对决策树有巨大的影响，正确的剪枝策略是优化决策树算法的核心。        </span><br><span class="line">&gt;</span><br><span class="line">&gt;### max_depth</span><br><span class="line">&gt;限制树的最大深度，超过设定深度的树枝全部剪掉，能够有效的控制过拟合，通常从3开始。</span><br><span class="line">&gt;</span><br><span class="line">&gt;### min_samples_leaf &amp; min_samples_split                 </span><br><span class="line">&gt;`min_samples_leaf`限定，一个节点在分枝后的每个子节点都必须包含至少min_samples_leaf个训练样本，否则分 枝就不会发生，或者，分枝会朝着满足每个子节点都包含min_samples_leaf个样本的方向去发生,一般搭配max_depth使用，在回归树中有神奇的效果，可以让模型变得更加平滑。这个参数的数量设置得太小会引起过拟合，设置得太大就会阻止模型学习数据。一般来说，建议从=5开始使用。如果叶节点中含有的样本量变化很 大，建议输入浮点数作为样本量的百分比来使用。同时，这个参数可以保证每个叶子的最小尺寸，可以在回归问题 中避免低方差，过拟合的叶子节点出现。对于类别不多的分类问题，=1通常就是最佳选择.</span><br><span class="line">&gt;</span><br><span class="line">&gt;`min_samples_split`限定，一个节点必须要包含至少min_samples_split个训练样本，这个节点才允许被分枝，否则 分枝就不会发生。</span><br><span class="line">&gt;</span><br><span class="line">&gt;### max_features &amp; min_impurity_decrease     </span><br><span class="line">&gt;一般max_depth使用，用作树的”精修“               </span><br><span class="line">&gt;`max_features`限制分枝时考虑的特征个数，超过限制个数的特征都会被舍弃。和max_depth异曲同工，max_features是用来限制高维度数据的过拟合的剪枝参数，但其方法比较暴力，是直接限制可以使用的特征数量而强行使决策树停下的参数，在不知道决策树中的各个特征的重要性的情况下，强行设定这个参数可能会导致模型学习不足。如果希望通过降维的方式防止过拟合，建议使用PCA，ICA或者特征选择模块中的降维算法。</span><br><span class="line">&gt;</span><br><span class="line">&gt;`min_impurity_decrease`限制信息增益的大小，信息增益小于设定数值的分枝不会发生。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<blockquote>
-<p>clf = tree.DecisionTreeClassifier(criterion=”entropy”<br>                                  ,random_state=20<br>                                  ,splitter=’random’<br>                                  ,max_depth=4</p>
-</blockquote>
-<pre><code>#    ,min_samples_leaf=10
-#    ,min_samples_split=10
-   )</code></pre><p>clf = clf.fit(Xtrain, Ytrain)<br>dot_data = tree.export_graphviz(clf<br>                               ,feature_names=feature_name<br>                               ,class_names=[‘琴酒’,’雪莉’,’贝尔摩德’]<br>                               ,filled=True<br>                               ,rounded=True<br>)<br>graph = graphviz.Source(dot_data)<br>graph</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>score_train = clf.score(Xtrain,Ytrain)</p>
-<p>score_train</p>
-<blockquote>
-<blockquote>
-<p>0.9758064516129032</p>
-</blockquote>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;可以看出通过剪枝后的模型，比原来分值更高</span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br><span class="line">--------</span><br><span class="line">## 那么如何确定最优的剪枝参数呢？</span><br><span class="line">使用确定超参数的曲线来进行判断，继续使用我们已经训练好的决策树模型clf。超参数的学习曲线，是一条以超参数的取值为横坐标，模型的度量指标为纵坐标的曲线，它是用来衡量不同超参数取值下模型的表现的线。在我们建好的决策树里，我们的模型度量指标就是score。</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>import matplotlib.pyplot as plt<br>test = []<br>for i in range(10):<br>   clf = tree.DecisionTreeClassifier(max_depth=i+1,criterion=”entropy”,random_state=30,splitter=”random”)<br>   clf = clf.fit(Xtrain, Ytrain)<br>   score = clf.score(Xtest, Ytest)<br>   test.append(score)<br>plt.plot(range(1,11),test,color=”red”,label=”max_depth”)<br>plt.legend()<br>plt.show()</p>
-<pre><code>![](\E:\Blog\image\确定最优参数.png)
-图中可得当 `max_depth=4`时最优 </code></pre></blockquote>
 
           
         
