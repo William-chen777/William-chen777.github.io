@@ -114,7 +114,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2020071415511693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200714155232534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:updated_time" content="2020-07-14T07:59:05.889Z">
+<meta property="og:updated_time" content="2020-07-14T14:44:31.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sklearn-DecisionTreeClassifier">
 <meta name="twitter:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
@@ -512,6 +512,27 @@ plt.show()</code></pre><blockquote>
 <p><img src="https://img-blog.csdnimg.cn/20200714155232534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>图中可得当 <code>max_depth=4</code>时最优                      </p>
 </blockquote>
 </blockquote>
+<hr>
+<h2 id="重要的属性和接口"><a href="#重要的属性和接口" class="headerlink" title="重要的属性和接口"></a>重要的属性和接口</h2><p>属性是在模型训练之后，能够调用查看的模型的各种性质。对决策树来说，最重要的是feature_importances_，能 够查看各个特征对模型的重要性。           </p>
+<p>sklearn中许多算法的接口都是相似的，比如说我们之前已经用到的fit和score，几乎对每个算法都可以使用。除了 这两个接口之外，决策树最常用的接口还有apply和predict。apply中输入测试集返回每个测试样本所在的叶子节 点的索引，predict输入测试集返回每个测试样本的标签。            </p>
+<p>所有接口中要求输入X_train和X_test的部分，输入的特征矩阵必须至少是一个二维矩阵。 sklearn不接受任何一维矩阵作为特征矩阵被输入。如果你的数据的确只有一个特征，那必须用reshape(-1,1)来给 矩阵增维；如果你的数据只有一个特征和一个样本，使用reshape(1,-1)来给你的数据增维。      </p>
+<blockquote>
+<pre><code>#apply返回每个测试样本所在的叶子节点的索引
+clf.apply(Xtest)            
+&gt;&gt;&gt;array([16, 11,  5, 11,  3, 16, 25, 20, 16, 20, 17,  5, 14, 25, 23, 14,  5,
+&gt;&gt;&gt;       20, 25,  5, 20, 14, 16,  5,  7, 16, 20, 16, 25,  5,  7,  5, 25, 25,
+&gt;&gt;&gt;       20, 14,  9,  9, 25, 16,  5, 25,  9, 25, 25, 25,  5, 11, 14, 14, 25,
+&gt;&gt;&gt;        5, 16, 16], dtype=int64)            </code></pre><pre><code>#predict返回每个测试样本的分类/回归结果
+clf.predict(Xtest)
+&gt;&gt;&gt;array([1, 1, 2, 1, 1, 1, 0, 1, 1, 1, 2, 2, 1, 0, 1, 1, 2, 1, 0, 2, 1, 1,
+&gt;&gt;&gt;       1, 2, 1, 1, 1, 1, 0, 2, 1, 2, 0, 0, 1, 1, 2, 2, 0, 1, 2, 0, 2, 0,
+&gt;&gt;&gt;       0, 0, 2, 1, 1, 1, 0, 2, 1, 1])</code></pre></blockquote>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<pre><code>基本流程：
+八个参数：criterion，两个随机性相关的参数（random_state, splitter）,五个剪枝参数（max_depth,min_samples_split,min_samples_leaf,max_feature,min_impurity_decrease）
+一个属性：feature_importances_
+四个接口：fit,score,apply,predict</code></pre></blockquote>
 
       
     </div>
@@ -542,8 +563,8 @@ plt.show()</code></pre><blockquote>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/07/Matplotlib相关语法及实例/" rel="next" title="Matplotlib相关语法及实例">
-                <i class="fa fa-chevron-left"></i> Matplotlib相关语法及实例
+              <a href="/2020/04/06/Python简单处理Excel的方法/" rel="next" title="Python简单处理Excel的方法">
+                <i class="fa fa-chevron-left"></i> Python简单处理Excel的方法
               </a>
             
           </div>
@@ -626,7 +647,7 @@ plt.show()</code></pre><blockquote>
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -662,9 +683,7 @@ plt.show()</code></pre><blockquote>
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -700,7 +719,7 @@ plt.show()</code></pre><blockquote>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sklearn-DecisionTreeClassifier的基本用法"><span class="nav-number">1.</span> <span class="nav-text">sklearn-DecisionTreeClassifier的基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树的流程"><span class="nav-number">1.0.1.</span> <span class="nav-text">决策树的流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建树"><span class="nav-number">1.1.</span> <span class="nav-text">建树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-导入需要的算法库和模块"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.导入需要的算法库和模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-探索数据"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.探索数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-将数据划分为训练集和测试集"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.将数据划分为训练集和测试集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建模三部曲"><span class="nav-number">1.2.</span> <span class="nav-text">建模三部曲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：-实例化"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一步： 实例化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部：-训练模型"><span class="nav-number">1.2.2.</span> <span class="nav-text">第二部： 训练模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：-打分"><span class="nav-number">1.2.3.</span> <span class="nav-text">第三步： 打分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#画图"><span class="nav-number">1.3.</span> <span class="nav-text">画图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型的分值随机变化，那么我们如何获得稳定的模型呢？"><span class="nav-number">1.3.1.</span> <span class="nav-text">模型的分值随机变化，那么我们如何获得稳定的模型呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在模型中加入random-state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter-“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">在模型中加入random_state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter=“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可以说-criterion-用来规定不纯度的计算，random-state和splitter用来控制决策树的随机度"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">可以说 criterion 用来规定不纯度的计算，random_state和splitter用来控制决策树的随机度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后我们对训练集的拟合程度怎么样呢？"><span class="nav-number">1.3.2.</span> <span class="nav-text">最后我们对训练集的拟合程度怎么样呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#因为训练集的精准度在92-，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80-，则考虑模型过拟合。"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#剪枝策略-剪枝参数调优"><span class="nav-number">1.4.</span> <span class="nav-text">剪枝策略-剪枝参数调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#max-depth"><span class="nav-number">1.4.1.</span> <span class="nav-text">max_depth</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-samples-leaf-amp-min-samples-split"><span class="nav-number">1.4.2.</span> <span class="nav-text">min_samples_leaf &amp; min_samples_split</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max-features-amp-min-impurity-decrease"><span class="nav-number">1.4.3.</span> <span class="nav-text">max_features &amp; min_impurity_decrease</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那么如何确定最优的剪枝参数呢？"><span class="nav-number">1.5.</span> <span class="nav-text">那么如何确定最优的剪枝参数呢？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sklearn-DecisionTreeClassifier的基本用法"><span class="nav-number">1.</span> <span class="nav-text">sklearn-DecisionTreeClassifier的基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#决策树的流程"><span class="nav-number">1.0.1.</span> <span class="nav-text">决策树的流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建树"><span class="nav-number">1.1.</span> <span class="nav-text">建树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-导入需要的算法库和模块"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.导入需要的算法库和模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-探索数据"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.探索数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-将数据划分为训练集和测试集"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.将数据划分为训练集和测试集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建模三部曲"><span class="nav-number">1.2.</span> <span class="nav-text">建模三部曲</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步：-实例化"><span class="nav-number">1.2.1.</span> <span class="nav-text">第一步： 实例化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部：-训练模型"><span class="nav-number">1.2.2.</span> <span class="nav-text">第二部： 训练模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步：-打分"><span class="nav-number">1.2.3.</span> <span class="nav-text">第三步： 打分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#画图"><span class="nav-number">1.3.</span> <span class="nav-text">画图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型的分值随机变化，那么我们如何获得稳定的模型呢？"><span class="nav-number">1.3.1.</span> <span class="nav-text">模型的分值随机变化，那么我们如何获得稳定的模型呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在模型中加入random-state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter-“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">在模型中加入random_state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter=“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可以说-criterion-用来规定不纯度的计算，random-state和splitter用来控制决策树的随机度"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">可以说 criterion 用来规定不纯度的计算，random_state和splitter用来控制决策树的随机度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后我们对训练集的拟合程度怎么样呢？"><span class="nav-number">1.3.2.</span> <span class="nav-text">最后我们对训练集的拟合程度怎么样呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#因为训练集的精准度在92-，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80-，则考虑模型过拟合。"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#剪枝策略-剪枝参数调优"><span class="nav-number">1.4.</span> <span class="nav-text">剪枝策略-剪枝参数调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#max-depth"><span class="nav-number">1.4.1.</span> <span class="nav-text">max_depth</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-samples-leaf-amp-min-samples-split"><span class="nav-number">1.4.2.</span> <span class="nav-text">min_samples_leaf &amp; min_samples_split</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max-features-amp-min-impurity-decrease"><span class="nav-number">1.4.3.</span> <span class="nav-text">max_features &amp; min_impurity_decrease</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那么如何确定最优的剪枝参数呢？"><span class="nav-number">1.5.</span> <span class="nav-text">那么如何确定最优的剪枝参数呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要的属性和接口"><span class="nav-number">1.6.</span> <span class="nav-text">重要的属性和接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
