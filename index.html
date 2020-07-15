@@ -273,6 +273,196 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/07/15/sklearn-DecisionTreeRegressor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/15/sklearn-DecisionTreeRegressor/" itemprop="url">sklearn-DecisionTreeRegressor</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-15T13:23:14+08:00">2020-07-15</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="sklearn-DecisionTreeRegressor"><a href="#sklearn-DecisionTreeRegressor" class="headerlink" title="sklearn-DecisionTreeRegressor"></a>sklearn-DecisionTreeRegressor</h1><p>class sklearn.tree.DecisionTreeRegressor (criterion=’mse’, splitter=’best’, max_depth=None,<br>min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features=None,<br>random_state=None, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, presort=False)</p>
+<p>几乎所有参数，属性及接口都和分类树一模一样。需要注意的是，在回归树中，没有标签分布是否均衡的问题(因为回归是连续值)，因</p>
+<h2 id="此没有class-weight这样的参数。"><a href="#此没有class-weight这样的参数。" class="headerlink" title="此没有class_weight这样的参数。"></a>此没有class_weight这样的参数。</h2><h2 id="重要的参数和接口"><a href="#重要的参数和接口" class="headerlink" title="重要的参数和接口"></a>重要的参数和接口</h2><h3 id="criterion"><a href="#criterion" class="headerlink" title="criterion"></a>criterion</h3><p>1）输入<code>mse</code>使用均方误差’mean squared error(MSE)’，父节点和叶子节点之间的均方误差的差额将被用来作为<br>特征选择的标准，这种方法通过使用叶子节点的均值来最小化L2损失</p>
+<p>2）输入<code>friedman_mse</code>使用费尔德曼均方误差，这种指标使用弗里德曼针对潜在分枝中的问题改进后的均方误差</p>
+<p>3）输入<code>mae</code>使用绝对平均误差MAE（mean absolute error），这种指标使用叶节点的中值来最小化L1损失属性中最重要的依然是feature_importances_，接口依然是apply, fit, predict, score最核心。</p>
+<p><strong>在回归树中，MSE不只是我们的分枝质量衡量指标，也是我们最常用的衡量回归树回归质量的指标，当我们在使用交叉验证，或者其他方式获取回归树的结果时，我们往往选择均方误差作<br>为我们的评估（在分类树中这个指标是score代表的预测准确率）。在回归中，我们追求的是，MSE越小越好。</strong></p>
+<h3 id="回归树的工作原理"><a href="#回归树的工作原理" class="headerlink" title="回归树的工作原理"></a>回归树的工作原理</h3><h4 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h4><p>交叉验证是用来观察模型的稳定性的一种方法，我们将数据划分为n份，依次使用其中一份作为测试集，其他n-1份<br>作为训练集，多次计算模型的精确性来评估模型的平均准确程度。训练集和测试集的划分会干扰模型的结果，因此<br>用交叉验证n次的结果求出的平均值，是对模型效果的一个更好的度量。              </p>
+<blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/18265112-d06f5f356ebb4911.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="交叉验证.png">                     </p>
+</blockquote>
+<h4 id="验证模型的泛化性"><a href="#验证模型的泛化性" class="headerlink" title="验证模型的泛化性"></a>验证模型的泛化性</h4><blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_boston                <span class="comment">#波士顿房价数据</span></span><br><span class="line">&gt;<span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score            </span><br><span class="line">&gt;<span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor          </span><br><span class="line">&gt;```                    </span><br><span class="line">&gt;```             </span><br><span class="line">&gt;boston = load_boston()</span><br><span class="line">&gt;```               </span><br><span class="line"></span><br><span class="line"><span class="comment">#### 操作               </span></span><br><span class="line">&gt;```                </span><br><span class="line">&gt;regressor = DecisionTreeRegressor(random_state=<span class="number">0</span>)</span><br><span class="line">&gt;```              </span><br><span class="line">&gt;```                   </span><br><span class="line">&gt;cross_val_score(regressor, boston.data, boston.target, cv=<span class="number">10</span>, scoring = <span class="string">"neg_mean_squared_error"</span>)</span><br><span class="line">&gt;<span class="comment"># 交叉验证</span></span><br><span class="line">&gt;&gt;&gt;&gt;array([<span class="number">-18.08941176</span>, <span class="number">-10.61843137</span>, <span class="number">-16.31843137</span>, <span class="number">-44.97803922</span>,</span><br><span class="line">&gt;&gt;&gt;&gt;       <span class="number">-17.12509804</span>, <span class="number">-49.71509804</span>, <span class="number">-12.9986</span>    , <span class="number">-88.4514</span>    ,</span><br><span class="line">&gt;&gt;&gt;&gt;       <span class="number">-55.7914</span>    , <span class="number">-25.0816</span>    ])</span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br><span class="line">&gt;regressor：模型评估器，可以是决策树也可以是svm等</span><br><span class="line">&gt;boston.data：传入完整数据，不需要划分训练集和数据集</span><br><span class="line">&gt;boston.target：传入完整的标签信息</span><br><span class="line">&gt;cv： 交叉验证的次数，<span class="number">10</span> 代表将数据划分为<span class="number">10</span>份</span><br><span class="line">&gt;scoring：打分标准，一般是“neg_mean_squared_error”，表示“负均方误差”</span><br><span class="line">&gt;默认打分是R方，评估模型标准是R方越接近<span class="number">1</span>越好，而负均方误差是越小越好</span><br><span class="line">&gt;```                </span><br><span class="line">&gt;</span><br><span class="line">---                    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 案例</span></span><br><span class="line">```                  </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np                                    <span class="comment">#生成数据点           </span></span><br><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor       </span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">```               </span><br><span class="line"><span class="comment">### 首先创建一条含有噪声的正弦曲线</span></span><br><span class="line">**思路：先创建一组随机的，分布在<span class="number">0</span>~<span class="number">5</span>上的横坐标轴的取值(x)，然后将这一组值放到sin函 数中去生成纵坐标的值(y)，接着再到y上去添加噪声。**</span><br><span class="line">&gt;```            </span><br><span class="line">&gt;rng = np.random.RandomState(<span class="number">1</span>)               <span class="comment">#np生成随机数种子</span></span><br><span class="line">&gt;```            </span><br><span class="line">&gt;```                      </span><br><span class="line">&gt;rng.rand(<span class="number">10</span>)                                 <span class="comment">#随机生成 10 个 0-1 之间的数</span></span><br><span class="line">&gt;<span class="number">5</span>*rng.rand(<span class="number">80</span>,<span class="number">1</span>)                             <span class="comment">#随机生成 80 行，1 列的数组，因为接口不能使用一维数据</span></span><br><span class="line">&gt;</span><br><span class="line">&gt;&gt;&gt;&gt;array([[<span class="number">6.97578649e-02</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">1.17181043e+00</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">3.08389179e+00</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">4.74508160e+00</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">4.75088060e+00</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">2.78326594e+00</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       .................</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">3.10959684e+00</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">2.15123635e+00</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">4.86901039e+00</span>],</span><br><span class="line">&gt;&gt;&gt;&gt;       [<span class="number">3.38900446e+00</span>]])</span><br><span class="line">&gt;```                  </span><br><span class="line">&gt;```                    </span><br><span class="line">&gt;X = np.sort(<span class="number">5</span> * rng.rand(<span class="number">80</span>,<span class="number">1</span>), axis=<span class="number">0</span>)                    <span class="comment">#按照从小到大的顺序排序</span></span><br><span class="line">&gt;&gt;&gt;&gt;       略</span><br><span class="line">&gt;```               </span><br><span class="line">&gt;```                </span><br><span class="line">&gt;y = np.sin(X).ravel()                         </span><br><span class="line">&gt;<span class="comment">#x是二维数据结构，而y是单标签，所以y只能是一维数据。故向np传入X的数据后，要使用ravel进行降维</span></span><br><span class="line">&gt;```           </span><br><span class="line">&gt;```             </span><br><span class="line">&gt;plt.figure()</span><br><span class="line">&gt;plt.scatter(X, y, s=<span class="number">20</span>, edgecolors=<span class="string">'black'</span>, c=<span class="string">'darkorange'</span>, label=<span class="string">'data'</span>)</span><br><span class="line">&gt;<span class="comment"># 查看散点分布</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/18265112-a332056ace0574ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="散点图.png"></p>
+</blockquote>
+<pre><code>y[::5] += 3 * (0.5 - rng.rand(16))      
+#y值所有行列，每5个取一个点，得到16个点。因为 .rand() 给出的数是1-0.5，用0.5-rng.rand()得到-0.5~0.5之间，再把数字扩大3倍，生成噪点</code></pre><pre><code>plt.figure()
+plt.scatter(X, y, s=20, edgecolors=&apos;black&apos;, c=&apos;darkorange&apos;, label=&apos;data&apos;)
+# 查看散点分布</code></pre><blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/18265112-2c5f8eb325835320.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="散点图_噪点.png">             </p>
+</blockquote>
+</blockquote>
+<p><strong>数据构造完毕</strong>           </p>
+<h3 id="构造模型"><a href="#构造模型" class="headerlink" title="构造模型"></a>构造模型</h3><blockquote>
+<pre><code>regr_1 = DecisionTreeRegressor(max_depth=2)                  #限制最大深度为2
+regr_2 = DecisionTreeRegressor(max_depth=5)                  #限制最大深度为5
+regr_1.fit(X, y)                                             #训练模型
+regr_2.fit(X, y)
+
+&gt;&gt;&gt;DecisionTreeRegressor(max_depth=5)</code></pre><pre><code>X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]            
+#导入测试集，np.arrange(开始点，结束点，步长) 生成有序数组的函数
+#np.newaxis 用来增维，放在切片后面。如果放在切片前面就会转置
+y_1 = regr_1.predict(X_test)
+y_2 = regr_2.predict(X_test)</code></pre></blockquote>
+<h3 id="绘制图像"><a href="#绘制图像" class="headerlink" title="绘制图像"></a>绘制图像</h3><blockquote>
+<pre><code>plt.figure()
+plt.scatter(X, y, s=20, edgecolor=&quot;black&quot;,c=&quot;darkorange&quot;, label=&quot;data&quot;)          #边框黑色，三点为深橘色，标签是“data”
+plt.plot(X_test, y_1, color=&quot;cornflowerblue&quot;,label=&quot;max_depth=2&quot;, linewidth=2)   
+plt.plot(X_test, y_2, color=&quot;yellowgreen&quot;, label=&quot;max_depth=5&quot;, linewidth=2)
+plt.xlabel(&quot;data&quot;)
+plt.ylabel(&quot;target&quot;)
+plt.title(&quot;Decision Tree Regression&quot;)
+plt.legend()
+plt.show()
+</code></pre><blockquote>
+<blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/18265112-c529db84bb9c0d1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="回归图最终图像.png"><br><strong>如果树的最大深度（由max_depth参数控制） 设置得太高，则决策树学习得太精细，它从训练数据中学了很多细节，包括噪声得呈现，从而使模型偏离真实的正 弦曲线，形成过拟合</strong></p>
+</blockquote>
+</blockquote>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/07/14/将excel表格批量整合/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1872,7 +2062,7 @@ clf.predict(Xtest)
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
