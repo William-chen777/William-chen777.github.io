@@ -8,21 +8,21 @@
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
   <title>sklearn-DecisionTreeClassifier | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
+  <meta name="description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支">
 <meta name="keywords" content="sklearn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sklearn-DecisionTreeClassifier">
 <meta property="og:url" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
+<meta property="og:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2020071415511693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200714155232534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:updated_time" content="2020-07-14T14:56:06.026Z">
+<meta property="og:updated_time" content="2020-07-15T07:46:19.915Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sklearn-DecisionTreeClassifier">
-<meta name="twitter:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支  DecisionTreeClassifier的核心参数：criterion   为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指">
+<meta name="twitter:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
@@ -176,6 +176,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="sklearn-DecisionTreeClassifier的基本用法"><a href="#sklearn-DecisionTreeClassifier的基本用法" class="headerlink" title="sklearn-DecisionTreeClassifier的基本用法"></a>sklearn-DecisionTreeClassifier的基本用法</h1><h3 id="决策树的流程"><a href="#决策树的流程" class="headerlink" title="决策树的流程"></a>决策树的流程</h3><p>计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支</p>
+<a id="more"></a>  
+
 <blockquote>
 <p>DecisionTreeClassifier的核心参数：<code>criterion</code> </p>
 <blockquote>
@@ -595,11 +597,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Matplotlib</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Matplotlib</a>
+                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -607,11 +609,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">sklearn</a>
+                <a href="javascript:void(0)" class="js-tag color1">日常小程序</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">日常小程序</a>
+                <a href="javascript:void(0)" class="js-tag color3">sklearn</a>
               </li>
             
             <div class="clearfix"></div>

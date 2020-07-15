@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
   <title>Python简单处理Excel的方法 | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简单梳理一下Python简单处理Excel的步骤和方法1.检查当前工作路径2.导入openpyxl模块3.调用openpyxl.load_workbook()函数，以打开工作簿4.通过xx.worksheets[n] 取得工作表     123456789&amp;gt;&amp;gt;import os                                           #导入os模块&amp;gt;">
+  <meta name="description" content="用python简单处理excel">
 <meta name="keywords" content="Excel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python简单处理Excel的方法">
 <meta property="og:url" content="https://william-chen777.github.io/2020/04/06/Python简单处理Excel的方法/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="简单梳理一下Python简单处理Excel的步骤和方法1.检查当前工作路径2.导入openpyxl模块3.调用openpyxl.load_workbook()函数，以打开工作簿4.通过xx.worksheets[n] 取得工作表     123456789&amp;gt;&amp;gt;import os                                           #导入os模块&amp;gt;">
+<meta property="og:description" content="用python简单处理excel">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-14T14:55:43.637Z">
+<meta property="og:updated_time" content="2020-07-15T07:45:50.531Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python简单处理Excel的方法">
-<meta name="twitter:description" content="简单梳理一下Python简单处理Excel的步骤和方法1.检查当前工作路径2.导入openpyxl模块3.调用openpyxl.load_workbook()函数，以打开工作簿4.通过xx.worksheets[n] 取得工作表     123456789&amp;gt;&amp;gt;import os                                           #导入os模块&amp;gt;">
+<meta name="twitter:description" content="用python简单处理excel">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
   
@@ -171,7 +171,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <blockquote>
+        <h1 id="用python简单处理excel"><a href="#用python简单处理excel" class="headerlink" title="用python简单处理excel"></a>用python简单处理excel</h1><a id="more"></a>
+
+<blockquote>
 <p>简单梳理一下Python简单处理Excel的步骤和方法<br>1.检查当前工作路径<br>2.导入openpyxl模块<br>3.调用openpyxl.load_workbook()函数，以打开工作簿<br>4.通过xx.worksheets[n] 取得工作表   </p>
 <blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;import os                                           #导入os模块</span><br><span class="line">&gt;&gt;print(os.getcwd())                                  #显示当前工作模块</span><br><span class="line">&gt;&gt;os.chdir(&quot;E:\\untitled\\exercise&quot;)                  #更改当前工作模块</span><br><span class="line">&gt;&gt;</span><br><span class="line">&gt;&gt;import openpyxl                                     #导入openpyxl模块</span><br><span class="line">&gt;&gt;print(&apos;Opening workbook...&apos;)</span><br><span class="line">&gt;&gt;wb = openpyxl.load_workbook(&apos;censuspopdata.xlsx&apos;)   #打开工作簿</span><br><span class="line">&gt;&gt;sheet = wb.worksheets[0]                            #取得工作表</span><br><span class="line">&gt;&gt;</span><br></pre></td></tr></table></figure>
@@ -438,11 +440,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Matplotlib</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Matplotlib</a>
+                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -450,11 +452,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">sklearn</a>
+                <a href="javascript:void(0)" class="js-tag color1">日常小程序</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">日常小程序</a>
+                <a href="javascript:void(0)" class="js-tag color3">sklearn</a>
               </li>
             
             <div class="clearfix"></div>

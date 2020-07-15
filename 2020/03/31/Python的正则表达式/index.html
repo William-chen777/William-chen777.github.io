@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
   <title>Python的正则表达式 | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="虽然在 Python 中使用正则表达式有几个步骤，但是每一步都相当简单  用 import re 导入正则表达式模块 用 re.compile()函数创建一个Regex对象（原始字符） 向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象 调用Match对象的group()方法,返回实际匹配文本的字符串 举例说明： 12345&amp;gt;&amp;gt;phone_numb">
+  <meta name="description" content="虽然在 Python 中使用正则表达式有几个步骤，但是每一步都相当简单  用 import re 导入正则表达式模块 用 re.compile()函数创建一个Regex对象（原始字符） 向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象 调用Match对象的group()方法,返回实际匹配文本的字符串 举例说明： phone_number_regex = re">
 <meta name="keywords" content="正则表达式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python的正则表达式">
 <meta property="og:url" content="https://william-chen777.github.io/2020/03/31/Python的正则表达式/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="虽然在 Python 中使用正则表达式有几个步骤，但是每一步都相当简单  用 import re 导入正则表达式模块 用 re.compile()函数创建一个Regex对象（原始字符） 向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象 调用Match对象的group()方法,返回实际匹配文本的字符串 举例说明： 12345&amp;gt;&amp;gt;phone_numb">
+<meta property="og:description" content="虽然在 Python 中使用正则表达式有几个步骤，但是每一步都相当简单  用 import re 导入正则表达式模块 用 re.compile()函数创建一个Regex对象（原始字符） 向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象 调用Match对象的group()方法,返回实际匹配文本的字符串 举例说明： phone_number_regex = re">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-14T14:55:23.251Z">
+<meta property="og:updated_time" content="2020-07-15T07:45:03.756Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python的正则表达式">
-<meta name="twitter:description" content="虽然在 Python 中使用正则表达式有几个步骤，但是每一步都相当简单  用 import re 导入正则表达式模块 用 re.compile()函数创建一个Regex对象（原始字符） 向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象 调用Match对象的group()方法,返回实际匹配文本的字符串 举例说明： 12345&amp;gt;&amp;gt;phone_numb">
+<meta name="twitter:description" content="虽然在 Python 中使用正则表达式有几个步骤，但是每一步都相当简单  用 import re 导入正则表达式模块 用 re.compile()函数创建一个Regex对象（原始字符） 向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象 调用Match对象的group()方法,返回实际匹配文本的字符串 举例说明： phone_number_regex = re">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
   
@@ -179,12 +179,16 @@
 <li>向Regex对象的search()方法传入想要查找的字符串，它将返回一个Match对象</li>
 <li>调用Match对象的group()方法,返回实际匹配文本的字符串<blockquote>
 <p>举例说明：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;phone_number_regex = re.compile(r&apos;\d\d\d-\d\d\d-\d\d\d\d&apos;)</span><br><span class="line">&gt;&gt;mo = phone_number_regex.search(&apos;My number is 415-555-5555.&apos;)</span><br><span class="line">&gt;&gt;print (&apos;Phone number found: &apos; + mo.group())</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;Phone number found: 415-555-5555</span><br><span class="line">&gt;&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
+<pre><code>phone_number_regex = re.compile(r&apos;\d\d\d-\d\d\d-\d\d\d\d&apos;)
+mo = phone_number_regex.search(&apos;My number is 415-555-5555.&apos;)
+print (&apos;Phone number found: &apos; + mo.group())
+&gt;&gt;&gt;Phone number found: 415-555-5555</code></pre></blockquote>
 </li>
 </ol>
 </blockquote>
 <hr>
+<a id="more"></a>
+
 <p>###正则表达式的符号</p>
 <blockquote>
 <ol>
@@ -547,11 +551,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Matplotlib</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Matplotlib</a>
+                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -559,11 +563,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">sklearn</a>
+                <a href="javascript:void(0)" class="js-tag color1">日常小程序</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">日常小程序</a>
+                <a href="javascript:void(0)" class="js-tag color3">sklearn</a>
               </li>
             
             <div class="clearfix"></div>

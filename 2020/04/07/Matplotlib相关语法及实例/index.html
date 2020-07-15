@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
   <title>Matplotlib相关语法及实例 | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="###Matplotlib——折线图=     基本步骤整理总结·绘制折线图(plt.plot)·设置图片的大小和分辨率(plt.figure)·实现图片的保存(plt.savefig)·设置xy轴上的刻度和字符串(xticks)·解决刻度稀疏和密集的问题(xticks)·设置标题,xy轴的lable(title,xlable,ylable)·设置字体(font_manager. fontProp">
+  <meta name="description" content="Matplotlib——折线图  基本步骤整理总结·绘制折线图(plt.plot)·设置图片的大小和分辨率(plt.figure)·实现图片的保存(plt.savefig)·设置xy轴上的刻度和字符串(xticks)·解决刻度稀疏和密集的问题(xticks)·设置标题,xy轴的lable(title,xlable,ylable)·设置字体(font_manager. fontProperties,">
 <meta name="keywords" content="Matplotlib">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Matplotlib相关语法及实例">
 <meta property="og:url" content="https://william-chen777.github.io/2020/04/07/Matplotlib相关语法及实例/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="###Matplotlib——折线图=     基本步骤整理总结·绘制折线图(plt.plot)·设置图片的大小和分辨率(plt.figure)·实现图片的保存(plt.savefig)·设置xy轴上的刻度和字符串(xticks)·解决刻度稀疏和密集的问题(xticks)·设置标题,xy轴的lable(title,xlable,ylable)·设置字体(font_manager. fontProp">
+<meta property="og:description" content="Matplotlib——折线图  基本步骤整理总结·绘制折线图(plt.plot)·设置图片的大小和分辨率(plt.figure)·实现图片的保存(plt.savefig)·设置xy轴上的刻度和字符串(xticks)·解决刻度稀疏和密集的问题(xticks)·设置标题,xy轴的lable(title,xlable,ylable)·设置字体(font_manager. fontProperties,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-14T14:54:37.385Z">
+<meta property="og:updated_time" content="2020-07-15T07:44:34.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Matplotlib相关语法及实例">
-<meta name="twitter:description" content="###Matplotlib——折线图=     基本步骤整理总结·绘制折线图(plt.plot)·设置图片的大小和分辨率(plt.figure)·实现图片的保存(plt.savefig)·设置xy轴上的刻度和字符串(xticks)·解决刻度稀疏和密集的问题(xticks)·设置标题,xy轴的lable(title,xlable,ylable)·设置字体(font_manager. fontProp">
+<meta name="twitter:description" content="Matplotlib——折线图  基本步骤整理总结·绘制折线图(plt.plot)·设置图片的大小和分辨率(plt.figure)·实现图片的保存(plt.savefig)·设置xy轴上的刻度和字符串(xticks)·解决刻度稀疏和密集的问题(xticks)·设置标题,xy轴的lable(title,xlable,ylable)·设置字体(font_manager. fontProperties,">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
   
@@ -171,12 +171,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>###Matplotlib——折线图<br>=   </p>
+        <h3 id="Matplotlib——折线图"><a href="#Matplotlib——折线图" class="headerlink" title="Matplotlib——折线图"></a>Matplotlib——折线图</h3><hr>
 <blockquote>
-<p>基本步骤整理总结<br>·绘制折线图(plt.plot)<br>·设置图片的大小和分辨率(plt.figure)<br>·实现图片的保存(plt.savefig)<br>·设置xy轴上的刻度和字符串(xticks)<br>·解决刻度稀疏和密集的问题(xticks)<br>·设置标题,xy轴的lable(title,xlable,ylable)<br>·设置字体(font_manager. fontProperties,matplotlib.rc)，在此仅用简单的两行代码实现<br>·在一个图上绘制多个图形(plt多次plot即可)<br>·为不同的图形添加图例</p>
+<p>基本步骤整理总结<br>·绘制折线图(plt.plot)<br>·设置图片的大小和分辨率(plt.figure)<br>·实现图片的保存(plt.savefig)<br>·设置xy轴上的刻度和字符串(xticks)<br>·解决刻度稀疏和密集的问题(xticks)<br>·设置标题,xy轴的lable(title,xlable,ylable)<br>·设置字体(font_manager. fontProperties,matplotlib.rc)，在此仅用简单的两行代码实现<br>·在一个图上绘制多个图形(plt多次plot即可)<br>·为不同的图形添加图例  </p>
 </blockquote>
 <hr>
-<h2 id="1-导入模块并命名"><a href="#1-导入模块并命名" class="headerlink" title="1.导入模块并命名"></a>1.导入模块并命名</h2><blockquote>
+<a id="more"></a>  
+
+<h2 id="1-导入模块并命名"><a href="#1-导入模块并命名" class="headerlink" title="1.导入模块并命名  "></a>1.导入模块并命名  </h2><blockquote>
 <p><code>from matplotlib import pyplot as plt</code>   </p>
 </blockquote>
 <h2 id="2-解决中文报错及无法显示的问题"><a href="#2-解决中文报错及无法显示的问题" class="headerlink" title="2.解决中文报错及无法显示的问题"></a>2.解决中文报错及无法显示的问题</h2><blockquote>
@@ -497,11 +499,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
+                <a href="javascript:void(0)" class="js-tag color1">Matplotlib</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Matplotlib</a>
+                <a href="javascript:void(0)" class="js-tag color1">正则表达式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -509,11 +511,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">sklearn</a>
+                <a href="javascript:void(0)" class="js-tag color1">日常小程序</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">日常小程序</a>
+                <a href="javascript:void(0)" class="js-tag color3">sklearn</a>
               </li>
             
             <div class="clearfix"></div>
