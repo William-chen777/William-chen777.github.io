@@ -6,19 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
-  <title>我的第一篇博客文章 | William Chen</title>
+  <title>实战：泰坦尼克号幸存者预测 | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="创建了自己的blog，希望能在这里记录下我学到的点点滴滴，分享我的经验。 -END">
+  <meta name="description" content="泰坦尼克号幸存者预测泰坦尼克号的沉没是世界上最严重额海难事故之一，我们通过分类树模型来预测一下哪些人可能成为幸存者。">
+<meta name="keywords" content="DecisionTree">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的第一篇博客文章">
-<meta property="og:url" content="https://william-chen777.github.io/2019/09/05/我的第一篇博客文章/index.html">
+<meta property="og:title" content="实战：泰坦尼克号幸存者预测">
+<meta property="og:url" content="https://william-chen777.github.io/2020/07/18/实战：泰坦尼克号幸存者预测/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="创建了自己的blog，希望能在这里记录下我学到的点点滴滴，分享我的经验。 -END">
+<meta property="og:description" content="泰坦尼克号幸存者预测泰坦尼克号的沉没是世界上最严重额海难事故之一，我们通过分类树模型来预测一下哪些人可能成为幸存者。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-31T06:19:37.929Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718123802571.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718123859957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718123931457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124011102.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124048644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124116800.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124154493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124229177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124306944.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-07-18T04:43:17.503Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的第一篇博客文章">
-<meta name="twitter:description" content="创建了自己的blog，希望能在这里记录下我学到的点点滴滴，分享我的经验。 -END">
+<meta name="twitter:title" content="实战：泰坦尼克号幸存者预测">
+<meta name="twitter:description" content="泰坦尼克号幸存者预测泰坦尼克号的沉没是世界上最严重额海难事故之一，我们通过分类树模型来预测一下哪些人可能成为幸存者。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200718123802571.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
   
@@ -156,14 +167,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-我的第一篇博客文章" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-实战：泰坦尼克号幸存者预测" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      我的第一篇博客文章
+      实战：泰坦尼克号幸存者预测
     </h1>
   
 
@@ -179,16 +190,187 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2019/09/05/我的第一篇博客文章/" class="archive-article-date">
-  	<time datetime="2019-09-05T04:50:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-05</time>
+        <a href="/2020/07/18/实战：泰坦尼克号幸存者预测/" class="archive-article-date">
+  	<time datetime="2020-07-18T03:28:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>创建了自己的blog，希望能在这里记录下我学到的点点滴滴，分享我的经验。</p>
-<p>-END</p>
+        <h1 id="泰坦尼克号幸存者预测"><a href="#泰坦尼克号幸存者预测" class="headerlink" title="泰坦尼克号幸存者预测"></a>泰坦尼克号幸存者预测</h1><p>泰坦尼克号的沉没是世界上最严重额海难事故之一，我们通过分类树模型来预测一下哪些人可能成为幸存者。</p>
+<a id="more"></a>   
+
+<pre><code>import pandas as pd 
+from sklearn.tree import DecisionTreeClassifier
+import matplotlib.pyplot as plt
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score</code></pre><h2 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h2><blockquote>
+<pre><code>data = pd.read_csv(r&quot;E:\machineLearning\cai\decisiontree\data.csv&quot;)          
+data            </code></pre><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718123802571.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">   </p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="探索数据"><a href="#探索数据" class="headerlink" title="探索数据"></a>探索数据</h2><blockquote>
+<p><code>data.info()</code>                            #探索数据,查看数据信息    </p>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718123859957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">        </p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p><code>data.head(10)</code>                           #展示前10行，默认为5                </p>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718123931457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">       </p>
+</blockquote>
+</blockquote>
+<blockquote>
+<pre><code>data.drop([&apos;Cabin&apos;, &apos;Name&apos;, &apos;Ticket&apos;], inplace=True, axis=1)        
+#筛选特征，删除不需要的特征， inplace= true 表示用删除后的表覆盖原表, axis 表示轴向，axis=1表示列，0表示行          
+#等价于 data = data.drop([&apos;Cabin&apos;, &apos;Name&apos;, &apos;Ticket&apos;])       
+
+data     </code></pre><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718124011102.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</blockquote>
+</blockquote>
+<hr>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><blockquote>
+<pre><code>data[&quot;Age&quot;] = data[&quot;Age&quot;].fillna(data[&quot;Age&quot;].mean())        
+#处理缺失值,用均值填补
+
+data = data.dropna(axis=0)
+#删除有缺失值的行
+</code></pre><pre><code>data[&quot;Embarked&quot;].unique()      #提取“Embarked”的类型，即去重后返回          
+&gt;&gt;array([&apos;S&apos;, &apos;C&apos;, &apos;Q&apos;], dtype=object)            </code></pre><pre><code>labels = data[&quot;Embarked&quot;].unique().tolist()       #将数组转换成列表          </code></pre><pre><code>data[&quot;Embarked&quot;] = data[&quot;Embarked&quot;].apply(lambda x:labels.index(x))         
+#将列表的元素转换成其索引值， S--&gt;0 , C--&gt;1 , Q--&gt;2</code></pre><pre><code>data[&quot;Sex&quot;] == &quot;male&quot;   
+#判断    
+
+&gt;&gt;0       True
+ 1      False
+ 2      False
+ 3      False
+ 4       True
+        ...  
+ 886     True
+ 887    False
+ 888    False
+ 889     True
+ 890     True
+ Name: Sex, Length: 889, dtype: bool               </code></pre><pre><code>data[&quot;Sex&quot;] = (data[&quot;Sex&quot;] == &quot;male&quot;).astype(&quot;int&quot;)            
+#将True和False的布尔值,转换成1/0</code></pre><p><strong>特征筛选完毕，非数值型特征已经转换成数值</strong>    </p>
+</blockquote>
+<hr>
+<blockquote>
+<pre><code>x = data.iloc[:,data.columns != &quot;Survived&quot;]  
+#取出所有行，和不包括“Survived”的列        </code></pre><pre><code>y = data.iloc[:,data.columns == &quot;Survived&quot;]  </code></pre><pre><code>Xtrain, Xtest, Ytrain, Ytest = train_test_split(x, y, test_size=0.3)
+Xtrain.shape                #确认数据为70%
+
+&gt;&gt;&gt;(622, 8)</code></pre><pre><code>Xtrain                     #发现索引打乱</code></pre><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718124048644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">     </p>
+</blockquote>
+<pre><code>Xtrain.index = range(Xtrain.shape[0])
+#Xtrain.shape 返回（622，8），所以Xtrain.shape[0]是622，故而range(622)为0-621的整数
+
+for i in [Xtrain, Xtest, Ytrain, Ytest]:
+   i.index = range(i.shape[0])
+</code></pre><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718124116800.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>特征与标签分离完毕，数据构造完成</strong>    </p>
+</blockquote>
+</blockquote>
+<hr>
+<hr>
+<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><blockquote>
+<pre><code>clf = DecisionTreeClassifier(random_state= 25)
+clf = clf.fit(Xtrain, Ytrain)
+score = clf.score(Xtest, Ytest)
+
+score
+&gt;&gt;&gt;0.7340823970037453</code></pre><p><strong>打分不高，用交叉验证尝试提高模型准确度</strong>     </p>
+<pre><code>clf = DecisionTreeClassifier(random_state= 25)
+score = cross_val_score(clf,x,y,cv=10).mean()
+
+score
+&gt;&gt;&gt;0.7469611848825333</code></pre><p><strong>发现分值依旧偏低，尝试通过剪枝提高分值。做学习曲线，探索max_depth的最优值</strong>     </p>
+<pre><code>tr=[]
+te=[]
+
+for i in range(10):
+   clf = DecisionTreeClassifier(random_state=25
+                               ,max_depth=i+1
+                               )
+   clf = clf.fit(Xtrain, Ytrain)
+   score_tr = clf.score(Xtrain, Ytrain)
+   score_te = cross_val_score(clf, x, y, cv=10).mean()
+   tr.append(score_tr)
+   te.append(score_te)
+
+print(max(te))
+&gt;&gt;&gt;0.8143896833503576
+
+plt.plot(range(1,11), tr, color=&quot;red&quot;, label=&quot;train&quot;)
+plt.plot(range(1,11), te, color=&quot;blue&quot;, label=&quot;test&quot;)                
+plt.xticks(range(1,11))
+plt.legend()
+plt.show()
+#如果在训练集上表现的很好，在测试集上表现的很糟糕，说明过拟合；如果在测试集上表现的很好，在训练集上表现的很不好，说明模型欠拟合   </code></pre><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718124154493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">      </p>
+</blockquote>
+<p><strong>随着<code>max_depth</code>的加深，训练集的拟合程度越来越深，出现过拟合现象，所以当且仅当max_depth=3时，可能通过调参获取最优模型</strong></p>
+<pre><code>tr=[]
+te=[]
+
+for i in range(10):
+   clf = DecisionTreeClassifier(random_state=25
+                               ,max_depth=i+1
+                               ,criterion=&quot;entropy&quot;)           #将基尼系数改为信息熵，当模型欠拟合时会采用这一参数
+   clf = clf.fit(Xtrain, Ytrain)
+   score_tr = clf.score(Xtrain, Ytrain)
+   score_te = cross_val_score(clf, x, y, cv=10).mean()
+   tr.append(score_tr)
+   te.append(score_te)
+
+print(max(te))
+&gt;&gt;&gt;0.8166624106230849
+
+
+plt.plot(range(1,11), tr, color=&quot;red&quot;, label=&quot;train&quot;)
+plt.plot(range(1,11), te, color=&quot;blue&quot;, label=&quot;test&quot;)                
+plt.xticks(range(1,11))
+plt.legend()
+plt.show()</code></pre><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718124229177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">      </p>
+</blockquote>
+</blockquote>
+<hr>
+<hr>
+<h2 id="网格搜索，确定最优参数"><a href="#网格搜索，确定最优参数" class="headerlink" title="网格搜索，确定最优参数"></a>网格搜索，确定最优参数</h2><p>能够帮我们同时调整多个参数，本质上是枚举             </p>
+<blockquote>
+<pre><code>import numpy as np
+gini_thresholds = np.linspace(0,0.5,20)#在0~0.5有顺序且等间隔的取50个值
+
+parameters = {&apos;splitter&apos;:(&apos;best&apos;,&apos;random&apos;)
+,&apos;criterion&apos;:(&quot;gini&quot;,&quot;entropy&quot;)
+,&quot;max_depth&quot;:[*range(1,10)]
+,&apos;min_samples_leaf&apos;:[*range(1,50,5)]
+,&apos;min_impurity_decrease&apos;:[*np.linspace(0,0.5,20)]          #信息增益最小值，当小于这个值的时候就不再分支
+}
+clf = DecisionTreeClassifier(random_state=25)
+GS = GridSearchCV(clf, parameters, cv=10)                  #parameters是参数及其取值的字典
+GS.fit(Xtrain,Ytrain)</code></pre><blockquote>
+<p><img src="https://img-blog.csdnimg.cn/20200718124306944.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">    </p>
+</blockquote>
+<pre><code>GS.best_params_        #从我们输入的参数和参数取值的列表中，返回最佳组合
+&gt;&gt;&gt;{&apos;criterion&apos;: &apos;entropy&apos;,
+  &apos;max_depth&apos;: 6,
+  &apos;min_impurity_decrease&apos;: 0.0,
+  &apos;min_samples_leaf&apos;: 1,
+  &apos;splitter&apos;: &apos;random&apos;}
+
+
+GS.best_score_
+&gt;&gt;&gt;0.8183307731694829
+</code></pre></blockquote>
 
       
 
@@ -218,7 +400,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DecisionTree</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/sklearn//" class="article-tag-list-link color3">sklearn</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -268,7 +472,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2019/09/05/我的第一篇博客文章/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2020/07/18/实战：泰坦尼克号幸存者预测/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -282,15 +486,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/03/31/Python的正则表达式/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Python的正则表达式
-        
-      </div>
-    </a>
   
+    <a href="/2020/07/15/sklearn-DecisionTreeRegressor/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">sklearn-DecisionTreeRegressor</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -315,7 +515,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#泰坦尼克号幸存者预测"><span class="toc-number">1.</span> <span class="toc-text">泰坦尼克号幸存者预测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#读取数据"><span class="toc-number">1.1.</span> <span class="toc-text">读取数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#探索数据"><span class="toc-number">1.2.</span> <span class="toc-text">探索数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据预处理"><span class="toc-number">1.3.</span> <span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建模"><span class="toc-number">1.4.</span> <span class="toc-text">建模</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网格搜索，确定最优参数"><span class="toc-number">1.5.</span> <span class="toc-text">网格搜索，确定最优参数</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
