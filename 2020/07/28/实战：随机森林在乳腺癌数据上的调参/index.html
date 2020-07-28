@@ -6,24 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
-  <title>sklearn-DecisionTreeClassifier | William Chen</title>
+  <title>实战：随机森林在乳腺癌数据上的调参 | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支">
-<meta name="keywords" content="DecisionTree">
+  <meta name="description" content="实战：随机森林在乳腺癌数据上的调参基于方差和偏差的调参方法，在乳腺癌数据上进行一次随机森林的调参。乳腺癌数据是sklearn自带的分类数据之一。">
+<meta name="keywords" content="RandomForest">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sklearn-DecisionTreeClassifier">
-<meta property="og:url" content="https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/index.html">
+<meta property="og:title" content="实战：随机森林在乳腺癌数据上的调参">
+<meta property="og:url" content="https://william-chen777.github.io/2020/07/28/实战：随机森林在乳腺癌数据上的调参/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支">
+<meta property="og:description" content="实战：随机森林在乳腺癌数据上的调参基于方差和偏差的调参方法，在乳腺癌数据上进行一次随机森林的调参。乳腺癌数据是sklearn自带的分类数据之一。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020071415511693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200714155232534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:updated_time" content="2020-07-18T03:30:13.500Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200728162838544.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200728162849740.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-07-28T08:30:37.487Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sklearn-DecisionTreeClassifier">
-<meta name="twitter:description" content="sklearn-DecisionTreeClassifier的基本用法决策树的流程计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta name="twitter:title" content="实战：随机森林在乳腺癌数据上的调参">
+<meta name="twitter:description" content="实战：随机森林在乳腺癌数据上的调参基于方差和偏差的调参方法，在乳腺癌数据上进行一次随机森林的调参。乳腺癌数据是sklearn自带的分类数据之一。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200728162838544.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
   
@@ -161,14 +160,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-sklearn-DecisionTreeClassifier" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-实战：随机森林在乳腺癌数据上的调参" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      sklearn-DecisionTreeClassifier
+      实战：随机森林在乳腺癌数据上的调参
     </h1>
   
 
@@ -184,184 +183,175 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2020/07/14/sklearn-DecisionTreeClassifier/" class="archive-article-date">
-  	<time datetime="2020-07-14T02:16:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-14</time>
+        <a href="/2020/07/28/实战：随机森林在乳腺癌数据上的调参/" class="archive-article-date">
+  	<time datetime="2020-07-28T08:25:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="sklearn-DecisionTreeClassifier的基本用法"><a href="#sklearn-DecisionTreeClassifier的基本用法" class="headerlink" title="sklearn-DecisionTreeClassifier的基本用法"></a>sklearn-DecisionTreeClassifier的基本用法</h1><h3 id="决策树的流程"><a href="#决策树的流程" class="headerlink" title="决策树的流程"></a>决策树的流程</h3><p>计算全部特征的不纯度，选取不纯度指标最优的特征来分支，在第一个特征的分支下，计算全部特征的不纯度指标，选取不纯度指标最优的特征继续分支</p>
-<a id="more"></a>  
+        <h1 id="实战：随机森林在乳腺癌数据上的调参"><a href="#实战：随机森林在乳腺癌数据上的调参" class="headerlink" title="实战：随机森林在乳腺癌数据上的调参"></a>实战：随机森林在乳腺癌数据上的调参</h1><p>基于方差和偏差的调参方法，在乳腺癌数据上进行一次随机森林的调参。乳腺癌数据是sklearn自带的分类数据之一。</p>
+<a id="more"></a>
 
-<blockquote>
-<p>DecisionTreeClassifier的核心参数：<code>criterion</code> </p>
-<blockquote>
-<p>为了要将表格转化为一棵树，决策树需要找出最佳节点和最佳的分枝方法，对分类树来说，衡量这个“最佳”的指标<br>叫做“不纯度”。通常来说，不纯度越低，决策树对训练集的拟合越好。现在使用的决策树算法在分枝方法上的核心<br>大多是围绕在对某个不纯度相关指标的最优化上。</p>
-</blockquote>
-<ul>
-<li><code>entropy</code>   信息熵</li>
-<li><code>gini</code>      基尼系数    </li>
-</ul>
-</blockquote>
-<hr>
-<h2 id="建树"><a href="#建树" class="headerlink" title="建树"></a>建树</h2><h3 id="1-导入需要的算法库和模块"><a href="#1-导入需要的算法库和模块" class="headerlink" title="1.导入需要的算法库和模块"></a>1.导入需要的算法库和模块</h3><blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">from</span> sklearn <span class="keyword">import</span> tree    </span><br><span class="line">&gt;<span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_wine    </span><br><span class="line">&gt;<span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split      </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-</blockquote>
-<h3 id="2-探索数据"><a href="#2-探索数据" class="headerlink" title="2.探索数据"></a>2.探索数据</h3><blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;wine = load_wine()                  #将数据库中的练习数据导入       </span><br><span class="line">&gt;wine.data.shape                     #获取数据结构——178行，13列，即13个特征</span><br><span class="line">&gt;&gt;(178,13)     </span><br><span class="line">&gt;</span><br><span class="line">&gt;</span><br><span class="line">&gt;wine.target                         #因为wine是一个字典，所以我们可以通过键来获取对于的值     </span><br><span class="line">&gt;&gt;array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span><br><span class="line">&gt;       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,</span><br><span class="line">&gt;       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1,</span><br><span class="line">&gt;       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span><br><span class="line">&gt;       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,</span><br><span class="line">&gt;       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2,</span><br><span class="line">&gt;       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,</span><br><span class="line">&gt;       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,</span><br><span class="line">&gt;       2, 2])</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;import pandas as pd</span><br><span class="line">&gt;pd.concat([pd.DataFrame(wine.data), pd.DataFrame(wine.target)], axis=1)        #将数据和标签都传入pd.DataFrame，生成表格,更方便的查看数据结构                              </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200714154939866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述">                    </p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&gt;wine.feature_names                  #查看特征名              </span><br><span class="line">&gt;&gt;[&apos;alcohol&apos;,</span><br><span class="line">&gt; &apos;malic_acid&apos;,</span><br><span class="line">&gt; &apos;ash&apos;,</span><br><span class="line">&gt; &apos;alcalinity_of_ash&apos;,</span><br><span class="line">&gt; &apos;magnesium&apos;,</span><br><span class="line">&gt; &apos;total_phenols&apos;,</span><br><span class="line">&gt; &apos;flavanoids&apos;,</span><br><span class="line">&gt; &apos;nonflavanoid_phenols&apos;,</span><br><span class="line">&gt; &apos;proanthocyanins&apos;,</span><br><span class="line">&gt; &apos;color_intensity&apos;,</span><br><span class="line">&gt; &apos;hue&apos;,</span><br><span class="line">&gt; &apos;od280/od315_of_diluted_wines&apos;,</span><br><span class="line">&gt; &apos;proline&apos;]                </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;wine.targets_names                #查看标签名</span><br><span class="line">&gt;&gt;array([&apos;class_0&apos;, &apos;class_1&apos;, &apos;class_2&apos;], dtype=&apos;&lt;U7&apos;)           </span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="3-将数据划分为训练集和测试集"><a href="#3-将数据划分为训练集和测试集" class="headerlink" title="3.将数据划分为训练集和测试集"></a>3.将数据划分为训练集和测试集</h3><blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;Xtrain,Xtest,Ytrain,Ytest = train_test_split(wine.data, wine.target, test_size=0.3) </span><br><span class="line">&gt;#给出数据和标签，test_size是指30%做测试集，剩下的70%做训练集</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;Xtrain.shape</span><br><span class="line">&gt;&gt;(124, 13)</span><br><span class="line">&gt;</span><br><span class="line">&gt;Xtest.shape</span><br><span class="line">&gt;&gt;(54, 13)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>查看数据结构，确认原始数据已经被分成70%和30%两部分       </p>
-</blockquote>
-<hr>
-<hr>
-<h2 id="建模三部曲"><a href="#建模三部曲" class="headerlink" title="建模三部曲"></a>建模三部曲</h2><h3 id="第一步：-实例化"><a href="#第一步：-实例化" class="headerlink" title="第一步： 实例化"></a>第一步： 实例化</h3><blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;clf = tree.DecisionTreeClassifier(criterion=&quot;entropy&quot;)     #criterion 默认是基尼系数，此处我们选择使用信息熵</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="第二部：-训练模型"><a href="#第二部：-训练模型" class="headerlink" title="第二部： 训练模型"></a>第二部： 训练模型</h3><blockquote>
-<pre><code>clf = clf.fit(Xtrain, Ytrain)</code></pre></blockquote>
-<h3 id="第三步：-打分"><a href="#第三步：-打分" class="headerlink" title="第三步： 打分"></a>第三步： 打分</h3><blockquote>
-<pre><code>score = clf.score(Xtest, Ytest)   #用测试集来打分，返回的是一个准确度accuracy                 
+<h2 id="导入需要的库"><a href="#导入需要的库" class="headerlink" title="导入需要的库"></a>导入需要的库</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_breast_cancer</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV                  <span class="comment">#网格搜索</span></span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score               <span class="comment">#交叉验证</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
 
-score                 
-&gt;&gt;0.9259259259259259              #在此处每次打分的结果都可能不一样</code></pre></blockquote>
-<hr>
-<hr>
-<h2 id="画图"><a href="#画图" class="headerlink" title="画图"></a>画图</h2><blockquote>
-<pre><code>feature_name = [&apos;酒精&apos;,&apos;苹果酸&apos;,&apos;灰&apos;,&apos;灰的碱性&apos;,&apos;镁&apos;,&apos;总酚&apos;,&apos;类黄酮&apos;,&apos;非黄烷类酚类&apos;,&apos;花青素&apos;,&apos;颜色强度&apos;,&apos;色调&apos;,&apos;od280/od315稀释葡萄酒&apos;,&apos;脯氨酸&apos;]
-import graphviz
-dot_data = tree.export_graphviz(clf, 
-                               feature_names=feature_name, 
-                               class_names=[&apos;琴酒&apos;,&apos;雪莉&apos;, &apos;贝尔摩德&apos;], 
-                               filled=True, 
-                               rounded=True
-)
-#   分别传入模型 clf ；特征名 ； 标签名
-#   filled表示是否填充颜色，不纯度越低，颜色越深
-#   rounded表示方框的圆度</code></pre><pre><code>graph = graphviz.Source(dot_data)
-graph</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/2020071415511693.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述">                          </p>
-</blockquote>
-<p>接下来查看我们感兴趣的数值，并针对性的分析                   </p>
-<pre><code>clf.feature_importances_             #虽然返回了数值，但是看不懂，需要连接前面的特征       
-&gt;&gt;array([0.        , 0.        , 0.        , 0.01424694, 0.        ,
-        0.        , 0.47329119, 0.        , 0.02568071, 0.31227528,
-        0.        , 0.        , 0.17450589])
+<h2 id="导入数据集-amp-探索数据"><a href="#导入数据集-amp-探索数据" class="headerlink" title="导入数据集&amp;探索数据"></a>导入数据集&amp;探索数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = load_breast_cancer()                    <span class="comment">#导入数据库</span></span><br></pre></td></tr></table></figure>
 
-# 此处返回的是特征值的权重</code></pre><pre><code>[*zip(feature_name, clf.feature_importances_)]      #用 *zip 连接特征名和对于数值
-&gt;&gt;[(&apos;酒精&apos;, 0.0),
-(&apos;苹果酸&apos;, 0.0),
-(&apos;灰&apos;, 0.0),
-(&apos;灰的碱性&apos;, 0.01424693586672224),
-(&apos;镁&apos;, 0.0),
-(&apos;总酚&apos;, 0.0),
-(&apos;类黄酮&apos;, 0.4732911864435072),
-(&apos;非黄烷类酚类&apos;, 0.0),
-(&apos;花青素&apos;, 0.02568070945422599),
-(&apos;颜色强度&apos;, 0.31227528031774815),
-(&apos;色调&apos;, 0.0),
-(&apos;od280/od315稀释葡萄酒&apos;, 0.0),
-(&apos;脯氨酸&apos;, 0.17450588791779637)]
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data</span><br></pre></td></tr></table></figure>
 
-可以看到 类黄酮 的数值最高，所以在决策树的顶端作为根结点</code></pre><hr>
-<h3 id="模型的分值随机变化，那么我们如何获得稳定的模型呢？"><a href="#模型的分值随机变化，那么我们如何获得稳定的模型呢？" class="headerlink" title="模型的分值随机变化，那么我们如何获得稳定的模型呢？"></a>模型的分值随机变化，那么我们如何获得稳定的模型呢？</h3><pre><code>clf = tree.DecisionTreeClassifier(criterion=&quot;entropy&quot;,random_state=20)
-clf = clf.fit(Xtrain, Ytrain)
-score = clf.score(Xtest, Ytest)
+<pre><code>{&apos;data&apos;: array([[1.799e+01, 1.038e+01, 1.228e+02, ..., 2.654e-01, 4.601e-01,
+         1.189e-01],
+        [2.057e+01, 1.777e+01, 1.329e+02, ..., 1.860e-01, 2.750e-01,
+         8.902e-02],
+        [1.969e+01, 2.125e+01, 1.300e+02, ..., 2.430e-01, 3.613e-01,
+         8.758e-02],
+        ...,
+        [1.660e+01, 2.808e+01, 1.083e+02, ..., 1.418e-01, 2.218e-01,
+         7.820e-02],
+        [2.060e+01, 2.933e+01, 1.401e+02, ..., 2.650e-01, 4.087e-01,
+         1.240e-01],
+        [7.760e+00, 2.454e+01, 4.792e+01, ..., 0.000e+00, 2.871e-01,
+         7.039e-02]]),
+ &apos;target&apos;: array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+        0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0,
+        1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1,
+        1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0,
+        0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1,
+        1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0,
+        0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0,
+        1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1,
+        1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0,
+        0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
+        0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0,
+        1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1,
+        1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1,
+        1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+        1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1,
+        1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1]),
+ &apos;frame&apos;: None,
+ &apos;target_names&apos;: array([&apos;malignant&apos;, &apos;benign&apos;], dtype=&apos;&lt;U9&apos;),
+ &apos;DESCR&apos;: &apos;.. _breast_cancer_dataset:\n\nBreast cancer wisconsin (diagnostic) dataset\n--------------------------------------------\n\n**Data Set Characteristics:**\n\n    :Number of Instances: 569\n\n    :Number of Attributes: 30 numeric, predictive attributes and the class\n\n    :Attribute Information:\n        - radius (mean of distances from center to points on the perimeter)\n        - texture (standard deviation of gray-scale values)\n        - perimeter\n        - area\n        - smoothness (local variation in radius lengths)\n        - compactness (perimeter^2 / area - 1.0)\n        - concavity (severity of concave portions of the contour)\n        - concave points (number of concave portions of the contour)\n        - symmetry\n        - fractal dimension (&quot;coastline approximation&quot; - 1)\n\n        The mean, standard error, and &quot;worst&quot; or largest (mean of the three\n        worst/largest values) of these features were computed for each image,\n        resulting in 30 features.  For instance, field 0 is Mean Radius, field\n        10 is Radius SE, field 20 is Worst Radius.\n\n        - class:\n                - WDBC-Malignant\n                - WDBC-Benign\n\n    :Summary Statistics:\n\n    ===================================== ====== ======\n                                           Min    Max\n    ===================================== ====== ======\n    radius (mean):                        6.981  28.11\n    texture (mean):                       9.71   39.28\n    perimeter (mean):                     43.79  188.5\n    area (mean):                          143.5  2501.0\n    smoothness (mean):                    0.053  0.163\n    compactness (mean):                   0.019  0.345\n    concavity (mean):                     0.0    0.427\n    concave points (mean):                0.0    0.201\n    symmetry (mean):                      0.106  0.304\n    fractal dimension (mean):             0.05   0.097\n    radius (standard error):              0.112  2.873\n    texture (standard error):             0.36   4.885\n    perimeter (standard error):           0.757  21.98\n    area (standard error):                6.802  542.2\n    smoothness (standard error):          0.002  0.031\n    compactness (standard error):         0.002  0.135\n    concavity (standard error):           0.0    0.396\n    concave points (standard error):      0.0    0.053\n    symmetry (standard error):            0.008  0.079\n    fractal dimension (standard error):   0.001  0.03\n    radius (worst):                       7.93   36.04\n    texture (worst):                      12.02  49.54\n    perimeter (worst):                    50.41  251.2\n    area (worst):                         185.2  4254.0\n    smoothness (worst):                   0.071  0.223\n    compactness (worst):                  0.027  1.058\n    concavity (worst):                    0.0    1.252\n    concave points (worst):               0.0    0.291\n    symmetry (worst):                     0.156  0.664\n    fractal dimension (worst):            0.055  0.208\n    ===================================== ====== ======\n\n    :Missing Attribute Values: None\n\n    :Class Distribution: 212 - Malignant, 357 - Benign\n\n    :Creator:  Dr. William H. Wolberg, W. Nick Street, Olvi L. Mangasarian\n\n    :Donor: Nick Street\n\n    :Date: November, 1995\n\nThis is a copy of UCI ML Breast Cancer Wisconsin (Diagnostic) datasets.\nhttps://goo.gl/U2Uwz2\n\nFeatures are computed from a digitized image of a fine needle\naspirate (FNA) of a breast mass.  They describe\ncharacteristics of the cell nuclei present in the image.\n\nSeparating plane described above was obtained using\nMultisurface Method-Tree (MSM-T) [K. P. Bennett, &quot;Decision Tree\nConstruction Via Linear Programming.&quot; Proceedings of the 4th\nMidwest Artificial Intelligence and Cognitive Science Society,\npp. 97-101, 1992], a classification method which uses linear\nprogramming to construct a decision tree.  Relevant features\nwere selected using an exhaustive search in the space of 1-4\nfeatures and 1-3 separating planes.\n\nThe actual linear program used to obtain the separating plane\nin the 3-dimensional space is that described in:\n[K. P. Bennett and O. L. Mangasarian: &quot;Robust Linear\nProgramming Discrimination of Two Linearly Inseparable Sets&quot;,\nOptimization Methods and Software 1, 1992, 23-34].\n\nThis database is also available through the UW CS ftp server:\n\nftp ftp.cs.wisc.edu\ncd math-prog/cpo-dataset/machine-learn/WDBC/\n\n.. topic:: References\n\n   - W.N. Street, W.H. Wolberg and O.L. Mangasarian. Nuclear feature extraction \n     for breast tumor diagnosis. IS&amp;T/SPIE 1993 International Symposium on \n     Electronic Imaging: Science and Technology, volume 1905, pages 861-870,\n     San Jose, CA, 1993.\n   - O.L. Mangasarian, W.N. Street and W.H. Wolberg. Breast cancer diagnosis and \n     prognosis via linear programming. Operations Research, 43(4), pages 570-577, \n     July-August 1995.\n   - W.H. Wolberg, W.N. Street, and O.L. Mangasarian. Machine learning techniques\n     to diagnose breast cancer from fine-needle aspirates. Cancer Letters 77 (1994) \n     163-171.&apos;,
+ &apos;feature_names&apos;: array([&apos;mean radius&apos;, &apos;mean texture&apos;, &apos;mean perimeter&apos;, &apos;mean area&apos;,
+        &apos;mean smoothness&apos;, &apos;mean compactness&apos;, &apos;mean concavity&apos;,
+        &apos;mean concave points&apos;, &apos;mean symmetry&apos;, &apos;mean fractal dimension&apos;,
+        &apos;radius error&apos;, &apos;texture error&apos;, &apos;perimeter error&apos;, &apos;area error&apos;,
+        &apos;smoothness error&apos;, &apos;compactness error&apos;, &apos;concavity error&apos;,
+        &apos;concave points error&apos;, &apos;symmetry error&apos;,
+        &apos;fractal dimension error&apos;, &apos;worst radius&apos;, &apos;worst texture&apos;,
+        &apos;worst perimeter&apos;, &apos;worst area&apos;, &apos;worst smoothness&apos;,
+        &apos;worst compactness&apos;, &apos;worst concavity&apos;, &apos;worst concave points&apos;,
+        &apos;worst symmetry&apos;, &apos;worst fractal dimension&apos;], dtype=&apos;&lt;U23&apos;),
+ &apos;filename&apos;: &apos;C:\\Users\\ALIENWARE\\Anaconda3\\lib\\site-packages\\sklearn\\datasets\\data\\breast_cancer.csv&apos;}</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.data.shape                <span class="comment">#数据和特征比比较小，可能会过拟合</span></span><br></pre></td></tr></table></figure>
 
-score
-&gt;&gt;0.8888888888888888</code></pre><h4 id="在模型中加入random-state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter-“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。"><a href="#在模型中加入random-state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter-“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。" class="headerlink" title="在模型中加入random_state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter=“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。"></a>在模型中加入<code>random_state</code>参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入<code>splitter=“random”</code>可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。</h4><h4 id="可以说-criterion-用来规定不纯度的计算，random-state和splitter用来控制决策树的随机度"><a href="#可以说-criterion-用来规定不纯度的计算，random-state和splitter用来控制决策树的随机度" class="headerlink" title="可以说 criterion 用来规定不纯度的计算，random_state和splitter用来控制决策树的随机度"></a>可以说 <code>criterion</code> 用来规定不纯度的计算，<code>random_state</code>和<code>splitter</code>用来控制决策树的随机度</h4><hr>
-<h3 id="最后我们对训练集的拟合程度怎么样呢？"><a href="#最后我们对训练集的拟合程度怎么样呢？" class="headerlink" title="最后我们对训练集的拟合程度怎么样呢？"></a>最后我们对训练集的拟合程度怎么样呢？</h3><pre><code>score_train = clf.score(Xtrain,Ytrain)         
+<pre><code>(569, 30)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.target</span><br></pre></td></tr></table></figure>
 
-score_train            
-&gt;&gt;1.0               </code></pre><h4 id="因为训练集的精准度在92-，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80-，则考虑模型过拟合。"><a href="#因为训练集的精准度在92-，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80-，则考虑模型过拟合。" class="headerlink" title="因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。"></a>因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。</h4></blockquote>
-<hr>
-<hr>
-<h2 id="剪枝策略-剪枝参数调优"><a href="#剪枝策略-剪枝参数调优" class="headerlink" title="剪枝策略-剪枝参数调优"></a>剪枝策略-剪枝参数调优</h2><p>剪枝策略对决策树有巨大的影响，正确的剪枝策略是优化决策树算法的核心。                       </p>
-<blockquote>
-<h3 id="max-depth"><a href="#max-depth" class="headerlink" title="max_depth"></a>max_depth</h3><p>限制树的最大深度，超过设定深度的树枝全部剪掉，能够有效的控制过拟合，通常从3开始。            </p>
-<h3 id="min-samples-leaf-amp-min-samples-split"><a href="#min-samples-leaf-amp-min-samples-split" class="headerlink" title="min_samples_leaf &amp; min_samples_split"></a>min_samples_leaf &amp; min_samples_split</h3><p><code>min_samples_leaf</code>限定，一个节点在分枝后的每个子节点都必须包含至少min_samples_leaf个训练样本，否则分 枝就不会发生，或者，分枝会朝着满足每个子节点都包含min_samples_leaf个样本的方向去发生,一般搭配max_depth使用，在回归树中有神奇的效果，可以让模型变得更加平滑。这个参数的数量设置得太小会引起过拟合，设置得太大就会阻止模型学习数据。一般来说，建议从=5开始使用。如果叶节点中含有的样本量变化很 大，建议输入浮点数作为样本量的百分比来使用。同时，这个参数可以保证每个叶子的最小尺寸，可以在回归问题 中避免低方差，过拟合的叶子节点出现。对于类别不多的分类问题，=1通常就是最佳选择.</p>
-<p><code>min_samples_split</code>限定，一个节点必须要包含至少min_samples_split个训练样本，这个节点才允许被分枝，否则 分枝就不会发生。</p>
-<h3 id="max-features-amp-min-impurity-decrease"><a href="#max-features-amp-min-impurity-decrease" class="headerlink" title="max_features &amp; min_impurity_decrease"></a>max_features &amp; min_impurity_decrease</h3><p>一般max_depth使用，用作树的”精修“<br><code>max_features</code>限制分枝时考虑的特征个数，超过限制个数的特征都会被舍弃。和max_depth异曲同工，max_features是用来限制高维度数据的过拟合的剪枝参数，但其方法比较暴力，是直接限制可以使用的特征数量而强行使决策树停下的参数，在不知道决策树中的各个特征的重要性的情况下，强行设定这个参数可能会导致模型学习不足。如果希望通过降维的方式防止过拟合，建议使用PCA，ICA或者特征选择模块中的降维算法。</p>
-<p><code>min_impurity_decrease</code>限制信息增益的大小，信息增益小于设定数值的分枝不会发生。</p>
-<pre><code>&gt;clf = tree.DecisionTreeClassifier(criterion=&quot;entropy&quot;
-                                  ,random_state=20
-                                  ,splitter=&apos;random&apos;
-                                  ,max_depth=4
-                             #    ,min_samples_leaf=10
-                             #    ,min_samples_split=10
-                                )
-clf = clf.fit(Xtrain, Ytrain)
-dot_data = tree.export_graphviz(clf
-                               ,feature_names=feature_name
-                               ,class_names=[&apos;琴酒&apos;,&apos;雪莉&apos;,&apos;贝尔摩德&apos;]
-                               ,filled=True
-                               ,rounded=True
-)
-graph = graphviz.Source(dot_data)
-graph     </code></pre><pre><code>score_train = clf.score(Xtrain,Ytrain)
+<pre><code>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+       0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0,
+       1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0,
+       1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1,
+       1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0,
+       0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1,
+       1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0,
+       0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0,
+       1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1,
+       1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0,
+       0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
+       0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0,
+       1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1,
+       1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1,
+       1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
+       1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+       1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1,
+       1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1])</code></pre><h2 id="进行一次建模，看一下效果"><a href="#进行一次建模，看一下效果" class="headerlink" title="进行一次建模，看一下效果"></a>进行一次建模，看一下效果</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rfc = RandomForestClassifier(n_estimators=<span class="number">100</span>, random_state=<span class="number">90</span>)     <span class="comment">#实例化</span></span><br><span class="line">score_pre = cross_val_score(rfc, data.data, data.target, cv=<span class="number">10</span>, scoring=<span class="string">"accuracy"</span>).mean()      <span class="comment">#交叉验证的分数</span></span><br></pre></td></tr></table></figure>
 
-score_train
-&gt;&gt;0.9758064516129032</code></pre><p>可以看出通过剪枝后的模型，比原来分值更高</p>
-</blockquote>
-<hr>
-<h2 id="那么如何确定最优的剪枝参数呢？"><a href="#那么如何确定最优的剪枝参数呢？" class="headerlink" title="那么如何确定最优的剪枝参数呢？"></a>那么如何确定最优的剪枝参数呢？</h2><p>使用确定超参数的曲线来进行判断，继续使用我们已经训练好的决策树模型clf。超参数的学习曲线，是一条以超参数的取值为横坐标，模型的度量指标为纵坐标的曲线，它是用来衡量不同超参数取值下模型的表现的线。在我们建好的决策树里，我们的模型度量指标就是score。</p>
-<blockquote>
-<pre><code>import matplotlib.pyplot as plt
-test = []
-for i in range(10):
-   clf = tree.DecisionTreeClassifier(max_depth=i+1,criterion=&quot;entropy&quot;,random_state=30,splitter=&quot;random&quot;)
-   clf = clf.fit(Xtrain, Ytrain)
-   score = clf.score(Xtest, Ytest)
-   test.append(score)
-plt.plot(range(1,11),test,color=&quot;red&quot;,label=&quot;max_depth&quot;)
-plt.legend()
-plt.show()</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200714155232534.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>图中可得当 <code>max_depth=4</code>时最优                      </p>
-</blockquote>
-</blockquote>
-<hr>
-<h2 id="重要的属性和接口"><a href="#重要的属性和接口" class="headerlink" title="重要的属性和接口"></a>重要的属性和接口</h2><p>属性是在模型训练之后，能够调用查看的模型的各种性质。对决策树来说，最重要的是feature_importances_，能 够查看各个特征对模型的重要性。           </p>
-<p>sklearn中许多算法的接口都是相似的，比如说我们之前已经用到的fit和score，几乎对每个算法都可以使用。除了 这两个接口之外，决策树最常用的接口还有apply和predict。apply中输入测试集返回每个测试样本所在的叶子节 点的索引，predict输入测试集返回每个测试样本的标签。            </p>
-<p>所有接口中要求输入X_train和X_test的部分，输入的特征矩阵必须至少是一个二维矩阵。 sklearn不接受任何一维矩阵作为特征矩阵被输入。如果你的数据的确只有一个特征，那必须用reshape(-1,1)来给 矩阵增维；如果你的数据只有一个特征和一个样本，使用reshape(1,-1)来给你的数据增维。      </p>
-<blockquote>
-<pre><code>#apply返回每个测试样本所在的叶子节点的索引
-clf.apply(Xtest)            
-&gt;&gt;&gt;array([16, 11,  5, 11,  3, 16, 25, 20, 16, 20, 17,  5, 14, 25, 23, 14,  5,
-&gt;&gt;&gt;       20, 25,  5, 20, 14, 16,  5,  7, 16, 20, 16, 25,  5,  7,  5, 25, 25,
-&gt;&gt;&gt;       20, 14,  9,  9, 25, 16,  5, 25,  9, 25, 25, 25,  5, 11, 14, 14, 25,
-&gt;&gt;&gt;        5, 16, 16], dtype=int64)            </code></pre><pre><code>#predict返回每个测试样本的分类/回归结果
-clf.predict(Xtest)
-&gt;&gt;&gt;array([1, 1, 2, 1, 1, 1, 0, 1, 1, 1, 2, 2, 1, 0, 1, 1, 2, 1, 0, 2, 1, 1,
-&gt;&gt;&gt;       1, 2, 1, 1, 1, 1, 0, 2, 1, 2, 0, 0, 1, 1, 2, 2, 0, 1, 2, 0, 2, 0,
-&gt;&gt;&gt;       0, 0, 2, 1, 1, 1, 0, 2, 1, 1])</code></pre></blockquote>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
-<pre><code>基本流程：
-八个参数：criterion，两个随机性相关的参数（random_state, splitter）,五个剪枝参数（max_depth,min_samples_split,min_samples_leaf,max_feature,min_impurity_decrease）
-一个属性：feature_importances_
-四个接口：fit,score,apply,predict</code></pre></blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">score_pre</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9648809523809524</code></pre><hr>
+<h2 id="随机森林调参第一步：调-n-estimators"><a href="#随机森林调参第一步：调-n-estimators" class="headerlink" title="随机森林调参第一步：调 n_estimators"></a>随机森林调参第一步：调 n_estimators</h2><p><strong>画学习曲线，看 n_estimators 在什么值开始变得平稳，是否一直推动模型变整体准确率的上升。第一次的学习曲线，可以用来帮我们划定取值范围，我们每十个数作为一个阶段，观察 n_estimators 的变化如何引起模型整体准确率的变化。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#####【TIME WARNING: 30 seconds】#####</span></span><br><span class="line">scorel = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">200</span>,<span class="number">10</span>):                                                    <span class="comment">#0-200每隔10去一次数</span></span><br><span class="line">    rfc = RandomForestClassifier(n_estimators=i+<span class="number">1</span>,n_jobs=<span class="number">-1</span>,random_state=<span class="number">90</span>)<span class="comment">#实例化</span></span><br><span class="line">    score = cross_val_score(rfc,data.data,data.target,cv=<span class="number">10</span>).mean()          <span class="comment">#打分</span></span><br><span class="line">    scorel.append(score)</span><br><span class="line">    </span><br><span class="line">print(max(scorel),(scorel.index(max(scorel))*<span class="number">10</span>)+<span class="number">1</span>)                          <span class="comment">#打印最大值和此时的索引</span></span><br><span class="line">plt.figure(figsize=[<span class="number">20</span>,<span class="number">5</span>])</span><br><span class="line">plt.plot(range(<span class="number">1</span>,<span class="number">201</span>,<span class="number">10</span>),scorel)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9631265664160402 71</code></pre><p><img src="https://img-blog.csdnimg.cn/20200728162838544.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">scorel = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">65</span>,<span class="number">75</span>):                                                    <span class="comment">#0-200每隔10去一次数</span></span><br><span class="line">    rfc = RandomForestClassifier(n_estimators=i,n_jobs=<span class="number">-1</span>,random_state=<span class="number">90</span>)<span class="comment">#实例化</span></span><br><span class="line">    score = cross_val_score(rfc,data.data,data.target,cv=<span class="number">10</span>).mean()          <span class="comment">#打分</span></span><br><span class="line">    scorel.append(score)</span><br><span class="line">    </span><br><span class="line">print(max(scorel),([*range(<span class="number">65</span>,<span class="number">75</span>)][scorel.index(max(scorel))]))                          <span class="comment">#打印最大值和此时的索引</span></span><br><span class="line">plt.figure(figsize=[<span class="number">20</span>,<span class="number">5</span>])</span><br><span class="line">plt.plot(range(<span class="number">65</span>,<span class="number">75</span>),scorel)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9666353383458647 73</code></pre><p><img src="https://img-blog.csdnimg.cn/20200728162849740.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id="为网格搜索做准备，书写网格搜索的参数"><a href="#为网格搜索做准备，书写网格搜索的参数" class="headerlink" title="为网格搜索做准备，书写网格搜索的参数"></a>为网格搜索做准备，书写网格搜索的参数</h2><p>有一些参数是没有参照的，很难说清一个范围，这种情况下我们使用学习曲线，看趋势从曲线跑出的结果中选取一个更小的区间，再跑曲线。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">param_grid = &#123;&apos;n_estimators&apos;:np.arange(0, 200, 10)&#125;             </span><br><span class="line">param_grid = &#123;&apos;max_depth&apos;:np.arange(1, 20, 1)&#125;              </span><br><span class="line">param_grid = &#123;&apos;max_leaf_nodes&apos;:np.arange(25,50,1)&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有一些参数是可以找到一个范围的，或者说我们知道他们的取值和随着他们的取值，模型的整体准确率会如何变化，这样的参数我们就可以直接跑网格搜索</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">param_grid = &#123;&apos;criterion&apos;:[&apos;gini&apos;, &apos;entropy&apos;]&#125;</span><br><span class="line">param_grid = &#123;&apos;min_samples_split&apos;:np.arange(2, 2+20, 1)&#125;</span><br><span class="line">param_grid = &#123;&apos;min_samples_leaf&apos;:np.arange(1, 1+10, 1)&#125;</span><br><span class="line">param_grid = &#123;&apos;max_features&apos;:np.arange(5,30,1)&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="按照参数对模型整体准确率的影响程度进行调参，首先调整-max-depth"><a href="#按照参数对模型整体准确率的影响程度进行调参，首先调整-max-depth" class="headerlink" title="按照参数对模型整体准确率的影响程度进行调参，首先调整 max_depth"></a>按照参数对模型整体准确率的影响程度进行调参，首先调整 max_depth</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调整max_depth</span></span><br><span class="line"></span><br><span class="line">param_grid = &#123;<span class="string">'max_depth'</span>:np.arange(<span class="number">1</span>, <span class="number">20</span>, <span class="number">1</span>)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一般根据数据的大小来进行一个试探，乳腺癌数据很小，所以可以采用1~10，或者1~20这样的试探</span></span><br><span class="line"><span class="comment"># 但对于像digit recognition那样的大型数据来说，我们应该尝试30~50层深度（或许还不足够</span></span><br><span class="line"><span class="comment"># 更应该画出学习曲线，来观察深度对模型的影响</span></span><br><span class="line"></span><br><span class="line">rfc = RandomForestClassifier(n_estimators=<span class="number">73</span>,random_state=<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line">GS = GridSearchCV(rfc,param_grid,cv=<span class="number">10</span>)        <span class="comment">#网格搜索，（实例化，搜索参数，交叉验证的次数）</span></span><br><span class="line">GS.fit(data.data,data.target)</span><br></pre></td></tr></table></figure>
+
+<pre><code>GridSearchCV(cv=10,
+             estimator=RandomForestClassifier(n_estimators=73, random_state=90),
+             param_grid={&apos;max_depth&apos;: array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+       18, 19])})</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_params_         <span class="comment">#显示调整出来的最佳参数</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>{&apos;max_depth&apos;: 8}</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_score_          <span class="comment">#返回最佳参数的对应的准确率</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9666353383458647</code></pre><p><strong>已经非常接近模型的上限</strong></p>
+<h3 id="叶子和分支无需调整，调整会降低模型复杂度，所以调整-max-feature"><a href="#叶子和分支无需调整，调整会降低模型复杂度，所以调整-max-feature" class="headerlink" title="叶子和分支无需调整，调整会降低模型复杂度，所以调整 max_feature"></a>叶子和分支无需调整，调整会降低模型复杂度，所以调整 max_feature</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调整max_features</span></span><br><span class="line">param_grid = &#123;<span class="string">'max_features'</span>:np.arange(<span class="number">5</span>,<span class="number">30</span>,<span class="number">1</span>)&#125;</span><br><span class="line"></span><br><span class="line">rfc = RandomForestClassifier(n_estimators=<span class="number">73</span>,random_state=<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line">GS = GridSearchCV(rfc,param_grid,cv=<span class="number">10</span>)</span><br><span class="line">GS.fit(data.data,data.target)</span><br></pre></td></tr></table></figure>
+
+<pre><code>GridSearchCV(cv=10,
+             estimator=RandomForestClassifier(n_estimators=73, random_state=90),
+             param_grid={&apos;max_features&apos;: array([ 5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+       22, 23, 24, 25, 26, 27, 28, 29])})</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_params_</span><br></pre></td></tr></table></figure>
+
+<pre><code>{&apos;max_features&apos;: 24}</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_score_</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9666666666666668</code></pre><p><strong>模型准确度上升吗，达到模型上限</strong></p>
+<h3 id="最后尝试一下调整min-samples-leaf-和min-samples-split"><a href="#最后尝试一下调整min-samples-leaf-和min-samples-split" class="headerlink" title="最后尝试一下调整min_samples_leaf 和min_samples_split"></a>最后尝试一下调整min_samples_leaf 和min_samples_split</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调整min_samples_leaf</span></span><br><span class="line"></span><br><span class="line">param_grid=&#123;<span class="string">'min_samples_leaf'</span>:np.arange(<span class="number">1</span>, <span class="number">1</span>+<span class="number">10</span>, <span class="number">1</span>)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#对于min_samples_split和min_samples_leaf,一般是从他们的最小值开始向上增加10或20</span></span><br><span class="line"><span class="comment">#面对高维度高样本量数据，如果不放心，也可以直接+50，对于大型数据，可能需要200~300的范围</span></span><br><span class="line"><span class="comment">#如果调整的时候发现准确率无论如何都上不来，那可以放心大胆调一个很大的数据，大力限制模型的复杂度</span></span><br><span class="line"></span><br><span class="line">rfc = RandomForestClassifier(n_estimators=<span class="number">73</span>,random_state=<span class="number">90</span>)</span><br><span class="line">GS = GridSearchCV(rfc,param_grid,cv=<span class="number">10</span>)</span><br><span class="line">GS.fit(data.data,data.target)</span><br></pre></td></tr></table></figure>
+
+<pre><code>GridSearchCV(cv=10,
+             estimator=RandomForestClassifier(n_estimators=73, random_state=90),
+             param_grid={&apos;min_samples_leaf&apos;: array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10])})</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_params_</span><br></pre></td></tr></table></figure>
+
+<pre><code>{&apos;min_samples_leaf&apos;: 1}</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_score_</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9666353383458647</code></pre><p><strong>精确度下降了</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调整min_samples_split</span></span><br><span class="line"></span><br><span class="line">param_grid=&#123;<span class="string">'min_samples_split'</span>:np.arange(<span class="number">2</span>, <span class="number">2</span>+<span class="number">20</span>, <span class="number">1</span>)&#125;</span><br><span class="line"></span><br><span class="line">rfc = RandomForestClassifier(n_estimators=<span class="number">73</span>,random_state=<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line">GS = GridSearchCV(rfc,param_grid,cv=<span class="number">10</span>)</span><br><span class="line">GS.fit(data.data,data.target)</span><br></pre></td></tr></table></figure>
+
+<pre><code>GridSearchCV(cv=10,
+             estimator=RandomForestClassifier(n_estimators=73, random_state=90),
+             param_grid={&apos;min_samples_split&apos;: array([ 2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+       19, 20, 21])})</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_params_</span><br></pre></td></tr></table></figure>
+
+<pre><code>{&apos;min_samples_split&apos;: 2}</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_score_</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9666353383458647</code></pre><p><strong>精确度依旧下降</strong></p>
+<h2 id="最后尝试调整-criterion"><a href="#最后尝试调整-criterion" class="headerlink" title="最后尝试调整 criterion"></a>最后尝试调整 criterion</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调整Criterion</span></span><br><span class="line"></span><br><span class="line">param_grid = &#123;<span class="string">'criterion'</span>:[<span class="string">'gini'</span>, <span class="string">'entropy'</span>]&#125;</span><br><span class="line">rfc = RandomForestClassifier(n_estimators=<span class="number">39</span>,random_state=<span class="number">90</span>)</span><br><span class="line"></span><br><span class="line">GS = GridSearchCV(rfc,param_grid,cv=<span class="number">10</span>)</span><br><span class="line">GS.fit(data.data,data.target)</span><br></pre></td></tr></table></figure>
+
+<pre><code>GridSearchCV(cv=10,
+             estimator=RandomForestClassifier(n_estimators=39, random_state=90),
+             param_grid={&apos;criterion&apos;: [&apos;gini&apos;, &apos;entropy&apos;]})</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_params_</span><br></pre></td></tr></table></figure>
+
+<pre><code>{&apos;criterion&apos;: &apos;entropy&apos;}</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GS.best_score_</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9649122807017543</code></pre><p><strong>模型准确度下降</strong></p>
+<h2 id="模型调整完毕，得出最佳参数"><a href="#模型调整完毕，得出最佳参数" class="headerlink" title="模型调整完毕，得出最佳参数"></a>模型调整完毕，得出最佳参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rfc = RandomForestClassifier(n_estimators=<span class="number">73</span>,random_state=<span class="number">90</span>)</span><br><span class="line">score = cross_val_score(rfc,data.data,data.target,cv=<span class="number">10</span>).mean()</span><br><span class="line">score</span><br><span class="line">score - score_pre</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.0017543859649122862</code></pre><p>在整个调参过程之中，我们首先调整了n_estimators（无论如何都请先走这一步），然后调整max_depth，通过max_depth产生的结果，来判断模型位于复杂度-泛化误差图像的哪一边，从而选择我们应该调整的参数和调参的方向。如果感到困惑，也可以画很多学习曲线来观察参数会如何影响我们的准确率，选取学习曲线中单调的部分来放大研究（如同我们对n_estimators做的）。学习曲线的拐点也许就是我们一直在追求的，最佳复杂度对应的泛化误差最低点（也是方差和偏差的平衡点）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -396,7 +386,7 @@ clf.predict(Xtest)
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DecisionTree</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">RandomForest</a>
         		</li>
       		
 		</ul>
@@ -463,7 +453,7 @@ clf.predict(Xtest)
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2020/07/14/sklearn-DecisionTreeClassifier/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2020/07/28/实战：随机森林在乳腺癌数据上的调参/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -477,18 +467,9 @@ clf.predict(Xtest)
   
 <nav id="article-nav">
   
-    <a href="/2020/07/14/批量修改后缀/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          批量修改后缀
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/04/07/Matplotlib相关语法及实例/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Matplotlib相关语法及实例</div>
+    <a href="/2020/07/25/RandomForestRegressor-填补缺失值/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RandomForestRegressor&amp;填补缺失值</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -515,7 +496,7 @@ clf.predict(Xtest)
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sklearn-DecisionTreeClassifier的基本用法"><span class="toc-number">1.</span> <span class="toc-text">sklearn-DecisionTreeClassifier的基本用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#决策树的流程"><span class="toc-number">1.0.1.</span> <span class="toc-text">决策树的流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建树"><span class="toc-number">1.1.</span> <span class="toc-text">建树</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-导入需要的算法库和模块"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.导入需要的算法库和模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-探索数据"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.探索数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-将数据划分为训练集和测试集"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.将数据划分为训练集和测试集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建模三部曲"><span class="toc-number">1.2.</span> <span class="toc-text">建模三部曲</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：-实例化"><span class="toc-number">1.2.1.</span> <span class="toc-text">第一步： 实例化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二部：-训练模型"><span class="toc-number">1.2.2.</span> <span class="toc-text">第二部： 训练模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：-打分"><span class="toc-number">1.2.3.</span> <span class="toc-text">第三步： 打分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#画图"><span class="toc-number">1.3.</span> <span class="toc-text">画图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模型的分值随机变化，那么我们如何获得稳定的模型呢？"><span class="toc-number">1.3.1.</span> <span class="toc-text">模型的分值随机变化，那么我们如何获得稳定的模型呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在模型中加入random-state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter-“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">在模型中加入random_state参数控制模型，使模型稳定，数值本身通过调试选择合适值；如果加入splitter=“random”可以让模型更加随机，从而防止过拟合，适用于特征值相当大的时候。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可以说-criterion-用来规定不纯度的计算，random-state和splitter用来控制决策树的随机度"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">可以说 criterion 用来规定不纯度的计算，random_state和splitter用来控制决策树的随机度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后我们对训练集的拟合程度怎么样呢？"><span class="toc-number">1.3.2.</span> <span class="toc-text">最后我们对训练集的拟合程度怎么样呢？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#因为训练集的精准度在92-，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80-，则考虑模型过拟合。"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">因为训练集的精准度在92%，所以虽然我们测试集的打分是满分，也是正常现象。如果训练集打分只有80%，则考虑模型过拟合。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#剪枝策略-剪枝参数调优"><span class="toc-number">1.4.</span> <span class="toc-text">剪枝策略-剪枝参数调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#max-depth"><span class="toc-number">1.4.1.</span> <span class="toc-text">max_depth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#min-samples-leaf-amp-min-samples-split"><span class="toc-number">1.4.2.</span> <span class="toc-text">min_samples_leaf &amp; min_samples_split</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#max-features-amp-min-impurity-decrease"><span class="toc-number">1.4.3.</span> <span class="toc-text">max_features &amp; min_impurity_decrease</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#那么如何确定最优的剪枝参数呢？"><span class="toc-number">1.5.</span> <span class="toc-text">那么如何确定最优的剪枝参数呢？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重要的属性和接口"><span class="toc-number">1.6.</span> <span class="toc-text">重要的属性和接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.7.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实战：随机森林在乳腺癌数据上的调参"><span class="toc-number">1.</span> <span class="toc-text">实战：随机森林在乳腺癌数据上的调参</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#导入需要的库"><span class="toc-number">1.1.</span> <span class="toc-text">导入需要的库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导入数据集-amp-探索数据"><span class="toc-number">1.2.</span> <span class="toc-text">导入数据集&amp;探索数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进行一次建模，看一下效果"><span class="toc-number">1.3.</span> <span class="toc-text">进行一次建模，看一下效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#随机森林调参第一步：调-n-estimators"><span class="toc-number">1.4.</span> <span class="toc-text">随机森林调参第一步：调 n_estimators</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为网格搜索做准备，书写网格搜索的参数"><span class="toc-number">1.5.</span> <span class="toc-text">为网格搜索做准备，书写网格搜索的参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#按照参数对模型整体准确率的影响程度进行调参，首先调整-max-depth"><span class="toc-number">1.5.1.</span> <span class="toc-text">按照参数对模型整体准确率的影响程度进行调参，首先调整 max_depth</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#叶子和分支无需调整，调整会降低模型复杂度，所以调整-max-feature"><span class="toc-number">1.5.2.</span> <span class="toc-text">叶子和分支无需调整，调整会降低模型复杂度，所以调整 max_feature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后尝试一下调整min-samples-leaf-和min-samples-split"><span class="toc-number">1.5.3.</span> <span class="toc-text">最后尝试一下调整min_samples_leaf 和min_samples_split</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后尝试调整-criterion"><span class="toc-number">1.6.</span> <span class="toc-text">最后尝试调整 criterion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型调整完毕，得出最佳参数"><span class="toc-number">1.7.</span> <span class="toc-text">模型调整完毕，得出最佳参数</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
