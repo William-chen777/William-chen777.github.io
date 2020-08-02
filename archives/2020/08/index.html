@@ -6,20 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
-  <title>Python简单处理Excel的方法 | William Chen</title>
+  <title>Archives: 2020/8 | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="用python简单处理excel">
-<meta name="keywords" content="Excel">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Python简单处理Excel的方法">
-<meta property="og:url" content="https://william-chen777.github.io/2020/04/06/Python简单处理Excel的方法/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="William Chen">
+<meta property="og:url" content="https://william-chen777.github.io/archives/2020/08/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="用python简单处理excel">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-15T07:45:50.531Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python简单处理Excel的方法">
-<meta name="twitter:description" content="用python简单处理excel">
+<meta name="twitter:title" content="William Chen">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
   
@@ -157,227 +152,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Python简单处理Excel的方法" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Python简单处理Excel的方法
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/08/02/数据预处理和特征工程/" class="archive-article-date">
+  	<time datetime="2020-08-02T07:08:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-02</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/08/02/数据预处理和特征工程/">数据预处理和特征工程</a>
     </h1>
   
 
-		<!--显示阅读次数-->
-        
-          <br/>
-          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-          <span class="icon-sort"></span>
-          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-          </span>   
-          </a>
-        
-        <!--显示阅读次数完毕-->
-        
-        <a href="/2020/04/06/Python简单处理Excel的方法/" class="archive-article-date">
-  	<time datetime="2020-04-06T13:46:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="用python简单处理excel"><a href="#用python简单处理excel" class="headerlink" title="用python简单处理excel"></a>用python简单处理excel</h1><a id="more"></a>
-
-<blockquote>
-<p>简单梳理一下Python简单处理Excel的步骤和方法<br>1.检查当前工作路径<br>2.导入openpyxl模块<br>3.调用openpyxl.load_workbook()函数，以打开工作簿<br>4.通过xx.worksheets[n] 取得工作表   </p>
-<blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;import os                                           #导入os模块</span><br><span class="line">&gt;&gt;print(os.getcwd())                                  #显示当前工作模块</span><br><span class="line">&gt;&gt;os.chdir(&quot;E:\\untitled\\exercise&quot;)                  #更改当前工作模块</span><br><span class="line">&gt;&gt;</span><br><span class="line">&gt;&gt;import openpyxl                                     #导入openpyxl模块</span><br><span class="line">&gt;&gt;print(&apos;Opening workbook...&apos;)</span><br><span class="line">&gt;&gt;wb = openpyxl.load_workbook(&apos;censuspopdata.xlsx&apos;)   #打开工作簿</span><br><span class="line">&gt;&gt;sheet = wb.worksheets[0]                            #取得工作表</span><br><span class="line">&gt;&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</blockquote>
-<hr>
-<p>###从表格中读取数据    </p>
-<blockquote>
-<p>程序需要做的事情：<br>·从Excel中读取数据<br>·计算每个县中普查区的数目<br>·计算每个县的总人数<br>·打印结果   </p>
-<p>代码需要完成下列任务：<br>·用 openpyxl 模块打开Excel文档并读取单元格<br>·计算普查区和人口数，将他保存到一个数据结构中<br>·利用 pprint 模块，将该数据结构写入一个扩展名为 .py 的文本文件</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import openpyxl</span><br><span class="line">import pprint</span><br><span class="line">print(&apos;Opening workbook...&apos;)</span><br><span class="line">wb = openpyxl.load_workbook(&apos;censuspopdata.xlsx&apos;)   #打开工作簿</span><br><span class="line">sheet = wb.worksheets[0]  </span><br><span class="line">countyData = &#123;&#125;                                     #创建变量</span><br><span class="line"></span><br><span class="line">print(&apos;Reading row...&apos;)</span><br><span class="line">for row in range(2, sheet.max_row + 1):             #迭代行数据</span><br><span class="line">    #每一行都有一个普查区数据</span><br><span class="line">    State = sheet[&apos;B&apos; + str(row)].value</span><br><span class="line">    county = sheet[&apos;C&apos; + str(row)].value</span><br><span class="line">    pop = sheet[&apos;D&apos; + str(row)].value</span><br><span class="line"></span><br><span class="line">    # 确保洲简称的键存在</span><br><span class="line">    countyData.setdefault(&quot;state&quot;, &#123;&#125;)              #设置默认值，确保键存在</span><br><span class="line"></span><br><span class="line">    # 确保县对应的键存在</span><br><span class="line">    countyData[&quot;state&quot;].setdefault(&quot;county&quot;, &#123;&apos;tracts&apos;:0, &apos;pop&apos;:0&#125;)</span><br><span class="line"></span><br><span class="line">    # 每一行都是一个人口普查区，所以需要+1</span><br><span class="line">    countyData[&quot;state&quot;][&quot;county&quot;][&apos;tracts&apos;] += 1</span><br><span class="line">    # 增加人口数量</span><br><span class="line">    countyData[&quot;state&quot;][&quot;county&quot;][&apos;pop&apos;] += int(pop)</span><br><span class="line"></span><br><span class="line">#打开一个新的文本并且写入数据</span><br><span class="line">print(&apos;Writing results...&apos;)</span><br><span class="line">result_file = open(&apos;census2010.py&apos;, &apos;w&apos;)</span><br><span class="line">result_file.write(&apos;allData= &apos; + pprint.pformat(countyData))</span><br><span class="line">result_file.close()</span><br><span class="line">print(&apos;Done.&apos;)</span><br></pre></td></tr></table></figure>
-
-<p>对于excel的处理还有大量的方法，在接下来的一段时间中，我会学习Pandas 和 Numpy 的使用方法，届时整理上传。</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Excel</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据处理</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Python//" class="article-tag-list-link color2">Python</a>
+        			<a href="/categories/sklearn//" class="article-tag-list-link color3">sklearn</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2020/04/06/Python简单处理Excel的方法/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/04/07/Matplotlib相关语法及实例/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Matplotlib相关语法及实例
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/03/31/Python的正则表达式/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Python的正则表达式</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用python简单处理excel"><span class="toc-number">1.</span> <span class="toc-text">用python简单处理excel</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -404,8 +243,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
