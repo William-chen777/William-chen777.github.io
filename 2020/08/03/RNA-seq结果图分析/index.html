@@ -6,30 +6,34 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
-  <title>实战：泰坦尼克号幸存者预测 | William Chen</title>
+  <title>RNA-seq结果图分析 | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="泰坦尼克号幸存者预测泰坦尼克号的沉没是世界上最严重额海难事故之一，我们通过分类树模型来预测一下哪些人可能成为幸存者。">
-<meta name="keywords" content="DecisionTree">
+  <meta name="description" content="质量测序基于 fastqc 快速地对测序数据进行质量评估,得到两个文件，一个是html的网页文件，一个是zip压缩文件。html文件就是我们质量评估的报表。">
+<meta name="keywords" content="RNA-seq">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实战：泰坦尼克号幸存者预测">
-<meta property="og:url" content="https://william-chen777.github.io/2020/07/18/实战：泰坦尼克号幸存者预测/index.html">
+<meta property="og:title" content="RNA-seq结果图分析">
+<meta property="og:url" content="https://william-chen777.github.io/2020/08/03/RNA-seq结果图分析/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="泰坦尼克号幸存者预测泰坦尼克号的沉没是世界上最严重额海难事故之一，我们通过分类树模型来预测一下哪些人可能成为幸存者。">
+<meta property="og:description" content="质量测序基于 fastqc 快速地对测序数据进行质量评估,得到两个文件，一个是html的网页文件，一个是zip压缩文件。html文件就是我们质量评估的报表。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718123802571.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718123859957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718123931457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124011102.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124048644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124116800.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124154493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124229177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200718124306944.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2020-07-18T04:43:17.503Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/202008031713439.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803171810239.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803172200172.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803172710285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803184119244.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020080318483365.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803185204813.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803190739589.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803191142544.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803191607252.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803191927610.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803192244201.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200803192506768.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-08-03T11:27:41.861Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="实战：泰坦尼克号幸存者预测">
-<meta name="twitter:description" content="泰坦尼克号幸存者预测泰坦尼克号的沉没是世界上最严重额海难事故之一，我们通过分类树模型来预测一下哪些人可能成为幸存者。">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200718123802571.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta name="twitter:title" content="RNA-seq结果图分析">
+<meta name="twitter:description" content="质量测序基于 fastqc 快速地对测序数据进行质量评估,得到两个文件，一个是html的网页文件，一个是zip压缩文件。html文件就是我们质量评估的报表。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/202008031713439.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
   
@@ -167,14 +171,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-实战：泰坦尼克号幸存者预测" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-RNA-seq结果图分析" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      实战：泰坦尼克号幸存者预测
+      RNA-seq结果图分析
     </h1>
   
 
@@ -190,187 +194,73 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2020/07/18/实战：泰坦尼克号幸存者预测/" class="archive-article-date">
-  	<time datetime="2020-07-18T03:28:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-18</time>
+        <a href="/2020/08/03/RNA-seq结果图分析/" class="archive-article-date">
+  	<time datetime="2020-08-03T07:31:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-03</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="泰坦尼克号幸存者预测"><a href="#泰坦尼克号幸存者预测" class="headerlink" title="泰坦尼克号幸存者预测"></a>泰坦尼克号幸存者预测</h1><p>泰坦尼克号的沉没是世界上最严重额海难事故之一，我们通过分类树模型来预测一下哪些人可能成为幸存者。</p>
-<a id="more"></a>   
+        <h1 id="质量测序"><a href="#质量测序" class="headerlink" title="质量测序"></a>质量测序</h1><p>基于 fastqc 快速地对测序数据进行质量评估,得到两个文件，一个是html的网页文件，一个是zip压缩文件。html文件就是我们质量评估的报表。    </p>
+<a id="more"></a>
 
-<pre><code>import pandas as pd 
-from sklearn.tree import DecisionTreeClassifier
-import matplotlib.pyplot as plt
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import cross_val_score</code></pre><h2 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h2><blockquote>
-<pre><code>data = pd.read_csv(r&quot;E:\machineLearning\cai\decisiontree\data.csv&quot;)          
-data            </code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718123802571.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">   </p>
-</blockquote>
-</blockquote>
 <hr>
-<h2 id="探索数据"><a href="#探索数据" class="headerlink" title="探索数据"></a>探索数据</h2><blockquote>
-<p><code>data.info()</code>                            #探索数据,查看数据信息    </p>
+<h3 id="序列测序质量统计"><a href="#序列测序质量统计" class="headerlink" title="序列测序质量统计"></a>序列测序质量统计</h3><p><img src="https://img-blog.csdnimg.cn/202008031713439.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718123859957.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">        </p>
+<p><strong>此图中的横轴是测序序列第1 个碱基到第151个碱基，纵轴是质量得分，即20表示0.01的错误率，30表示0.001的错误率。图中红线表示中值，图中蓝色的细线是各个位置的平均值的连线</strong>      </p>
 </blockquote>
-</blockquote>
+<p>1.<strong>为什么一个样本会有两张图?</strong><br>—-答：测序的时候，所有上机片段都是约300bp的文库。测序采用2*150的测序模式，即从左端测150，再从右端测150。所以每个片段都会有两个序列，这两个序列就是我们常说的read。所以，碱基质量分布图会有两个，分别与read1和read2对应。</p>
+<p>2.<strong>最上面的竖线，黄框，蓝线是什么意思?</strong><br>—-答：对于一个样本，在RNA测序完成后就会获得几千万条read1。对于read1的第一个碱基，也就会有几千万个碱基质量值。那么我们就需要统计这几千万个碱基质量值得中位数，均值等等，用以展示read1的第一个碱基的质量。此处：红色表示中位数，黄色表示25-75%区间，触须是10-90%区间，蓝线是平均数。</p>
+<hr>
+<h3 id="每条序列的测序质量统计"><a href="#每条序列的测序质量统计" class="headerlink" title="每条序列的测序质量统计"></a>每条序列的测序质量统计</h3><p><img src="https://img-blog.csdnimg.cn/20200803171810239.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <blockquote>
-<p><code>data.head(10)</code>                           #展示前10行，默认为5                </p>
+<p><strong>序列长度为151bp，那么这151个位置每个位置Q值的平均值就是这条reads的质量值。图中的横轴0-40表示Q值，纵轴是灭个值对应的reads数目。这个样本数据，测序结果主要集中在30-40中，证明测序的质量很好！</strong></p>
+</blockquote>
+<hr>
+<h3 id="碱基分布图"><a href="#碱基分布图" class="headerlink" title="碱基分布图"></a>碱基分布图</h3><p><img src="https://img-blog.csdnimg.cn/20200803172200172.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718123931457.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">       </p>
+<p>·<strong>横轴是1-151bp，纵轴是百分比。图中的四条线代表ATCG在每个位置平均含量。理论上来说，A和T应该相等，G和C应该相等，但是一般测序的时候，刚开始测序仪不稳定，很可能出现上图开头的情况。</strong>·</p>
 </blockquote>
-</blockquote>
+<hr>
+<h3 id="碱基平均含量分布图"><a href="#碱基平均含量分布图" class="headerlink" title="碱基平均含量分布图"></a>碱基平均含量分布图</h3><p><img src="https://img-blog.csdnimg.cn/20200803172710285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <blockquote>
-<pre><code>data.drop([&apos;Cabin&apos;, &apos;Name&apos;, &apos;Ticket&apos;], inplace=True, axis=1)        
-#筛选特征，删除不需要的特征， inplace= true 表示用删除后的表覆盖原表, axis 表示轴向，axis=1表示列，0表示行          
-#等价于 data = data.drop([&apos;Cabin&apos;, &apos;Name&apos;, &apos;Ticket&apos;])       
-
-data     </code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718124011102.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-</blockquote>
+<p>·<strong>横轴是0-100%， 纵轴是每条序列GC含量对应的数量。蓝色的线是程序根据经验分布给出的理论值，红色是真实值，两个应该比较接近才比较好。</strong>·</p>
 </blockquote>
 <hr>
-<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><blockquote>
-<pre><code>data[&quot;Age&quot;] = data[&quot;Age&quot;].fillna(data[&quot;Age&quot;].mean())        
-#处理缺失值,用均值填补
-
-data = data.dropna(axis=0)
-#删除有缺失值的行
-</code></pre><pre><code>data[&quot;Embarked&quot;].unique()      #提取“Embarked”的类型，即去重后返回          
-&gt;&gt;array([&apos;S&apos;, &apos;C&apos;, &apos;Q&apos;], dtype=object)            </code></pre><pre><code>labels = data[&quot;Embarked&quot;].unique().tolist()       #将数组转换成列表          </code></pre><pre><code>data[&quot;Embarked&quot;] = data[&quot;Embarked&quot;].apply(lambda x:labels.index(x))         
-#将列表的元素转换成其索引值， S--&gt;0 , C--&gt;1 , Q--&gt;2</code></pre><pre><code>data[&quot;Sex&quot;] == &quot;male&quot;   
-#判断    
-
-&gt;&gt;0       True
- 1      False
- 2      False
- 3      False
- 4       True
-        ...  
- 886     True
- 887    False
- 888    False
- 889     True
- 890     True
- Name: Sex, Length: 889, dtype: bool               </code></pre><pre><code>data[&quot;Sex&quot;] = (data[&quot;Sex&quot;] == &quot;male&quot;).astype(&quot;int&quot;)            
-#将True和False的布尔值,转换成1/0</code></pre><p><strong>特征筛选完毕，非数值型特征已经转换成数值</strong>    </p>
-</blockquote>
-<hr>
+<h3 id="N统计含量"><a href="#N统计含量" class="headerlink" title="N统计含量"></a>N统计含量</h3><p><img src="https://img-blog.csdnimg.cn/20200803184119244.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <blockquote>
-<pre><code>x = data.iloc[:,data.columns != &quot;Survived&quot;]  
-#取出所有行，和不包括“Survived”的列        </code></pre><pre><code>y = data.iloc[:,data.columns == &quot;Survived&quot;]  </code></pre><pre><code>Xtrain, Xtest, Ytrain, Ytest = train_test_split(x, y, test_size=0.3)
-Xtrain.shape                #确认数据为70%
-
-&gt;&gt;&gt;(622, 8)</code></pre><pre><code>Xtrain                     #发现索引打乱</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718124048644.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">     </p>
-</blockquote>
-<pre><code>Xtrain.index = range(Xtrain.shape[0])
-#Xtrain.shape 返回（622，8），所以Xtrain.shape[0]是622，故而range(622)为0-621的整数
-
-for i in [Xtrain, Xtest, Ytrain, Ytest]:
-   i.index = range(i.shape[0])
-</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718124116800.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>特征与标签分离完毕，数据构造完成</strong>    </p>
-</blockquote>
+<p>·<strong>当测序仪不能辨别某条reads的某个位置都是ATCG哪个碱基时，就会产生“N”，对所有reads的每个位置统计N的比率。</strong>·</p>
 </blockquote>
 <hr>
-<hr>
-<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><blockquote>
-<pre><code>clf = DecisionTreeClassifier(random_state= 25)
-clf = clf.fit(Xtrain, Ytrain)
-score = clf.score(Xtest, Ytest)
-
-score
-&gt;&gt;&gt;0.7340823970037453</code></pre><p><strong>打分不高，用交叉验证尝试提高模型准确度</strong>     </p>
-<pre><code>clf = DecisionTreeClassifier(random_state= 25)
-score = cross_val_score(clf,x,y,cv=10).mean()
-
-score
-&gt;&gt;&gt;0.7469611848825333</code></pre><p><strong>发现分值依旧偏低，尝试通过剪枝提高分值。做学习曲线，探索max_depth的最优值</strong>     </p>
-<pre><code>tr=[]
-te=[]
-
-for i in range(10):
-   clf = DecisionTreeClassifier(random_state=25
-                               ,max_depth=i+1
-                               )
-   clf = clf.fit(Xtrain, Ytrain)
-   score_tr = clf.score(Xtrain, Ytrain)
-   score_te = cross_val_score(clf, x, y, cv=10).mean()
-   tr.append(score_tr)
-   te.append(score_te)
-
-print(max(te))
-&gt;&gt;&gt;0.8143896833503576
-
-plt.plot(range(1,11), tr, color=&quot;red&quot;, label=&quot;train&quot;)
-plt.plot(range(1,11), te, color=&quot;blue&quot;, label=&quot;test&quot;)                
-plt.xticks(range(1,11))
-plt.legend()
-plt.show()
-#如果在训练集上表现的很好，在测试集上表现的很糟糕，说明过拟合；如果在测试集上表现的很好，在训练集上表现的很不好，说明模型欠拟合   </code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718124154493.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">      </p>
-</blockquote>
-<p><strong>随着<code>max_depth</code>的加深，训练集的拟合程度越来越深，出现过拟合现象，所以当且仅当max_depth=3时，可能通过调参获取最优模型</strong></p>
-<pre><code>tr=[]
-te=[]
-
-for i in range(10):
-   clf = DecisionTreeClassifier(random_state=25
-                               ,max_depth=i+1
-                               ,criterion=&quot;entropy&quot;)           #将基尼系数改为信息熵，当模型欠拟合时会采用这一参数
-   clf = clf.fit(Xtrain, Ytrain)
-   score_tr = clf.score(Xtrain, Ytrain)
-   score_te = cross_val_score(clf, x, y, cv=10).mean()
-   tr.append(score_tr)
-   te.append(score_te)
-
-print(max(te))
-&gt;&gt;&gt;0.8166624106230849
-
-
-plt.plot(range(1,11), tr, color=&quot;red&quot;, label=&quot;train&quot;)
-plt.plot(range(1,11), te, color=&quot;blue&quot;, label=&quot;test&quot;)                
-plt.xticks(range(1,11))
-plt.legend()
-plt.show()</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718124229177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">      </p>
-</blockquote>
-</blockquote>
-<hr>
-<hr>
-<h2 id="网格搜索，确定最优参数"><a href="#网格搜索，确定最优参数" class="headerlink" title="网格搜索，确定最优参数"></a>网格搜索，确定最优参数</h2><p>能够帮我们同时调整多个参数，本质上是枚举             </p>
+<h3 id="序列测序长度统计"><a href="#序列测序长度统计" class="headerlink" title="序列测序长度统计"></a>序列测序长度统计</h3><p><img src="https://img-blog.csdnimg.cn/2020080318483365.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <blockquote>
-<pre><code>import numpy as np
-gini_thresholds = np.linspace(0,0.5,20)#在0~0.5有顺序且等间隔的取50个值
-
-parameters = {&apos;splitter&apos;:(&apos;best&apos;,&apos;random&apos;)
-,&apos;criterion&apos;:(&quot;gini&quot;,&quot;entropy&quot;)
-,&quot;max_depth&quot;:[*range(1,10)]
-,&apos;min_samples_leaf&apos;:[*range(1,50,5)]
-,&apos;min_impurity_decrease&apos;:[*np.linspace(0,0.5,20)]          #信息增益最小值，当小于这个值的时候就不再分支
-}
-clf = DecisionTreeClassifier(random_state=25)
-GS = GridSearchCV(clf, parameters, cv=10)                  #parameters是参数及其取值的字典
-GS.fit(Xtrain,Ytrain)</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200718124306944.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">    </p>
+<p>·<strong>每次测序仪测出来的长度在理论上应该是完全相等的，但是总会有一些偏差。比如在这张图上，151bp是主要的，但是还是有少量的150和152bp的长度。当测序的长度不同时，如果很严重，则表明测序仪在此次测序不成功。</strong></p>
 </blockquote>
-<pre><code>GS.best_params_        #从我们输入的参数和参数取值的列表中，返回最佳组合
-&gt;&gt;&gt;{&apos;criterion&apos;: &apos;entropy&apos;,
-  &apos;max_depth&apos;: 6,
-  &apos;min_impurity_decrease&apos;: 0.0,
-  &apos;min_samples_leaf&apos;: 1,
-  &apos;splitter&apos;: &apos;random&apos;}
-
-
-GS.best_score_
-&gt;&gt;&gt;0.8183307731694829
-</code></pre></blockquote>
+<hr>
+<h3 id="重复序列"><a href="#重复序列" class="headerlink" title="重复序列"></a>重复序列</h3><p><img src="https://img-blog.csdnimg.cn/20200803185204813.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>·<strong>统计序列完全一样的reads的频率。横坐标是duplication的次数，纵坐标是duplication的数目。</strong></p>
+</blockquote>
+<p><strong>尚不完善，待分析完全</strong>  </p>
+<hr>
+<h1 id="基础分析"><a href="#基础分析" class="headerlink" title="基础分析"></a>基础分析</h1><h3 id="主成分分析图（PCA图）-—-用RNA测序结果体现样本聚类"><a href="#主成分分析图（PCA图）-—-用RNA测序结果体现样本聚类" class="headerlink" title="主成分分析图（PCA图）   —-用RNA测序结果体现样本聚类"></a>主成分分析图（PCA图）   —-用RNA测序结果体现样本聚类</h3><p><strong>主成分分析是生信分析中最朴实无华的，因为谁都能看的懂。我们不需要操心X,Y轴的主成分到底是什么，只要明白每个样本都被一个二维坐标（X,Y）定位到了这张图上。对于转录组的PCA图中，如果两个样本距离越远，则说明两个样本转录组差异越大。我们最想看到的情况就是，相同表型的个体（比如疾病组）会在图中聚类在一起。</strong>    </p>
+<p><img src="https://img-blog.csdnimg.cn/20200803190739589.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<hr>
+<h3 id="差异基因表达散点图—-体现重复样本的重复性好不好"><a href="#差异基因表达散点图—-体现重复样本的重复性好不好" class="headerlink" title="差异基因表达散点图—-体现重复样本的重复性好不好"></a>差异基因表达散点图—-体现重复样本的重复性好不好</h3><p><strong>我们可以简单的把这张图理解为2个样本的RNAseq结果关联度散点图。X,Y轴分别是两个样本，每个点代表一个基因在两个样品中FPKM的对数值（FPKM是RNA-seq中衡量基因表达高低的常用数值），从这张图中可以观察，偏离对角线的点越多，说明样品表达量的相关性越低，重复性越差；偏离对角线的点越少，则说明样品间表达量的相关性越高，重复样品的重复性越好。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200803191142544.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<hr>
+<h3 id="差异基因表达火山图—-直观展示上调表达和下调表达基因数量"><a href="#差异基因表达火山图—-直观展示上调表达和下调表达基因数量" class="headerlink" title="差异基因表达火山图—-直观展示上调表达和下调表达基因数量"></a>差异基因表达火山图—-直观展示上调表达和下调表达基因数量</h3><p><strong>对于常规的2组样本RNA-seq研究，我们关心的是组1和组2到底哪些基因有显著性的差异表达（T检验获得P值，p值反映显著性），差异表达基因在组1和组2之间到底查了多少倍。—-这些信息都是通过火山图展示的，火山图是以log2（差异倍数）为横坐标，以T检-log10（P值）为纵坐标。所以，我们最关心的基因就是图中左上角和右上角的点，分别表示表达水平差异非常显著的下调基因和上调基因。</strong><br><img src="https://img-blog.csdnimg.cn/20200803191607252.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<hr>
+<h3 id="差异基因聚类热图—-体现样本聚类和基因聚类"><a href="#差异基因聚类热图—-体现样本聚类和基因聚类" class="headerlink" title="差异基因聚类热图—-体现样本聚类和基因聚类"></a>差异基因聚类热图—-体现样本聚类和基因聚类</h3><p><strong>聚类热图体现了2个层次的聚类，一般会在横轴和纵轴的位置展示。如下图横轴顶部的线图，展示了样本的聚类；而下图左侧线图，可以将不同样本中表达模式相同或相似的基因聚为一类，这样的聚类有助于推测位置基因功能或已知基因是否具有新功能。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200803191927610.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<hr>
+<h3 id="差异基因韦恩图—-用于寻找交集“元素”"><a href="#差异基因韦恩图—-用于寻找交集“元素”" class="headerlink" title="差异基因韦恩图—-用于寻找交集“元素”"></a>差异基因韦恩图—-用于寻找交集“元素”</h3><p><strong>韦恩图用于显示元素集合重叠区域的图示。对于RNA-seq来说，至少有三个组别的样本才能绘制韦恩图。比如对于下图来说，A和B对比，差异表达基因有353+492个，B和C对比，差异表达基因有353+51个，那么同时在这2种比较里面都是差异表达的基因数目即为353个。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200803192244201.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<hr>
+<h3 id="时间-浓度序列基因表达变化趋势图—-按趋势类聚"><a href="#时间-浓度序列基因表达变化趋势图—-按趋势类聚" class="headerlink" title="时间/浓度序列基因表达变化趋势图—-按趋势类聚"></a>时间/浓度序列基因表达变化趋势图—-按趋势类聚</h3><p><strong>对于探究不同时间点，或者不同浓度处理下的样本的表达量变化，通常需要如下的趋势图。该图展示了依据不同时间点的表达量，这些基因可以被聚成多少cluster，同一cluster的基因可能具有相似或者相关的基因功能。</strong><br><img src="https://img-blog.csdnimg.cn/20200803192506768.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><strong>未完待续</strong></p>
+<hr>
 
       
 
@@ -405,7 +295,7 @@ GS.best_score_
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DecisionTree</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">RNA-seq</a>
         		</li>
       		
 		</ul>
@@ -417,7 +307,7 @@ GS.best_score_
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/sklearn//" class="article-tag-list-link color3">sklearn</a>
+        			<a href="/categories/生物信息学//" class="article-tag-list-link color1">生物信息学</a>
         		</li>
       		
 		</ul>
@@ -472,7 +362,7 @@ GS.best_score_
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2020/07/18/实战：泰坦尼克号幸存者预测/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2020/08/03/RNA-seq结果图分析/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -486,18 +376,9 @@ GS.best_score_
   
 <nav id="article-nav">
   
-    <a href="/2020/07/19/批量生成折线图/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          批量生成折线图
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/07/15/sklearn-DecisionTreeRegressor/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">sklearn-DecisionTreeRegressor</div>
+    <a href="/2020/08/02/数据预处理和特征工程/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据预处理和特征工程</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -524,7 +405,7 @@ GS.best_score_
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#泰坦尼克号幸存者预测"><span class="toc-number">1.</span> <span class="toc-text">泰坦尼克号幸存者预测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#读取数据"><span class="toc-number">1.1.</span> <span class="toc-text">读取数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#探索数据"><span class="toc-number">1.2.</span> <span class="toc-text">探索数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据预处理"><span class="toc-number">1.3.</span> <span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建模"><span class="toc-number">1.4.</span> <span class="toc-text">建模</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网格搜索，确定最优参数"><span class="toc-number">1.5.</span> <span class="toc-text">网格搜索，确定最优参数</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#质量测序"><span class="toc-number">1.</span> <span class="toc-text">质量测序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#序列测序质量统计"><span class="toc-number">1.0.1.</span> <span class="toc-text">序列测序质量统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#每条序列的测序质量统计"><span class="toc-number">1.0.2.</span> <span class="toc-text">每条序列的测序质量统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#碱基分布图"><span class="toc-number">1.0.3.</span> <span class="toc-text">碱基分布图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#碱基平均含量分布图"><span class="toc-number">1.0.4.</span> <span class="toc-text">碱基平均含量分布图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#N统计含量"><span class="toc-number">1.0.5.</span> <span class="toc-text">N统计含量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#序列测序长度统计"><span class="toc-number">1.0.6.</span> <span class="toc-text">序列测序长度统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重复序列"><span class="toc-number">1.0.7.</span> <span class="toc-text">重复序列</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基础分析"><span class="toc-number">2.</span> <span class="toc-text">基础分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主成分分析图（PCA图）-—-用RNA测序结果体现样本聚类"><span class="toc-number">2.0.1.</span> <span class="toc-text">主成分分析图（PCA图）   —-用RNA测序结果体现样本聚类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#差异基因表达散点图—-体现重复样本的重复性好不好"><span class="toc-number">2.0.2.</span> <span class="toc-text">差异基因表达散点图—-体现重复样本的重复性好不好</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#差异基因表达火山图—-直观展示上调表达和下调表达基因数量"><span class="toc-number">2.0.3.</span> <span class="toc-text">差异基因表达火山图—-直观展示上调表达和下调表达基因数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#差异基因聚类热图—-体现样本聚类和基因聚类"><span class="toc-number">2.0.4.</span> <span class="toc-text">差异基因聚类热图—-体现样本聚类和基因聚类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#差异基因韦恩图—-用于寻找交集“元素”"><span class="toc-number">2.0.5.</span> <span class="toc-text">差异基因韦恩图—-用于寻找交集“元素”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间-浓度序列基因表达变化趋势图—-按趋势类聚"><span class="toc-number">2.0.6.</span> <span class="toc-text">时间/浓度序列基因表达变化趋势图—-按趋势类聚</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
