@@ -6,24 +6,37 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://william-chen777.github.io">
-  <title>RandomForestClassifier | William Chen</title>
+  <title>sklearn中的降维算法 | William Chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="RandomForestClassifierclass sklearn.ensemble.RandomForestClassifier (n_estimators=’10’, criterion=’gini’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_fea">
-<meta name="keywords" content="RandomForest">
+  <meta name="description" content="sklearn中的降维算法-PCA和SVD在降维过程中，我们会减少特征的数量，这意味着删除数据，数据量变少则表示模型可以获取的信息会变少，模型的表现可能会因此受影响。      我们希望能够找出一种办法来帮助我们衡量特征上所带的信息量，让我们在降维的过程中，能够即减少特征的数量，又保留大部分有效信息——将那些带有重复信息的特征合并，并删除那些带无效信息的特征等等——逐渐创造出能够代表原特征矩阵大部">
+<meta name="keywords" content="降维">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RandomForestClassifier">
-<meta property="og:url" content="https://william-chen777.github.io/2020/07/20/RandomForestClassifier/index.html">
+<meta property="og:title" content="sklearn中的降维算法">
+<meta property="og:url" content="https://william-chen777.github.io/2020/08/04/sklearn中的降维算法/index.html">
 <meta property="og:site_name" content="William Chen">
-<meta property="og:description" content="RandomForestClassifierclass sklearn.ensemble.RandomForestClassifier (n_estimators=’10’, criterion=’gini’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_fea">
+<meta property="og:description" content="sklearn中的降维算法-PCA和SVD在降维过程中，我们会减少特征的数量，这意味着删除数据，数据量变少则表示模型可以获取的信息会变少，模型的表现可能会因此受影响。      我们希望能够找出一种办法来帮助我们衡量特征上所带的信息量，让我们在降维的过程中，能够即减少特征的数量，又保留大部分有效信息——将那些带有重复信息的特征合并，并删除那些带无效信息的特征等等——逐渐创造出能够代表原特征矩阵大部">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200720160235518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200720160551771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20200720160805866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
-<meta property="og:updated_time" content="2020-07-20T08:16:15.601Z">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020080710493333.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020080710500114.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105102330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105239134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105251832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105312424.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020080710541917.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105522735.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105532603.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105552786.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105704399.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105724179.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105742831.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105758708.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105808657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200807105820225.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-08-07T03:04:59.784Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RandomForestClassifier">
-<meta name="twitter:description" content="RandomForestClassifierclass sklearn.ensemble.RandomForestClassifier (n_estimators=’10’, criterion=’gini’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_fea">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200720160235518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
+<meta name="twitter:title" content="sklearn中的降维算法">
+<meta name="twitter:description" content="sklearn中的降维算法-PCA和SVD在降维过程中，我们会减少特征的数量，这意味着删除数据，数据量变少则表示模型可以获取的信息会变少，模型的表现可能会因此受影响。      我们希望能够找出一种办法来帮助我们衡量特征上所带的信息量，让我们在降维的过程中，能够即减少特征的数量，又保留大部分有效信息——将那些带有重复信息的特征合并，并删除那些带无效信息的特征等等——逐渐创造出能够代表原特征矩阵大部">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2020080710493333.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="William Chen" type="application/atom+xml">
   
@@ -161,14 +174,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-RandomForestClassifier" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-sklearn中的降维算法" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      RandomForestClassifier
+      sklearn中的降维算法
     </h1>
   
 
@@ -184,176 +197,439 @@
         
         <!--显示阅读次数完毕-->
         
-        <a href="/2020/07/20/RandomForestClassifier/" class="archive-article-date">
-  	<time datetime="2020-07-20T07:42:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-20</time>
+        <a href="/2020/08/04/sklearn中的降维算法/" class="archive-article-date">
+  	<time datetime="2020-08-04T02:04:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="RandomForestClassifier"><a href="#RandomForestClassifier" class="headerlink" title="RandomForestClassifier"></a>RandomForestClassifier</h1><p>class sklearn.ensemble.RandomForestClassifier (n_estimators=’10’, criterion=’gini’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features=’auto’, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, bootstrap=True, oob_score=False, n_jobs=None, random_state=None, verbose=0, warm_start=False, class_weight=None)</p>
+        <h1 id="sklearn中的降维算法-PCA和SVD"><a href="#sklearn中的降维算法-PCA和SVD" class="headerlink" title="sklearn中的降维算法-PCA和SVD"></a>sklearn中的降维算法-PCA和SVD</h1><p><strong>在降维过程中，我们会减少特征的数量</strong>，这意味着删除数据，数据量变少则表示模型可以获取的信息会变少，模型的表现可能会因此受影响。     </p>
+<p>我们希望能够找出一种办法来帮助我们衡量特征上所带的信息量，让我们在降维的过程中，能够<strong>即减少特征的数量，又保留大部分有效信息</strong>——将那些带有重复信息的特征合并，并删除那些带无效信息的特征等等——逐渐创造出能够代表原特征矩阵大部分信息的，特征更少的，新特征矩阵。    </p>
+<p>如果一个特征的方差很大，则说明这个特征上带有大量的信息。因此，在降维中，<strong>PCA使用的信息量衡量指标，就是样本方差，又称可解释性方差，方差越大，特征所带的信息量越多</strong>。   </p>
 <a id="more"></a>
 
-<h2 id="n-estimators"><a href="#n-estimators" class="headerlink" title="n_estimators"></a>n_estimators</h2><p>这是森林中树木的数量，即基评估器的数量。这个参数对随机森林模型的精确性影响是单调的，n_estimators越 大，模型的效果往往越好。但是相应的，任何模型都有决策边界，n_estimators达到一定的程度之后，随机森林的 精确性往往不在上升或开始波动，并且，n_estimators越大，需要的计算量和内存也越大，训练的时间也会越来越 长。对于这个参数，我们是渴望在训练难度和模型效果之间取得平衡。 n_estimators的默认值在现有版本的sklearn中是10，但是在即将更新的0.22版本中，这个默认值会被修正为 100。这个修正显示出了使用者的调参倾向：要更大的n_estimators。    </p>
-<blockquote>
-<pre><code>%matplotlib inline  
 
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import load_wine</code></pre><pre><code>wine = load_wine()
+<h1 id="降维究竟是怎样实现？"><a href="#降维究竟是怎样实现？" class="headerlink" title="降维究竟是怎样实现？"></a>降维究竟是怎样实现？</h1><p><img src="https://img-blog.csdnimg.cn/2020080710493333.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>我们现在有一组简单的数据，有特征x1和x2，三个样本数据的坐标点分别为(1,1)，(2,2)，(3,3)。我们可以让x1和x2分别作为两个特征向量，很轻松地用一个二维平面来描述这组数据。这组数据现在每个特征的均值都为2，方差则等于：</p>
+<p><img src="https://img-blog.csdnimg.cn/2020080710500114.png" alt="在这里插入图片描述"></p>
+<p>每个特征的数据一模一样，因此方差也都为1，数据的方差总和是2。</p>
+<p>现在我们的目标是：只用一个特征向量来描述这组数据，即将二维数据降为一维数据，并且尽可能地保留信息量，即让数据的总方差尽量靠近2。于是，我们将原本的直角坐标系逆时针旋转45°，形成了新的特征向量x1#和x2#组成的新平面。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200807105102330.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><strong>我们用来找出n个新特征向量，让数据能够被压缩到少数特征上并且总信息量不损失太多的技术就是矩阵分解</strong>,降维完成之后，PCA找到的每个新特征向量就叫做<strong>“主成分”</strong>，而被丢弃的特征向量被认为信息量很少，这些信息很可能就是噪音。</p>
+<h3 id="PCA和特征选择技术都是特征工程的一部分，它们有什么不同？"><a href="#PCA和特征选择技术都是特征工程的一部分，它们有什么不同？" class="headerlink" title="PCA和特征选择技术都是特征工程的一部分，它们有什么不同？"></a>PCA和特征选择技术都是特征工程的一部分，它们有什么不同？</h3><p>特征工程中有三种方式：特征提取，特征创造和特征选择。     </p>
+<p>特征选择是从已存在的特征中选取携带信息最多的，选完之后的特征依然具有可解释性，我们依然知道这个特征在原数据的哪个位置，代表着原数据上的什么含义。     </p>
+<p>而PCA，是将已存在的特征进行压缩，降维完毕后的特征不是原本的特征矩阵中的任何一个特征，而是通过某些方式组合起来的新特征。通常来说，在新的特征矩阵生成之前，我们无法知晓PCA都建立了怎样的新特征向量，新特征矩阵生成之后也不具有可读性，我们无法判断新特征矩阵的特征是从原数据中的什么特征组合而来，新特征虽然带有原始数据的信息，却已经不是原数据上代表着的含义了。    </p>
+<p>以PCA为代表的降维算法因此是特征创造（feature creation，或feature construction）的一种。可以想见，PCA一般不适用于探索特征和标签之间的关系的模型（如线性回归），因为无法解释的新特征和标签之间的关系不具有意义。在线性回归模型中，我们使用特征选择。</p>
+<h2 id="重要参数：n-components"><a href="#重要参数：n-components" class="headerlink" title="重要参数：n_components"></a>重要参数：n_components</h2><p>n_components是我们降维后需要的维度，即降维后需要保留的特征数量，降维流程中第二步里需要确认的k值，一般输入[0, min(X.shape)]范围中的整数。一说到K，大家可能都会想到，类似于KNN中的K和随机森林中的       </p>
+<p>n_estimators，这是一个需要我们人为去确认的超参数，并且我们设定的数字会影响到模型的表现。如果留下的特征太多，就达不到降维的效果，如果留下的特征太少，那新特征向量可能无法容纳原始数据集中的大部分信息，因此，n_components既不能太大也不能太小。那怎么办呢？<br>可以先从我们的降维目标说起：<strong>如果我们希望可视化一组数据来观察数据分布，我们往往将数据降到三维以下，很多时候是二维，即n_components的取值为2。</strong></p>
+<h4 id="迷你案例：高维数据的可视化"><a href="#迷你案例：高维数据的可视化" class="headerlink" title="迷你案例：高维数据的可视化"></a>迷你案例：高维数据的可视化</h4><h5 id="调用库和模块"><a href="#调用库和模块" class="headerlink" title="调用库和模块"></a>调用库和模块</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris        <span class="comment">#导入鸢尾花数据集</span></span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br></pre></td></tr></table></figure>
 
-wine.data.shape
-&gt;&gt;&gt;(178, 13)
+<h5 id="提取数据集"><a href="#提取数据集" class="headerlink" title="提取数据集"></a>提取数据集</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iris = load_iris()  <span class="comment">#实例化</span></span><br></pre></td></tr></table></figure>
 
-wine.target
-&gt;&gt;&gt;array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1,
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2,
-      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-      2, 2])</code></pre></blockquote>
-<hr>
-<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><p>实例化<br>训练集带入实例化后的模型取训练，使用的接口是fit<br>使用其他接口将测试集导入我们训练好的模型，去获取我们希望获取的结果（score,Y_test)   </p>
-<blockquote>
-<pre><code>from sklearn.model_selection import train_test_split      #
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">y = iris.target</span><br><span class="line">X = iris.data</span><br></pre></td></tr></table></figure>
 
-Xtrain, Xtest, Ytrain, Ytest = train_test_split(wine.data, wine.target, test_size=0.3) 
-# 划分数据
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X</span><br></pre></td></tr></table></figure>
 
-clf = DecisionTreeClassifier(random_state=0)
-rfc = RandomForestClassifier(random_state=0)
-# 实例化
+<pre><code>array([[5.1, 3.5, 1.4, 0.2],
+       [4.9, 3. , 1.4, 0.2],
+       [4.7, 3.2, 1.3, 0.2],
+       [4.6, 3.1, 1.5, 0.2],
+       [5. , 3.6, 1.4, 0.2],
+      .........
+       [6.8, 3.2, 5.9, 2.3],
+       [6.7, 3.3, 5.7, 2.5],
+       [6.7, 3. , 5.2, 2.3],
+       [6.3, 2.5, 5. , 1.9],
+       [6.5, 3. , 5.2, 2. ],
+       [6.2, 3.4, 5.4, 2.3],
+       [5.9, 3. , 5.1, 1.8]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#作为数组，X是几维？</span></span><br><span class="line">X.shape</span><br></pre></td></tr></table></figure>
 
-clf = clf.fit(Xtrain, Ytrain)
-rfc = rfc.fit(Xtrain, Ytrain)
-# 训练模型
+<pre><code>(150, 4)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#作为数据表或特征矩阵，X是几维？</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">pd.DataFrame(X)</span><br></pre></td></tr></table></figure>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+<pre><code>.dataframe tbody tr th {
+    vertical-align: top;
+}
+
+.dataframe thead th {
+    text-align: right;
+}</code></pre><p></style><p></p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 4 columns</p>
+</div>
 
 
-score_c = clf.score(Xtest, Ytest)
-score_r = rfc.score(Xtest, Ytest)
-# 打分
 
 
-print (&quot;single tree:{}&quot;.format(score_c)
-     ,&quot;random forest:{}&quot;.format(score_r))            # 将format()带入到前面的大括号里面，并将数值转成字符串
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y</span><br></pre></td></tr></table></figure>
 
-&gt;&gt;&gt;single tree:0.9074074074074074 
-  random forest:0.9814814814814815
-</code></pre><p><strong>看出随机森林比决策树的打分高很多</strong>   </p>
-</blockquote>
-<hr>
-<h2 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h2><blockquote>
-<pre><code>from sklearn.model_selection import cross_val_score
-import matplotlib.pyplot as plt
-# 导入模块</code></pre><pre><code>rfc = RandomForestClassifier(n_estimators=25)                 # 实例化，做25棵树     
-rfc_s = cross_val_score(rfc, wine.data, wine.target, cv=10)   # 交叉验证
+<pre><code>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])</code></pre><h5 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#调用PCA</span></span><br><span class="line">pca = PCA(n_components=<span class="number">2</span>) <span class="comment">#实例化</span></span><br><span class="line">pca = pca.fit(X) <span class="comment">#拟合模型</span></span><br><span class="line">X_dr = pca.transform(X) <span class="comment">#获取新矩阵（降维完毕）</span></span><br></pre></td></tr></table></figure>
 
-clf = DecisionTreeClassifier()
-clf_s = cross_val_score(clf, wine.data, wine.target, cv=10)
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X_dr</span><br><span class="line"><span class="comment">#也可以fit_transform一步到位</span></span><br><span class="line"><span class="comment">#X_dr = PCA(2).fit_transform(X)</span></span><br></pre></td></tr></table></figure>
 
-plt.plot(range(1,11), rfc_s, label=&quot;RandomForest&quot;)
-plt.plot(range(1,11), clf_s, label=&quot;DecisionTree&quot;)
-plt.legend()
-plt.show()</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200720160235518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-</blockquote>
-<p><strong>每次验证中，随机森林比决策树的效果要更好</strong></p>
-</blockquote>
-<hr>
-<h2 id="n-estimators的学习曲线"><a href="#n-estimators的学习曲线" class="headerlink" title="n_estimators的学习曲线"></a>n_estimators的学习曲线</h2><p>在不同的n_estimators下跑200次。第一次建1棵，第二次建2颗……，然后输出最高的分值为0.99，以及此时的n_estimators值为30      </p>
-<blockquote>
-<pre><code>superpa = []
-for i in range(200):
-   rfc = RandomForestClassifier(n_estimators=i+1,n_jobs=-1)
-   rfc_s = cross_val_score(rfc,wine.data,wine.target,cv=10).mean()
-   superpa.append(rfc_s)
+<pre><code>array([[-2.68412563,  0.31939725],
+       [-2.71414169, -0.17700123],
+       [-2.88899057, -0.14494943],
+       [-2.74534286, -0.31829898],
+       [-2.72871654,  0.32675451],
+       ........
+       [ 1.94410979,  0.1875323 ],
+       [ 1.52716661, -0.37531698],
+       [ 1.76434572,  0.07885885],
+       [ 1.90094161,  0.11662796],
+       [ 1.39018886, -0.28266094]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_dr.shape</span><br></pre></td></tr></table></figure>
 
-print(max(superpa),superpa.index(max(superpa)))
-plt.figure(figsize=[20,5])
-plt.plot(range(1,201),superpa)
-plt.show()
+<pre><code>(150, 2)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y</span><br></pre></td></tr></table></figure>
 
-&gt;&gt;&gt;0.9888888888888889 29</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200720160551771.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">   </p>
-</blockquote>
-</blockquote>
-<h2 id="画出随机森林和决策树在十组交叉验证下的效果对比图"><a href="#画出随机森林和决策树在十组交叉验证下的效果对比图" class="headerlink" title="画出随机森林和决策树在十组交叉验证下的效果对比图"></a>画出随机森林和决策树在十组交叉验证下的效果对比图</h2><blockquote>
-<pre><code>rfc_1 = []
-clf_1 = []
+<pre><code>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])</code></pre><h5 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_dr [y == <span class="number">0</span>, <span class="number">0</span>]           <span class="comment">#取出第0列，所有y=0的行</span></span><br></pre></td></tr></table></figure>
 
-for i in range(10):
-   rfc = RandomForestClassifier(n_estimators=25)
-   rfc_s = cross_val_score(rfc, wine.data, wine.target, cv=10).mean()
-   rfc_1.append(rfc_s)
+<pre><code>array([-2.68412563, -2.71414169, -2.88899057, -2.74534286, -2.72871654,
+       -2.28085963, -2.82053775, -2.62614497, -2.88638273, -2.6727558 ,
+       -2.50694709, -2.61275523, -2.78610927, -3.22380374, -2.64475039,
+       -2.38603903, -2.62352788, -2.64829671, -2.19982032, -2.5879864 ,
+       -2.31025622, -2.54370523, -3.21593942, -2.30273318, -2.35575405,
+       -2.50666891, -2.46882007, -2.56231991, -2.63953472, -2.63198939,
+       -2.58739848, -2.4099325 , -2.64886233, -2.59873675, -2.63692688,
+       -2.86624165, -2.62523805, -2.80068412, -2.98050204, -2.59000631,
+       -2.77010243, -2.84936871, -2.99740655, -2.40561449, -2.20948924,
+       -2.71445143, -2.53814826, -2.83946217, -2.54308575, -2.70335978])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#老实人的写法</span></span><br><span class="line">plt.figure()  <span class="comment">#画布大小</span></span><br><span class="line"></span><br><span class="line">plt.scatter(X_dr[y==<span class="number">0</span>, <span class="number">0</span>], X_dr[y==<span class="number">0</span>, <span class="number">1</span>], c=<span class="string">"red"</span>, label=iris.target_names[<span class="number">0</span>])  </span><br><span class="line">plt.scatter(X_dr[y==<span class="number">1</span>, <span class="number">0</span>], X_dr[y==<span class="number">1</span>, <span class="number">1</span>], c=<span class="string">"black"</span>, label=iris.target_names[<span class="number">1</span>])</span><br><span class="line">plt.scatter(X_dr[y==<span class="number">2</span>, <span class="number">0</span>], X_dr[y==<span class="number">2</span>, <span class="number">1</span>], c=<span class="string">"orange"</span>, label=iris.target_names[<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line">plt.legend()</span><br><span class="line">plt.title(<span class="string">'PCA of IRIS dataset'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
-   clf = DecisionTreeClassifier()
-   clf_s = cross_val_score(clf, wine.data, wine.target, cv=10).mean()
-   clf_1.append(clf_s)
+<p><img src="https://img-blog.csdnimg.cn/20200807105239134.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#使用for循环实现数据可视化</span></span><br><span class="line">plt.figure()</span><br><span class="line"></span><br><span class="line">colors = [<span class="string">'red'</span>, <span class="string">'black'</span>, <span class="string">'orange'</span>]</span><br><span class="line">iris.target_names</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]:</span><br><span class="line">    plt.scatter(X_dr[y == i, <span class="number">0</span>]</span><br><span class="line">                    , X_dr[y == i, <span class="number">1</span>]</span><br><span class="line">                    , alpha=<span class="number">.7</span>       <span class="comment">#透明度</span></span><br><span class="line">                    , c=colors[i]</span><br><span class="line">                    , label=iris.target_names[i]</span><br><span class="line">                      )</span><br><span class="line">    </span><br><span class="line">plt.legend()</span><br><span class="line">plt.title(<span class="string">'PCA of IRIS dataset'</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
-plt.plot(range(1,11), rfc_1, label=&quot;Random Forest&quot;)
-plt.plot(range(1,11), clf_1, label=&quot;Decicison Tree&quot;)
-plt.legend()
-plt.show()   
-</code></pre><blockquote>
-<p><img src="https://img-blog.csdnimg.cn/20200720160805866.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">      </p>
-</blockquote>
-<p><strong>通过100次验证，可以看出随机森林与决策树之间的差异</strong><br><strong>随机森林是通过决策树的平均值来计算的，30棵树中有15棵树错误才能导致随机森林判断其为错误，而决策树的错误率是0.2，所以决策树的错误概率为0.2的15次方。</strong>    </p>
-</blockquote>
-<blockquote>
-<pre><code>rfc = RandomForestClassifier(n_estimators=25, random_state=2)
-rfc = rfc.fit(Xtrain, Ytrain)
+<p><img src="https://img-blog.csdnimg.cn/20200807105251832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h5 id="探索降维后的数据"><a href="#探索降维后的数据" class="headerlink" title="探索降维后的数据"></a>探索降维后的数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#属性explained_variance_，查看降维后每个新特征向量上所带的信息量大小（可解释性方差的大小）</span></span><br><span class="line">pca.explained_variance_</span><br></pre></td></tr></table></figure>
 
-# 随机森林中重要的属性：estimators_ ,查看森林中树的状况
-rfc.estimators_[0]
-&gt;&gt;&gt;DecisionTreeClassifier(max_features=&apos;auto&apos;, random_state=1872583848)</code></pre></blockquote>
-<blockquote>
-<p><strong>使用 oob_score=True 参数，无需划分训练集和测试集</strong>    </p>
-<pre><code>rfc = RandomForestClassifier(n_estimators=25, oob_score=True)
-rfc = rfc.fit(wine.data, wine.target)                                #完整的数据集
+<pre><code>array([4.22824171, 0.24267075])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#属性explained_variance_ratio，查看降维后每个新特征向量所占的信息量占原始数据总信息量的百分比</span></span><br><span class="line"><span class="comment">#又叫做可解释方差贡献率</span></span><br><span class="line">pca.explained_variance_ratio_    <span class="comment">#大部分信息都被有效地集中在了第一个特征上</span></span><br></pre></td></tr></table></figure>
 
-rfc.oob_score_
-&gt;&gt;&gt;0.9887640449438202</code></pre></blockquote>
-<h2 id="重要的属性和接口"><a href="#重要的属性和接口" class="headerlink" title="重要的属性和接口"></a>重要的属性和接口</h2><blockquote>
-<pre><code>rfc = RandomForestClassifier(n_estimators=25)
-rfc = rfc.fit(Xtrain, Ytrain)
+<pre><code>array([0.92461872, 0.05306648])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 降维后数据总信息量与原始数据的对比</span></span><br><span class="line">pca.explained_variance_ratio_.sum()</span><br></pre></td></tr></table></figure>
 
-rfc.score(Xtest,Ytest)
-&gt;&gt;&gt;0.9814814814814815
+<pre><code>0.977685206318795</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pca_line = PCA().fit(X)</span><br></pre></td></tr></table></figure>
 
-rfc.feature_importances_
-&gt;&gt;&gt;array([0.09836407, 0.03709119, 0.00633773, 0.01690141, 0.05652153,
-      0.05270029, 0.14390297, 0.01017389, 0.00975081, 0.17916517,
-      0.11107285, 0.08174645, 0.19627163])
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pca_line.explained_variance_ratio_   <span class="comment">#默认特征个数为4的情况下，每个特征的信息占比</span></span><br></pre></td></tr></table></figure>
 
-rfc.apply(Xtest)
-&gt;&gt;&gt;array([[13,  6,  3, ...,  7,  1,  4],
-      [ 6,  2, 10, ...,  1,  7,  6],
-      [ 6,  2, 10, ...,  1,  7,  6],
-      ...,
-      [ 6,  2, 10, ...,  1,  7, 16],
-      [16,  7, 16, ..., 21, 14, 20],
-      [ 4,  6,  3, ...,  7,  1,  4]], dtype=int64)
+<pre><code>array([0.92461872, 0.05306648, 0.01710261, 0.00521218])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
 
-rfc.predict(Xtest)
-&gt;&gt;&gt;array([2, 1, 1, 1, 0, 1, 1, 0, 0, 2, 2, 2, 1, 1, 2, 1, 2, 1, 1, 2, 2, 0,
-      0, 2, 1, 0, 1, 2, 0, 2, 2, 0, 1, 0, 2, 0, 0, 1, 0, 0, 1, 1, 2, 2,
-      1, 0, 1, 2, 2, 0, 2, 1, 0, 2])
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.cumsum(pca_line.explained_variance_ratio_)   <span class="comment"># 画出第一个值，第一加第二个值，第一加第二加第三个值……</span></span><br></pre></td></tr></table></figure>
 
-rfc.predict_proba(Xtest)            #分到的标签的概率
-&gt;&gt;&gt;array([[0.  , 0.04, 0.96],
-      [0.  , 0.96, 0.04],
-      [0.  , 1.  , 0.  ],
-      [0.08, 0.92, 0.  ],
-      [1.  , 0.  , 0.  ],
-      [0.08, 0.92, 0.  ],
-            .....
-      [0.  , 1.  , 0.  ],
-      [0.92, 0.08, 0.  ],
-      [0.  , 0.04, 0.96]])</code></pre></blockquote>
+<pre><code>array([0.92461872, 0.97768521, 0.99478782, 1.        ])</code></pre><h5 id="选择最好的n-components：累积可解释方差贡献率曲线"><a href="#选择最好的n-components：累积可解释方差贡献率曲线" class="headerlink" title="选择最好的n_components：累积可解释方差贡献率曲线"></a>选择最好的n_components：累积可解释方差贡献率曲线</h5><p>当参数n_components中不填写任何值，则默认返回min(X.shape)个特征，一般来说，样本量都会大于特征数目，所以什么都不填就相当于转换了新特征空间，但没有减少特征的个数。一般来说，不会使用这种输入方式。但我们却可以使用这种输入方式来画出累计可解释方差贡献率曲线，以此选择最好的n_components的整数取值。<br>累积可解释方差贡献率曲线是一条以降维后保留的特征个数为横坐标，降维后新特征矩阵捕捉到的可解释方差贡献率为纵坐标的曲线，能够帮助我们决定n_components最好的取值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plt.plot([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span><br><span class="line">            ,np.cumsum(pca_line.explained_variance_ratio_))</span><br><span class="line"></span><br><span class="line">plt.xticks([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]) <span class="comment">#这是为了限制坐标轴显示为整数</span></span><br><span class="line">plt.xlabel(<span class="string">"number of components after dimension reduction"</span>)    </span><br><span class="line">plt.ylabel(<span class="string">"cumulative explained variance ratio"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105312424.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h4 id="最大似然估计自选超参数"><a href="#最大似然估计自选超参数" class="headerlink" title="最大似然估计自选超参数"></a>最大似然估计自选超参数</h4><p>除了输入整数，n_components还有哪些选择呢？矩阵分解的理论发展在业界独树一帜，勤奋智慧的数学大神Minka, T.P.在麻省理工学院媒体实验室做研究时找出了让PCA用最大似然估计(maximum likelihood estimation)自选超参数的方法，输入“mle”作为n_components的参数输入，就可以调用这种方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pca_mle = PCA(n_components=<span class="string">"mle"</span>)</span><br><span class="line">pca_mle = pca_mle.fit(X)</span><br><span class="line">X_mle = pca_mle.transform(X)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_mle</span><br></pre></td></tr></table></figure>
+
+<pre><code>array([[-2.68412563,  0.31939725, -0.02791483],
+       [-2.71414169, -0.17700123, -0.21046427],
+       [-2.88899057, -0.14494943,  0.01790026],
+       [-2.74534286, -0.31829898,  0.03155937],
+      .........
+       [ 1.76434572,  0.07885885,  0.13048163],
+       [ 1.90094161,  0.11662796,  0.72325156],
+       [ 1.39018886, -0.28266094,  0.36290965]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#可以发现，mle为我们自动选择了3个特征</span></span><br><span class="line">pca_mle.explained_variance_ratio_.sum()</span><br><span class="line"><span class="comment">#得到了比设定2个特征时更高的信息含量，对于鸢尾花这个很小的数据集来说，3个特征对应这么高的信息含量，并不需要去纠结于只保留2个特征，毕竟三个特征也可以可视化</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9947878161267247</code></pre><h4 id="按信息量占比选择超参数"><a href="#按信息量占比选择超参数" class="headerlink" title="按信息量占比选择超参数"></a>按信息量占比选择超参数</h4><p>输入[0,1]之间的浮点数，并且让参数svd_solver ==’full’，表示希望降维后的总解释性方差占比大于n_components指定的百分比，即是说，希望保留百分之多少的信息量。比如说，如果我们希望保留97%的信息量，就可以输入n_components = 0.97，PCA会自动选出能够让保留的信息量超过97%的特征数量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pca_f = PCA(n_components=<span class="number">0.97</span>,svd_solver=<span class="string">"full"</span>)</span><br><span class="line">pca_f = pca_f.fit(X)</span><br><span class="line">X_f = pca_f.transform(X)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pca_f.explained_variance_ratio_</span><br></pre></td></tr></table></figure>
+
+<pre><code>array([0.92461872, 0.05306648])</code></pre><h2 id="PCA中的SVD"><a href="#PCA中的SVD" class="headerlink" title="PCA中的SVD"></a>PCA中的SVD</h2><p><img src="https://img-blog.csdnimg.cn/2020080710541917.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PCA(<span class="number">2</span>).fit(X).components_</span><br></pre></td></tr></table></figure>
+
+<pre><code>array([[ 0.36138659, -0.08452251,  0.85667061,  0.3582892 ],
+       [ 0.65658877,  0.73016143, -0.17337266, -0.07548102]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PCA(<span class="number">2</span>).fit(X).components_.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(2, 4)</code></pre><h3 id="重要参数svd-solver-与-random-state"><a href="#重要参数svd-solver-与-random-state" class="headerlink" title="重要参数svd_solver 与 random_state"></a>重要参数svd_solver 与 random_state</h3><p>参数svd_solver是在降维过程中，用来控制矩阵分解的一些细节的参数。有四种模式可选：”auto”,”full”, “arpack”,”randomized”，默认”auto”。</p>
+<p>“<strong>auto</strong>“：基于X.shape和n_components的默认策略来选择分解器：如果输入数据的尺寸大于500x500且要提取的特征数小于数据最小维度min(X.shape)的80％，就启用效率更高的”randomized“方法。否则，精确完整的SVD将被计算，截断将会在矩阵被分解完成后有选择地发生</p>
+<p>“<strong>full</strong>“：从scipy.linalg.svd中调用标准的LAPACK分解器来生成精确完整的SVD，<strong>适合数据量比较适中，计算时间充足的情况</strong></p>
+<p>“<strong>arpack</strong>“：从scipy.sparse.linalg.svds调用ARPACK分解器来运行截断奇异值分解(SVD truncated)，分解时就将特征数量降到n_components中输入的数值k，可以加快运算速度，<strong>适合特征矩阵很大的时候，但一般用于特征矩阵为稀疏矩阵的情况，此过程包含一定的随机性</strong>。</p>
+<p>“<strong>randomized</strong>“，通过Halko等人的随机方法进行随机SVD。在”full”方法中，分解器会根据原始数据和输入的n_components值去计算和寻找符合需求的新特征向量，但是在”randomized”方法中，分解器会先生成多个随机向量，然后一一去检测这些随机向量中是否有任何一个符合我们的分解需求，如果符合，就保留这个随机向量，并基于这个随机向量来构建后续的向量空间。这个方法已经被Halko等人证明，比”full”模式下计算快很多，并且还能够保证模型运行效果。<strong>适合特征矩阵巨大，计算量庞大的情况。</strong></p>
+<p><strong>而参数random_state在参数svd_solver的值为”arpack” or “randomized”的时候生效，可以控制这两种SVD模式中的随机模式。通常我们就选用”auto“，不必对这个参数纠结太多。</strong></p>
+<h4 id="迷你案例：用人脸识别看PCA降维后的信息保存量"><a href="#迷你案例：用人脸识别看PCA降维后的信息保存量" class="headerlink" title="迷你案例：用人脸识别看PCA降维后的信息保存量"></a>迷你案例：用人脸识别看PCA降维后的信息保存量</h4><h5 id="导入库和模块"><a href="#导入库和模块" class="headerlink" title="导入库和模块"></a>导入库和模块</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_lfw_people  <span class="comment">#人脸数据</span></span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<h5 id="实例化数据集，探索数据"><a href="#实例化数据集，探索数据" class="headerlink" title="实例化数据集，探索数据"></a>实例化数据集，探索数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">faces = fetch_lfw_people(min_faces_per_person=<span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#min_faces_per_person 参数是给每个人最少需要多少脸部照片</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">faces</span><br></pre></td></tr></table></figure>
+
+<pre><code>{&apos;data&apos;: array([[138.        , 135.66667   , 127.666664  , ...,   1.6666666 ,
+           1.6666666 ,   0.33333334],
+        [ 71.333336  ,  56.        ,  67.666664  , ..., 247.66667   ,
+         243.        , 238.33333   ],
+        [ 84.333336  ,  97.333336  ,  72.333336  , ..., 114.        ,
+         194.33333   , 241.        ],
+        ...,
+         [ 44.666668  ,  42.666668  ,  44.666668  , ...,  22.333334  ,
+           25.333334  ,  46.333332  ],
+         [ 42.333332  ,  42.333332  ,  45.        , ...,  25.333334  ,
+           32.666668  ,  49.666668  ],
+         [ 46.        ,  49.333332  ,  51.666668  , ...,  34.        ,
+           42.        ,  69.666664  ]]], dtype=float32),
+ &apos;target&apos;: array([1, 3, 3, ..., 7, 3, 5], dtype=int64),
+ &apos;target_names&apos;: array([&apos;Ariel Sharon&apos;, &apos;Colin Powell&apos;, &apos;Donald Rumsfeld&apos;, &apos;George W Bush&apos;,
+        &apos;Gerhard Schroeder&apos;, &apos;Hugo Chavez&apos;, &apos;Junichiro Koizumi&apos;,
+        &apos;Tony Blair&apos;], dtype=&apos;&lt;U17&apos;),
+ &apos;DESCR&apos;: &quot;.. _labeled_faces_in_the_wild_dataset:\n\nThe Labeled Faces in the Wild face recognition dataset\n------------------------------------------------------\n\nThis dataset is a collection of JPEG pictures of famous people collected\nover the internet, all details are available on the official website:\n\n    http://vis-www.cs.umass.edu/lfw/\n\nEach picture is centered on a single face. The typical task is called\nFace Verification: given a pair of two pictures, a binary classifier\nmust predict whether the two images are from the same person.\n\nAn alternative task, Face Recognition or Face Identification is:\ngiven the picture of the face of an unknown person, identify the name\nof the person by referring to a gallery of previously seen pictures of\nidentified persons.\n\nBoth Face Verification and Face Recognition are tasks that are typically\nperformed on the output of a model trained to perform Face Detection. The\nmost popular model for Face Detection is called Viola-Jones and is\nimplemented in the OpenCV library. The LFW faces were extracted by this\nface detector from various online websites.\n\n**Data Set Characteristics:**\n\n    =================   =======================\n    Classes                                5749\n    Samples total                         13233\n    Dimensionality                         5828\n    Features            real, between 0 and 255\n    =================   =======================\n\nUsage\n~~~~~\n\n``scikit-learn`` provides two loaders that will automatically download,\ncache, parse the metadata files, decode the jpeg and convert the\ninteresting slices into memmapped numpy arrays. This dataset size is more\nthan 200 MB. The first load typically takes more than a couple of minutes\nto fully decode the relevant part of the JPEG files into numpy arrays. If\nthe dataset has  been loaded once, the following times the loading times\nless than 200ms by using a memmapped version memoized on the disk in the\n``~/scikit_learn_data/lfw_home/`` folder using ``joblib``.\n\nThe first loader is used for the Face Identification task: a multi-class\nclassification task (hence supervised learning)::\n\n  &gt;&gt;&gt; from sklearn.datasets import fetch_lfw_people\n  &gt;&gt;&gt; lfw_people = fetch_lfw_people(min_faces_per_person=70, resize=0.4)\n\n  &gt;&gt;&gt; for name in lfw_people.target_names:\n  ...     print(name)\n  ...\n  Ariel Sharon\n  Colin Powell\n  Donald Rumsfeld\n  George W Bush\n  Gerhard Schroeder\n  Hugo Chavez\n  Tony Blair\n\nThe default slice is a rectangular shape around the face, removing\nmost of the background::\n\n  &gt;&gt;&gt; lfw_people.data.dtype\n  dtype(&apos;float32&apos;)\n\n  &gt;&gt;&gt; lfw_people.data.shape\n  (1288, 1850)\n\n  &gt;&gt;&gt; lfw_people.images.shape\n  (1288, 50, 37)\n\nEach of the ``1140`` faces is assigned to a single person id in the ``target``\narray::\n\n  &gt;&gt;&gt; lfw_people.target.shape\n  (1288,)\n\n  &gt;&gt;&gt; list(lfw_people.target[:10])\n  [5, 6, 3, 1, 0, 1, 3, 4, 3, 0]\n\nThe second loader is typically used for the face verification task: each sample\nis a pair of two picture belonging or not to the same person::\n\n  &gt;&gt;&gt; from sklearn.datasets import fetch_lfw_pairs\n  &gt;&gt;&gt; lfw_pairs_train = fetch_lfw_pairs(subset=&apos;train&apos;)\n\n  &gt;&gt;&gt; list(lfw_pairs_train.target_names)\n  [&apos;Different persons&apos;, &apos;Same person&apos;]\n\n  &gt;&gt;&gt; lfw_pairs_train.pairs.shape\n  (2200, 2, 62, 47)\n\n  &gt;&gt;&gt; lfw_pairs_train.data.shape\n  (2200, 5828)\n\n  &gt;&gt;&gt; lfw_pairs_train.target.shape\n  (2200,)\n\nBoth for the :func:`sklearn.datasets.fetch_lfw_people` and\n:func:`sklearn.datasets.fetch_lfw_pairs` function it is\npossible to get an additional dimension with the RGB color channels by\npassing ``color=True``, in that case the shape will be\n``(2200, 2, 62, 47, 3)``.\n\nThe :func:`sklearn.datasets.fetch_lfw_pairs` datasets is subdivided into\n3 subsets: the development ``train`` set, the development ``test`` set and\nan evaluation ``10_folds`` set meant to compute performance metrics using a\n10-folds cross validation scheme.\n\n.. topic:: References:\n\n * `Labeled Faces in the Wild: A Database for Studying Face Recognition\n   in Unconstrained Environments.\n   &lt;http://vis-www.cs.umass.edu/lfw/lfw.pdf&gt;`_\n   Gary B. Huang, Manu Ramesh, Tamara Berg, and Erik Learned-Miller.\n   University of Massachusetts, Amherst, Technical Report 07-49, October, 2007.\n\n\nExamples\n~~~~~~~~\n\n:ref:`sphx_glr_auto_examples_applications_plot_face_recognition.py`\n&quot;}</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">faces.data.shape</span><br><span class="line"></span><br><span class="line"><span class="comment">#行是样本，列是样本相关的所有特征</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>(1348, 2914)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">faces.images.shape</span><br><span class="line"></span><br><span class="line"><span class="comment">#怎样理解这个数据的维度？</span></span><br><span class="line"><span class="comment">#1348是我们图像的个数（第三维，后面才是行、列）</span></span><br><span class="line"><span class="comment">#62是每个图像的特征矩阵的行</span></span><br><span class="line"><span class="comment">#47是每个特征矩阵的列</span></span><br><span class="line"><span class="comment">#即：每张图有62个行，47个列</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>(1348, 62, 47)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X = faces.data</span><br></pre></td></tr></table></figure>
+
+<h5 id="看看图像像什么样子"><a href="#看看图像像什么样子" class="headerlink" title="看看图像像什么样子"></a>看看图像像什么样子</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">4</span>, <span class="number">5</span>                                                        <span class="comment">#需要4行5列的图</span></span><br><span class="line">                         ,figsize = (<span class="number">8</span>,<span class="number">4</span>)                                                   <span class="comment">#图像的横纵比例</span></span><br><span class="line">                         ,subplot_kw = &#123;<span class="string">"xticks"</span>:[], <span class="string">"yticks"</span>:[]&#125;              <span class="comment">#不要显示坐标轴</span></span><br><span class="line">                        )</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105522735.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fig</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105532603.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axes.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(4, 5)</code></pre><p><strong>不难发现，axes中的一个对象对应fig中的一个空格.<br>我们希望，在每一个子图对象中填充图像（共24张图），因此我们需要写一个在子图对象中遍历的循环</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axes[<span class="number">0</span>][<span class="number">0</span>].imshow(faces.images[<span class="number">0</span>, :, :])     <span class="comment">#[0][0]表示上面二十张图的第1列第一张图，然后在此位置填充1348张图中第一张图的所有行列</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;matplotlib.image.AxesImage at 0x1ec797d0e80&gt;</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">4</span>, <span class="number">5</span>                                                        <span class="comment">#需要4行5列的图</span></span><br><span class="line">                         ,figsize = (<span class="number">8</span>,<span class="number">4</span>)                                                   <span class="comment">#图像的横纵比例</span></span><br><span class="line">                         ,subplot_kw = &#123;<span class="string">"xticks"</span>:[], <span class="string">"yticks"</span>:[]&#125;              <span class="comment">#不要显示坐标轴</span></span><br><span class="line">                        )  </span><br><span class="line">axes[<span class="number">0</span>][<span class="number">0</span>].imshow(faces.images[<span class="number">0</span>, :, :])</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;matplotlib.image.AxesImage at 0x1ec797a5f60&gt;</code></pre><p><img src="https://img-blog.csdnimg.cn/20200807105552786.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[*axes.flat]        <span class="comment">#变成了一维数组</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>[&lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec797a52b0&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ab204e0&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ab56780&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ab87a20&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7abbecc0&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7abf3f60&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ac32240&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ac68470&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ac99748&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7accea20&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ad01cc0&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ad38f60&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ad78240&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7adab4e0&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ade0780&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ae14a20&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ae46cc0&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ae7bf60&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7aebc240&gt;,
+ &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7aeec908&gt;]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[*enumerate(axes.flat)]      <span class="comment">#变成20个元组，分别是索引和一个图像</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>[(0, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec797a52b0&gt;),
+ (1, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ab204e0&gt;),
+ (2, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ab56780&gt;),
+ (3, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ab87a20&gt;),
+ (4, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7abbecc0&gt;),
+ (5, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7abf3f60&gt;),
+ (6, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ac32240&gt;),
+ (7, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ac68470&gt;),
+ (8, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ac99748&gt;),
+ (9, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7accea20&gt;),
+ (10, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ad01cc0&gt;),
+ (11, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ad38f60&gt;),
+ (12, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ad78240&gt;),
+ (13, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7adab4e0&gt;),
+ (14, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ade0780&gt;),
+ (15, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ae14a20&gt;),
+ (16, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ae46cc0&gt;),
+ (17, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7ae7bf60&gt;),
+ (18, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7aebc240&gt;),
+ (19, &lt;matplotlib.axes._subplots.AxesSubplot at 0x1ec7aeec908&gt;)]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">3</span>, <span class="number">8</span>                                                       <span class="comment">#需要4行5列的图</span></span><br><span class="line">                         ,figsize = (<span class="number">8</span>,<span class="number">4</span>)                                                   <span class="comment">#图像的横纵比例</span></span><br><span class="line">                         ,subplot_kw = &#123;<span class="string">"xticks"</span>:[], <span class="string">"yticks"</span>:[]&#125;              <span class="comment">#不要显示坐标轴</span></span><br><span class="line">                        )  </span><br><span class="line"><span class="keyword">for</span> i, ax <span class="keyword">in</span> enumerate(axes.flat):</span><br><span class="line">    ax.imshow(faces.images[i,:,:]</span><br><span class="line">                       ,cmap=<span class="string">"gray"</span> <span class="comment">#选择色彩的模式</span></span><br><span class="line">                      )</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105704399.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="建模降维，提取新的矩阵空间"><a href="#建模降维，提取新的矩阵空间" class="headerlink" title="建模降维，提取新的矩阵空间"></a>建模降维，提取新的矩阵空间</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pca = PCA(<span class="number">150</span>).fit(X)       <span class="comment">#降维时只能接受二维，然后输入150，表示我们只需要150个特征</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">V = pca.components_        <span class="comment">#得到的是V(k,n)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">V.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(150, 2914)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">3</span>,<span class="number">8</span>,figsize=(<span class="number">8</span>,<span class="number">4</span>),subplot_kw = &#123;<span class="string">"xticks"</span>:[],<span class="string">"yticks"</span>:[]&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, ax <span class="keyword">in</span> enumerate(axes.flat):</span><br><span class="line">    ax.imshow(V[i,:].reshape(<span class="number">62</span>,<span class="number">47</span>),cmap=<span class="string">"gray"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105724179.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p><strong>将特征空间可视化，并没有将具体的特征填入，就是只有骨骼没有填入血肉。但是可以直观的让我们看到降维后选择了哪些特征</strong></p>
+<p>这张图稍稍有一些恐怖，但可以看出，比起降维前的数据，新特征空间可视化后的人脸非常模糊，这是因为原始数据还没有被映射到特征空间中。但是可以看出，整体比较亮的图片，获取的信息较多，整体比较暗的图片，却只能看见黑漆漆的一块。在比较亮的图片中，眼睛，鼻子，嘴巴，都相对清晰，脸的轮廓，头发之类的比较模糊。      </p>
+<p>这说明，新特征空间里的特征向量们，大部分是”五官”和”亮度”相关的向量，所以新特征向量上的信息肯定大部分是由原数据中和”五官”和”亮度”相关的特征中提取出来的。到这里，我们通过可视化新特征空间V，解释了一部分降维后的特征：虽然显示出来的数字看着不知所云，但画出来的图表示，这些特征是和”五官“以及”亮度“有关的。这也再次证明了，PCA能够将原始数据集中重要的数据进行聚集。</p>
+<h3 id="重要的接口：inverse-transform"><a href="#重要的接口：inverse-transform" class="headerlink" title="重要的接口：inverse_transform"></a>重要的接口：inverse_transform</h3><p>在上周的特征工程课中，我们学到了神奇的接口inverse_transform，可以将我们归一化，标准化，甚至做过哑变量的特征矩阵还原回原始数据中的特征矩阵，这几乎在向我们暗示，任何有inverse_transform这个接口的过程都是可逆的。PCA应该也是如此。在sklearn中，我们通过让原特征矩阵X右乘新特征空间矩阵V(k,n)来生成新特征矩阵X_dr，那理论上来说，让新特征矩阵X_dr右乘V(k,n)的逆矩阵，就可以将新特征矩阵X_dr还原为X。</p>
+<h4 id="迷你案例：用人脸识别看PCA降维后的信息保存量-1"><a href="#迷你案例：用人脸识别看PCA降维后的信息保存量-1" class="headerlink" title="迷你案例：用人脸识别看PCA降维后的信息保存量"></a>迷你案例：用人脸识别看PCA降维后的信息保存量</h4><p>人脸识别是最容易的，用来探索inverse_transform功能的数据。我们先调用一组人脸数据X(m,n)，对人脸图像进行绘制，然后我们对人脸数据进行降维得到X_dr，之后再使用inverse_transform(X_dr)返回一个X_inverse(m,n)，并对这个新矩阵中的人脸图像也进行绘制。如果PCA的降维过程是可逆的，我们应当期待X(m,n)和X_inverse(m,n)返回一模一样的图像，即携带一模一样的信息。</p>
+<h5 id="导入库和模块-1"><a href="#导入库和模块-1" class="headerlink" title="导入库和模块"></a>导入库和模块</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_lfw_people</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<h5 id="导入数据，探索数据"><a href="#导入数据，探索数据" class="headerlink" title="导入数据，探索数据"></a>导入数据，探索数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">faces = fetch_lfw_people(min_faces_per_person=<span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">faces.images.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(1348, 62, 47)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">faces.data.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(1348, 2914)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X = faces.data</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X</span><br></pre></td></tr></table></figure>
+
+<pre><code>array([[138.        , 135.66667   , 127.666664  , ...,   1.6666666 ,
+          1.6666666 ,   0.33333334],
+       [ 71.333336  ,  56.        ,  67.666664  , ..., 247.66667   ,
+        243.        , 238.33333   ],
+       [ 84.333336  ,  97.333336  ,  72.333336  , ..., 114.        ,
+        194.33333   , 241.        ],
+       ...,
+       [ 29.333334  ,  29.        ,  29.333334  , ..., 145.        ,
+        147.        , 141.66667   ],
+       [ 49.333332  ,  55.666668  ,  76.666664  , ..., 186.33333   ,
+        176.33333   , 161.        ],
+       [ 31.        ,  26.333334  ,  28.        , ...,  34.        ,
+         42.        ,  69.666664  ]], dtype=float32)</code></pre><h5 id="建模降维，获取降维后的特征矩阵X-dr"><a href="#建模降维，获取降维后的特征矩阵X-dr" class="headerlink" title="建模降维，获取降维后的特征矩阵X_dr"></a>建模降维，获取降维后的特征矩阵X_dr</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pca = PCA(<span class="number">150</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_dr = pca.fit_transform(X)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_dr.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(1348, 150)</code></pre><h5 id="将降维后矩阵用inverse-transform返回原空间"><a href="#将降维后矩阵用inverse-transform返回原空间" class="headerlink" title="将降维后矩阵用inverse_transform返回原空间"></a>将降维后矩阵用inverse_transform返回原空间</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_inverse = pca.inverse_transform(X_dr)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_inverse.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(1348, 2914)</code></pre><h5 id="将特征矩阵X和X-inverse可视化"><a href="#将特征矩阵X和X-inverse可视化" class="headerlink" title="将特征矩阵X和X_inverse可视化"></a>将特征矩阵X和X_inverse可视化</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(<span class="number">2</span>,<span class="number">10</span>,figsize=(<span class="number">10</span>,<span class="number">2.5</span>)</span><br><span class="line">                       ,subplot_kw=&#123;<span class="string">"xticks"</span>:[],<span class="string">"yticks"</span>:[]&#125;</span><br><span class="line">                      )</span><br><span class="line"><span class="comment">#和2.3.3节中的案例一样，我们需要对子图对象进行遍历的循环，来将图像填入子图中</span></span><br><span class="line"><span class="comment">#那在这里，我们使用怎样的循环？</span></span><br><span class="line"><span class="comment">#现在我们的ax中是2行10列，第一行是原数据，第二行是inverse_transform后返回的数据</span></span><br><span class="line"><span class="comment">#所以我们需要同时循环两份数据，即一次循环画一列上的两张图，而不是把ax拉平</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    ax[<span class="number">0</span>,i].imshow(faces.images[i,:,:],cmap=<span class="string">"binary_r"</span>)</span><br><span class="line">    ax[<span class="number">1</span>,i].imshow(X_inverse[i].reshape(<span class="number">62</span>,<span class="number">47</span>),cmap=<span class="string">"binary_r"</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105742831.png" alt="在这里插入图片描述"></p>
+<p><strong>模糊，数据降维后不能完全复原</strong></p>
+<h4 id="PCA噪音过滤"><a href="#PCA噪音过滤" class="headerlink" title="PCA噪音过滤"></a>PCA噪音过滤</h4><p>降维的目的之一就是希望抛弃掉对模型带来负面影响的特征，而我们相信，带有效信息的特征的方差应该是远大于噪音的，所以相比噪音，有效的特征所带的信息应该不会在PCA过程中被大量抛弃。     </p>
+<p>inverse_transform能够在不恢复原始数据的情况下，将降维后的数据返回到原本的高维空间，即是说能够实现”保证维度，但去掉方差很小特征所带的信息“。利用inverse_transform的这个性质，我们能够实现噪音过滤。</p>
+<h5 id="导入库和模块-2"><a href="#导入库和模块-2" class="headerlink" title="导入库和模块"></a>导入库和模块</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_digits</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+
+<h5 id="导入数据，探索数据-1"><a href="#导入数据，探索数据-1" class="headerlink" title="导入数据，探索数据"></a>导入数据，探索数据</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">digits = load_digits()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">digits.data.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(1797, 64)</code></pre><h5 id="自定义画图函数"><a href="#自定义画图函数" class="headerlink" title="自定义画图函数"></a>自定义画图函数</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_digits</span><span class="params">(data)</span>:</span></span><br><span class="line">    fig, axes = plt.subplots(<span class="number">4</span>,<span class="number">10</span>,figsize=(<span class="number">10</span>,<span class="number">4</span>)</span><br><span class="line">                             ,subplot_kw = &#123;<span class="string">"xticks"</span>:[],<span class="string">"yticks"</span>:[]&#125;</span><br><span class="line">                            )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i, ax <span class="keyword">in</span> enumerate(axes.flat):</span><br><span class="line">        ax.imshow(data[i].reshape(<span class="number">8</span>,<span class="number">8</span>),cmap=<span class="string">"binary"</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_digits(digits.data)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105758708.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h5 id="添加噪音"><a href="#添加噪音" class="headerlink" title="添加噪音"></a>添加噪音</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">np.random.RandomState(<span class="number">42</span>)</span><br><span class="line"><span class="comment">#在指定的数据集中，随机抽取服从正态分布的数据</span></span><br><span class="line"><span class="comment">#两个参数，分别是指定的数据集，和抽取出来的正太分布的方差</span></span><br><span class="line">noisy = np.random.normal(digits.data,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_digits(noisy)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105808657.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h5 id="降维"><a href="#降维" class="headerlink" title="降维"></a>降维</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pca = PCA(<span class="number">0.5</span>,svd_solver=<span class="string">"full"</span>).fit(noisy)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_dr = pca.transform(noisy)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X_dr.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(1797, 6)</code></pre><h5 id="逆转降维结果，实现降噪"><a href="#逆转降维结果，实现降噪" class="headerlink" title="逆转降维结果，实现降噪"></a>逆转降维结果，实现降噪</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">without_noise = pca.inverse_transform(X_dr)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_digits(without_noise)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200807105820225.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -388,7 +664,7 @@ rfc.predict_proba(Xtest)            #分到的标签的概率
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">RandomForest</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">降维</a>
         		</li>
       		
 		</ul>
@@ -455,7 +731,7 @@ rfc.predict_proba(Xtest)            #分到的标签的概率
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2020/07/20/RandomForestClassifier/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://william-chen777.github.io/2020/08/04/sklearn中的降维算法/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -469,18 +745,9 @@ rfc.predict_proba(Xtest)            #分到的标签的概率
   
 <nav id="article-nav">
   
-    <a href="/2020/07/25/RandomForestRegressor-填补缺失值/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          RandomForestRegressor&amp;填补缺失值
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/07/19/通过插值法生成折线图/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">通过插值法生成折线图</div>
+    <a href="/2020/08/03/RNA-seq结果图分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RNA-seq结果图分析</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -507,7 +774,7 @@ rfc.predict_proba(Xtest)            #分到的标签的概率
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RandomForestClassifier"><span class="toc-number">1.</span> <span class="toc-text">RandomForestClassifier</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#n-estimators"><span class="toc-number">1.1.</span> <span class="toc-text">n_estimators</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#建模"><span class="toc-number">1.2.</span> <span class="toc-text">建模</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交叉验证"><span class="toc-number">1.3.</span> <span class="toc-text">交叉验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#n-estimators的学习曲线"><span class="toc-number">1.4.</span> <span class="toc-text">n_estimators的学习曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#画出随机森林和决策树在十组交叉验证下的效果对比图"><span class="toc-number">1.5.</span> <span class="toc-text">画出随机森林和决策树在十组交叉验证下的效果对比图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重要的属性和接口"><span class="toc-number">1.6.</span> <span class="toc-text">重要的属性和接口</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#sklearn中的降维算法-PCA和SVD"><span class="toc-number">1.</span> <span class="toc-text">sklearn中的降维算法-PCA和SVD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#降维究竟是怎样实现？"><span class="toc-number">2.</span> <span class="toc-text">降维究竟是怎样实现？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCA和特征选择技术都是特征工程的一部分，它们有什么不同？"><span class="toc-number">2.0.1.</span> <span class="toc-text">PCA和特征选择技术都是特征工程的一部分，它们有什么不同？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重要参数：n-components"><span class="toc-number">2.1.</span> <span class="toc-text">重要参数：n_components</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#迷你案例：高维数据的可视化"><span class="toc-number">2.1.0.1.</span> <span class="toc-text">迷你案例：高维数据的可视化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#调用库和模块"><span class="toc-number">2.1.0.1.1.</span> <span class="toc-text">调用库和模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#提取数据集"><span class="toc-number">2.1.0.1.2.</span> <span class="toc-text">提取数据集</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#建模"><span class="toc-number">2.1.0.1.3.</span> <span class="toc-text">建模</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#可视化"><span class="toc-number">2.1.0.1.4.</span> <span class="toc-text">可视化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#探索降维后的数据"><span class="toc-number">2.1.0.1.5.</span> <span class="toc-text">探索降维后的数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#选择最好的n-components：累积可解释方差贡献率曲线"><span class="toc-number">2.1.0.1.6.</span> <span class="toc-text">选择最好的n_components：累积可解释方差贡献率曲线</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#最大似然估计自选超参数"><span class="toc-number">2.1.0.2.</span> <span class="toc-text">最大似然估计自选超参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#按信息量占比选择超参数"><span class="toc-number">2.1.0.3.</span> <span class="toc-text">按信息量占比选择超参数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PCA中的SVD"><span class="toc-number">2.2.</span> <span class="toc-text">PCA中的SVD</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#重要参数svd-solver-与-random-state"><span class="toc-number">2.2.1.</span> <span class="toc-text">重要参数svd_solver 与 random_state</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#迷你案例：用人脸识别看PCA降维后的信息保存量"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">迷你案例：用人脸识别看PCA降维后的信息保存量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#导入库和模块"><span class="toc-number">2.2.1.1.1.</span> <span class="toc-text">导入库和模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实例化数据集，探索数据"><span class="toc-number">2.2.1.1.2.</span> <span class="toc-text">实例化数据集，探索数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#看看图像像什么样子"><span class="toc-number">2.2.1.1.3.</span> <span class="toc-text">看看图像像什么样子</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建模降维，提取新的矩阵空间"><span class="toc-number">2.2.2.</span> <span class="toc-text">建模降维，提取新的矩阵空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重要的接口：inverse-transform"><span class="toc-number">2.2.3.</span> <span class="toc-text">重要的接口：inverse_transform</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#迷你案例：用人脸识别看PCA降维后的信息保存量-1"><span class="toc-number">2.2.3.1.</span> <span class="toc-text">迷你案例：用人脸识别看PCA降维后的信息保存量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#导入库和模块-1"><span class="toc-number">2.2.3.1.1.</span> <span class="toc-text">导入库和模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#导入数据，探索数据"><span class="toc-number">2.2.3.1.2.</span> <span class="toc-text">导入数据，探索数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#建模降维，获取降维后的特征矩阵X-dr"><span class="toc-number">2.2.3.1.3.</span> <span class="toc-text">建模降维，获取降维后的特征矩阵X_dr</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#将降维后矩阵用inverse-transform返回原空间"><span class="toc-number">2.2.3.1.4.</span> <span class="toc-text">将降维后矩阵用inverse_transform返回原空间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#将特征矩阵X和X-inverse可视化"><span class="toc-number">2.2.3.1.5.</span> <span class="toc-text">将特征矩阵X和X_inverse可视化</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PCA噪音过滤"><span class="toc-number">2.2.3.2.</span> <span class="toc-text">PCA噪音过滤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#导入库和模块-2"><span class="toc-number">2.2.3.2.1.</span> <span class="toc-text">导入库和模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#导入数据，探索数据-1"><span class="toc-number">2.2.3.2.2.</span> <span class="toc-text">导入数据，探索数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#自定义画图函数"><span class="toc-number">2.2.3.2.3.</span> <span class="toc-text">自定义画图函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#添加噪音"><span class="toc-number">2.2.3.2.4.</span> <span class="toc-text">添加噪音</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#降维"><span class="toc-number">2.2.3.2.5.</span> <span class="toc-text">降维</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#逆转降维结果，实现降噪"><span class="toc-number">2.2.3.2.6.</span> <span class="toc-text">逆转降维结果，实现降噪</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
