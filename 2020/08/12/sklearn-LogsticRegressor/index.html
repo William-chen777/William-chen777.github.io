@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bear.png?v=6.0.3">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="LogsticRegressor,">
+
+
+<meta name="description" content="sklearn中的逻辑回归逻辑回归对线性关系的拟合效果好到丧心病狂，特征与标签之间的线性关系极强的数据，比如金融领域中的信用卡欺诈，评分卡制作，电商中的营销预测等等相关的数据，都是逻辑回归的强项。虽然现在有了梯度提升树GDBT，比逻辑回归效果更好，也被许多数据咨询公司启用，但逻辑回归在金融领域，尤其是银行业中的统治地位依然不可动摇（相对的，逻辑回归在非线性数据的效果很多时候比瞎猜还不如，所以如果你">
+<meta name="keywords" content="LogsticRegressor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sklearn-LogsticRegressor">
+<meta property="og:url" content="https://william-chen777.github.io/2020/08/12/sklearn-LogsticRegressor/index.html">
+<meta property="og:site_name" content="William Chen">
+<meta property="og:description" content="sklearn中的逻辑回归逻辑回归对线性关系的拟合效果好到丧心病狂，特征与标签之间的线性关系极强的数据，比如金融领域中的信用卡欺诈，评分卡制作，电商中的营销预测等等相关的数据，都是逻辑回归的强项。虽然现在有了梯度提升树GDBT，比逻辑回归效果更好，也被许多数据咨询公司启用，但逻辑回归在金融领域，尤其是银行业中的统治地位依然不可动摇（相对的，逻辑回归在非线性数据的效果很多时候比瞎猜还不如，所以如果你">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200812111058154.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200812111110697.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200812111120202.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200812111129864.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200812111139893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2020-08-12T03:13:24.584Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sklearn-LogsticRegressor">
+<meta name="twitter:description" content="sklearn中的逻辑回归逻辑回归对线性关系的拟合效果好到丧心病狂，特征与标签之间的线性关系极强的数据，比如金融领域中的信用卡欺诈，评分卡制作，电商中的营销预测等等相关的数据，都是逻辑回归的强项。虽然现在有了梯度提升树GDBT，比逻辑回归效果更好，也被许多数据咨询公司启用，但逻辑回归在金融领域，尤其是银行业中的统治地位依然不可动摇（相对的，逻辑回归在非线性数据的效果很多时候比瞎猜还不如，所以如果你">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200812111058154.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+
+
+
+
+
+
+  <link rel="canonical" href="https://william-chen777.github.io/2020/08/12/sklearn-LogsticRegressor/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>sklearn-LogsticRegressor | William Chen</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">William Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/08/12/sklearn-LogsticRegressor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sklearn-LogsticRegressor</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-12T11:08:24+08:00">2020-08-12</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/sklearn/" itemprop="url" rel="index"><span itemprop="name">sklearn</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="sklearn中的逻辑回归"><a href="#sklearn中的逻辑回归" class="headerlink" title="sklearn中的逻辑回归"></a>sklearn中的逻辑回归</h1><p><strong>逻辑回归对线性关系的拟合效果好到丧心病狂</strong>，特征与标签之间的线性关系极强的数据，比如金融领域中的信用卡欺诈，评分卡制作，电商中的营销预测等等相关的数据，都是逻辑回归的强项。虽然现在有了梯度提升树GDBT，比逻辑回归效果更好，也被许多数据咨询公司启用，但逻辑回归在金融领域，尤其是银行业中的统治地位依然不可动摇（相对的，<strong>逻辑回归在非线性数据的效果很多时候比瞎猜还不如</strong>，所以如果你已经知道数据之间的联系是非线性的，千万不要迷信逻辑回归）</p>
+<p><strong>逻辑回归计算快</strong>：对线性数据，逻辑回归的拟合和计算都非常快，计算效率优于SVM和随机森林，亲测表示在大型数据上尤其能够看得出区别</p>
+<p><strong>逻辑回归返回的分类结果不是固定的0，1，而是以小数形式呈现的类概率数字</strong>：我们因此可以把逻辑回归返回的结果当成连续型数据来利用。比如在评分卡制作时，我们不仅需要判断客户是否会违约，还需要给出确定的”信用分“，而这个信用分的计算就需要使用类概率计算出的对数几率，而决策树和随机森林这样的分类器，可以产出分类结果，却无法帮助我们计算分数（当然，在sklearn中，决策树也可以产生概率，使用接口predict_proba调用就好，但一般来说，正常的决策树没有这个功能）。</p>
+<a id="more"></a>
+
+<h2 id="linear-model-LogisticRegression"><a href="#linear-model-LogisticRegression" class="headerlink" title="linear_model.LogisticRegression"></a>linear_model.LogisticRegression</h2><p>class sklearn.linear_model.LogisticRegression (penalty=’l2’, dual=False, tol=0.0001, C=1.0,<br>fit_intercept=True, intercept_scaling=1, class_weight=None, random_state=None, solver=’warn’, max_iter=100,<br>multi_class=’warn’, verbose=0, warm_start=False, n_jobs=None)</p>
+<h3 id="损失函数的概念与解惑"><a href="#损失函数的概念与解惑" class="headerlink" title="损失函数的概念与解惑"></a>损失函数的概念与解惑</h3><p>在学习决策树和随机森林时，我们曾经提到过两种模型表现：在训练集上的表现，和在测试集上的表现。我们建模，是追求模型在测试集上的表现最优，因此模型的评估指标往往是用来衡量模型在测试集上的表现的。然而，逻辑回归有着基于训练数据求解参数的需求，并且<strong>希望训练出来的模型能够尽可能地拟合训练数据，即模型在训练集上的预测准确率越靠近100%越好</strong>。</p>
+<p>因此，我们使用”<strong>损失函数</strong>“这个评估指标，来<strong>衡量参数为θ的模型拟合训练集时产生的信息损失的大小，并以此衡量参数 θ 的优劣</strong>。如果用一组参数建模后，模型在训练集上表现良好，那我们就说模型拟合过程中的损失很小，损失函数的值很小，这一组参数就优秀；相反，如果模型在训练集上表现糟糕，损失函数就会很大，模型就训练不足，效果较差，这一组参数也就比较差。即是说，我们在求解参数 θ 时，追求损失函数最小，让模型在训练数据上的拟合效果最优，即预测准确率尽量靠近100%。</p>
+<blockquote>
+<p>衡量参数的优劣的评估指标，用来求解最优参数的工具<br>   损失函数小，模型在训练集上表现优异，拟合充分，参数优秀<br>   损失函数大，模型在训练集上表现差劲，拟合不足，参数糟糕<br>   我们追求，能够让损失函数最小化的参数组合          </p>
+<p> 注意：没有”求解参数“需求的模型没有损失函数，比如KNN，决策树        </p>
+</blockquote>
+<h3 id="重要参数penalty-amp-C"><a href="#重要参数penalty-amp-C" class="headerlink" title="重要参数penalty &amp; C"></a>重要参数penalty &amp; C</h3><blockquote>
+<p>penalty: 可以输入”l1”或”l2”来指定使用哪一种正则化方式，不填写默认”l2”。<br>注意，若选择”l1”正则化，参数solver仅能够使用求解方式”liblinear”和”saga“，若使用“l2”正则<br>化，参数solver中所有的求解方式都可以使用。</p>
+<p>C:C正则化强度的倒数，必须是一个大于0的浮点数，不填写默认1.0，即默认正则项与损失函数的比值是1：1。C越小，损失函数会越小，模型对损失函数的惩罚越重，正则化的效力越强，参数 θ会逐渐被压缩得越来越小。</p>
+</blockquote>
+<p>L1正则化和L2正则化虽然都可以控制过拟合，但它们的效果并不相同。当正则化强度逐渐增大（即C逐渐变小），参数的θ取值会逐渐变小，<strong>但L1正则化会将参数压缩为0，L2正则化只会让参数尽量小，不会取到0</strong>。所以L1正则化本质是一个特征选择的过程，掌管了参数的“稀疏性”。</p>
+<h4 id="建立两个逻辑回归，L1正则化和L2正则化的差别就一目了然了："><a href="#建立两个逻辑回归，L1正则化和L2正则化的差别就一目了然了：" class="headerlink" title="建立两个逻辑回归，L1正则化和L2正则化的差别就一目了然了："></a>建立两个逻辑回归，L1正则化和L2正则化的差别就一目了然了：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression <span class="keyword">as</span> LR  <span class="comment">#线性模型中导入逻辑回归</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span>  load_breast_cancer                  <span class="comment">#导入乳腺癌数据集</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span>  train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = load_breast_cancer()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data</span><br></pre></td></tr></table></figure>
+
+<pre><code>{&apos;data&apos;: array([[1.799e+01, 1.038e+01, 1.228e+02, ..., 2.654e-01, 4.601e-01,
+         1.189e-01],
+        [2.057e+01, 1.777e+01, 1.329e+02, ..., 1.860e-01, 2.750e-01,
+         8.902e-02],
+        [1.969e+01, 2.125e+01, 1.300e+02, ..., 2.430e-01, 3.613e-01,
+         8.758e-02],
+        ...,
+        [1.660e+01, 2.808e+01, 1.083e+02, ..., 1.418e-01, 2.218e-01,
+         7.820e-02],
+        [2.060e+01, 2.933e+01, 1.401e+02, ..., 2.650e-01, 4.087e-01,
+         1.240e-01],
+        [7.760e+00, 2.454e+01, 4.792e+01, ..., 0.000e+00, 2.871e-01,
+         7.039e-02]]),
+ &apos;target&apos;: array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
+        0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0,
+        1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1,
+        1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0,
+        0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1,
+        1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0,
+        0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0,
+        1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1,
+        1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0,
+        0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
+        0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0,
+        1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1,
+        1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1,
+        1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+        1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1,
+        1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1]),
+ &apos;frame&apos;: None,
+ &apos;target_names&apos;: array([&apos;malignant&apos;, &apos;benign&apos;], dtype=&apos;&lt;U9&apos;),
+ &apos;DESCR&apos;: &apos;.. _breast_cancer_dataset:\n\nBreast cancer wisconsin (diagnostic) dataset\n--------------------------------------------\n\n**Data Set Characteristics:**\n\n    :Number of Instances: 569\n\n    :Number of Attributes: 30 numeric, predictive attributes and the class\n\n    :Attribute Information:\n        - radius (mean of distances from center to points on the perimeter)\n        - texture (standard deviation of gray-scale values)\n        - perimeter\n        - area\n        - smoothness (local variation in radius lengths)\n        - compactness (perimeter^2 / area - 1.0)\n        - concavity (severity of concave portions of the contour)\n        - concave points (number of concave portions of the contour)\n        - symmetry\n        - fractal dimension (&quot;coastline approximation&quot; - 1)\n\n        The mean, standard error, and &quot;worst&quot; or largest (mean of the three\n        worst/largest values) of these features were computed for each image,\n        resulting in 30 features.  For instance, field 0 is Mean Radius, field\n        10 is Radius SE, field 20 is Worst Radius.\n\n        - class:\n                - WDBC-Malignant\n                - WDBC-Benign\n\n    :Summary Statistics:\n\n    ===================================== ====== ======\n                                           Min    Max\n    ===================================== ====== ======\n    radius (mean):                        6.981  28.11\n    texture (mean):                       9.71   39.28\n    perimeter (mean):                     43.79  188.5\n    area (mean):                          143.5  2501.0\n    smoothness (mean):                    0.053  0.163\n    compactness (mean):                   0.019  0.345\n    concavity (mean):                     0.0    0.427\n    concave points (mean):                0.0    0.201\n    symmetry (mean):                      0.106  0.304\n    fractal dimension (mean):             0.05   0.097\n    radius (standard error):              0.112  2.873\n    texture (standard error):             0.36   4.885\n    perimeter (standard error):           0.757  21.98\n    area (standard error):                6.802  542.2\n    smoothness (standard error):          0.002  0.031\n    compactness (standard error):         0.002  0.135\n    concavity (standard error):           0.0    0.396\n    concave points (standard error):      0.0    0.053\n    symmetry (standard error):            0.008  0.079\n    fractal dimension (standard error):   0.001  0.03\n    radius (worst):                       7.93   36.04\n    texture (worst):                      12.02  49.54\n    perimeter (worst):                    50.41  251.2\n    area (worst):                         185.2  4254.0\n    smoothness (worst):                   0.071  0.223\n    compactness (worst):                  0.027  1.058\n    concavity (worst):                    0.0    1.252\n    concave points (worst):               0.0    0.291\n    symmetry (worst):                     0.156  0.664\n    fractal dimension (worst):            0.055  0.208\n    ===================================== ====== ======\n\n    :Missing Attribute Values: None\n\n    :Class Distribution: 212 - Malignant, 357 - Benign\n\n    :Creator:  Dr. William H. Wolberg, W. Nick Street, Olvi L. Mangasarian\n\n    :Donor: Nick Street\n\n    :Date: November, 1995\n\nThis is a copy of UCI ML Breast Cancer Wisconsin (Diagnostic) datasets.\nhttps://goo.gl/U2Uwz2\n\nFeatures are computed from a digitized image of a fine needle\naspirate (FNA) of a breast mass.  They describe\ncharacteristics of the cell nuclei present in the image.\n\nSeparating plane described above was obtained using\nMultisurface Method-Tree (MSM-T) [K. P. Bennett, &quot;Decision Tree\nConstruction Via Linear Programming.&quot; Proceedings of the 4th\nMidwest Artificial Intelligence and Cognitive Science Society,\npp. 97-101, 1992], a classification method which uses linear\nprogramming to construct a decision tree.  Relevant features\nwere selected using an exhaustive search in the space of 1-4\nfeatures and 1-3 separating planes.\n\nThe actual linear program used to obtain the separating plane\nin the 3-dimensional space is that described in:\n[K. P. Bennett and O. L. Mangasarian: &quot;Robust Linear\nProgramming Discrimination of Two Linearly Inseparable Sets&quot;,\nOptimization Methods and Software 1, 1992, 23-34].\n\nThis database is also available through the UW CS ftp server:\n\nftp ftp.cs.wisc.edu\ncd math-prog/cpo-dataset/machine-learn/WDBC/\n\n.. topic:: References\n\n   - W.N. Street, W.H. Wolberg and O.L. Mangasarian. Nuclear feature extraction \n     for breast tumor diagnosis. IS&amp;T/SPIE 1993 International Symposium on \n     Electronic Imaging: Science and Technology, volume 1905, pages 861-870,\n     San Jose, CA, 1993.\n   - O.L. Mangasarian, W.N. Street and W.H. Wolberg. Breast cancer diagnosis and \n     prognosis via linear programming. Operations Research, 43(4), pages 570-577, \n     July-August 1995.\n   - W.H. Wolberg, W.N. Street, and O.L. Mangasarian. Machine learning techniques\n     to diagnose breast cancer from fine-needle aspirates. Cancer Letters 77 (1994) \n     163-171.&apos;,
+ &apos;feature_names&apos;: array([&apos;mean radius&apos;, &apos;mean texture&apos;, &apos;mean perimeter&apos;, &apos;mean area&apos;,
+        &apos;mean smoothness&apos;, &apos;mean compactness&apos;, &apos;mean concavity&apos;,
+        &apos;mean concave points&apos;, &apos;mean symmetry&apos;, &apos;mean fractal dimension&apos;,
+        &apos;radius error&apos;, &apos;texture error&apos;, &apos;perimeter error&apos;, &apos;area error&apos;,
+        &apos;smoothness error&apos;, &apos;compactness error&apos;, &apos;concavity error&apos;,
+        &apos;concave points error&apos;, &apos;symmetry error&apos;,
+        &apos;fractal dimension error&apos;, &apos;worst radius&apos;, &apos;worst texture&apos;,
+        &apos;worst perimeter&apos;, &apos;worst area&apos;, &apos;worst smoothness&apos;,
+        &apos;worst compactness&apos;, &apos;worst concavity&apos;, &apos;worst concave points&apos;,
+        &apos;worst symmetry&apos;, &apos;worst fractal dimension&apos;], dtype=&apos;&lt;U23&apos;),
+ &apos;filename&apos;: &apos;C:\\Users\\ALIENWARE\\Anaconda3\\lib\\site-packages\\sklearn\\datasets\\data\\breast_cancer.csv&apos;}</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X= data.data</span><br><span class="line">y = data.target</span><br><span class="line"></span><br><span class="line">X.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(569, 30)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 实例化</span></span><br><span class="line">lrl1 = LR(penalty=<span class="string">"l1"</span>, solver=<span class="string">"liblinear"</span>, C=<span class="number">0.5</span>, max_iter=<span class="number">1000</span>)</span><br><span class="line">lrl2 = LR(penalty=<span class="string">"l2"</span>, solver=<span class="string">"liblinear"</span>, C=<span class="number">0.5</span>, max_iter=<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 逻辑回归的重要属性coef_, 查看每个特征所对应的参数</span></span><br><span class="line">lrl1 = lrl1.fit(X,y)  <span class="comment">#训练模型</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrl1.coef_</span><br></pre></td></tr></table></figure>
+
+<pre><code>array([[ 3.99814628,  0.0316776 , -0.13693978, -0.01620766,  0.        ,
+         0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+         0.        ,  0.50466987,  0.        , -0.07125779,  0.        ,
+         0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+         0.        , -0.24559775, -0.12840877, -0.01441992,  0.        ,
+         0.        , -2.04515222,  0.        ,  0.        ,  0.        ]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lrl1.coef_ != <span class="number">0</span>).sum(axis=<span class="number">1</span>)    <span class="comment">#加和出每个特征对应参数不为零的总和</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>array([10])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lrl2 = lrl2.fit(X,y)</span><br><span class="line">lrl2.coef_</span><br></pre></td></tr></table></figure>
+
+<pre><code>array([[ 1.58651399e+00,  1.05063447e-01,  4.48683632e-02,
+        -3.74375536e-03, -8.56901613e-02, -2.94287943e-01,
+        -4.37733190e-01, -2.07600072e-01, -1.22519137e-01,
+        -1.87465544e-02,  2.78262183e-02,  8.41924650e-01,
+         1.66118667e-01, -9.75336736e-02, -8.75079523e-03,
+        -3.14114111e-02, -6.23724835e-02, -2.55180879e-02,
+        -2.58371386e-02, -1.14472251e-03,  1.34078040e+00,
+        -3.01592084e-01, -1.79752694e-01, -2.25790709e-02,
+        -1.57048116e-01, -8.65467461e-01, -1.12967239e+00,
+        -3.98774604e-01, -3.79997636e-01, -8.51004287e-02]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(lrl2.coef_ != <span class="number">0</span>).sum(axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<pre><code>array([30])</code></pre><p>可以看见，当我们选择L1正则化的时候，许多特征的参数都被设置为了0，这些特征在真正建模的时候，就不会出现在我们的模型当中了，而L2正则化则是对所有的特征都给出了参数。</p>
+<p>究竟哪个正则化的效果更好呢？还是都差不多？<br><strong>画C的学习曲线</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为逻辑回归希望训练时也要尽量100%所以也需要画图</span></span><br><span class="line">l1 = []</span><br><span class="line">l2 = []</span><br><span class="line">l1test= []</span><br><span class="line">l2test =[]</span><br><span class="line"></span><br><span class="line">Xtrain, Xtest, Ytrain, Ytest = train_test_split(X, y, test_size=<span class="number">0.3</span>, random_state=<span class="number">777</span> )</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> np.linspace(<span class="number">0.05</span> ,<span class="number">1</span> ,<span class="number">19</span>):    <span class="comment">#np.linspace(0.05 ,1 ,19)是指从0.05到1，随机选择19个数</span></span><br><span class="line">    lrl1 = LR(penalty=<span class="string">"l1"</span> ,solver=<span class="string">"liblinear"</span> ,C=i ,max_iter=<span class="number">1000</span>)</span><br><span class="line">    lrl2 = LR(penalty=<span class="string">"l2"</span> ,solver=<span class="string">"liblinear"</span> ,C=i ,max_iter=<span class="number">1000</span>)</span><br><span class="line">    </span><br><span class="line">    lrl1 = lrl1.fit(Xtrain ,Ytrain)</span><br><span class="line">    l1.append(accuracy_score(lrl1.predict(Xtrain) ,Ytrain))      <span class="comment">#lrl1.predict()是模型预测出来的Y，后面的是Y的真实值 </span></span><br><span class="line">    l1test.append(accuracy_score(lrl1.predict(Xtest) ,Ytest))</span><br><span class="line">    </span><br><span class="line">    lrl2 = lrl2.fit(Xtrain ,Ytrain)</span><br><span class="line">    l2.append(accuracy_score(lrl2.predict(Xtrain) ,Ytrain))</span><br><span class="line">    l2test.append(accuracy_score(lrl2.predict(Xtest) ,Ytest))</span><br><span class="line">    </span><br><span class="line">graph = [l1 ,l2 ,l1test ,l2test]</span><br><span class="line">color = [<span class="string">"green"</span> ,<span class="string">"black"</span> ,<span class="string">"lightgreen"</span> ,<span class="string">"gray"</span>]</span><br><span class="line">label = [<span class="string">"L1"</span> ,<span class="string">"L2"</span> ,<span class="string">"L1test"</span> ,<span class="string">"L2test"</span>]</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">6</span>,<span class="number">6</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(graph)):</span><br><span class="line">    plt.plot(np.linspace(<span class="number">0.05</span>,<span class="number">1</span>,<span class="number">19</span>),graph[i],color[i],label=label[i])</span><br><span class="line">plt.legend(loc=<span class="number">4</span>) <span class="comment">#图例的位置在哪里？ 4表示右下角</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://img-blog.csdnimg.cn/20200812111058154.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>训练结果比测试结果更好，有轻微的过拟合，当C逐渐增大（惩罚越来越小）模型拟合程度越来越高，但是在测试集上没有什么大的提升，所以这种情况下C=0.8或者0.9是最优解。</strong></p>
+<h3 id="逻辑回归中的特征工程"><a href="#逻辑回归中的特征工程" class="headerlink" title="逻辑回归中的特征工程"></a>逻辑回归中的特征工程</h3><h5 id="业务选择"><a href="#业务选择" class="headerlink" title="业务选择"></a>业务选择</h5><p>肉眼可见明显和标签有关的特征就是需要留下的。当然，如果我们并不了解业务，或者有成千上万的特征，那我们也可以使用算法来帮助我们。或者，可以让算法先帮助我们筛选过一遍特征，然后在少量的特征中，我们再根据业务常识来选择更少量的特征。</p>
+<h5 id="PCA和SVD一般不用"><a href="#PCA和SVD一般不用" class="headerlink" title="PCA和SVD一般不用"></a>PCA和SVD一般不用</h5><p>说到降维，我们首先想到的是之前提过的高效降维算法，PCA和SVD，遗憾的是，这两种方法大多数时候不适用于逻辑回归。逻辑回归是由线性回归演变而来，线性回归的一个核心目的是通过求解参数来探究特征X与标签y之间的关系，而逻辑回归也传承了这个性质，我们常常希望通过逻辑回归的结果，来判断什么样的特征与分类结果相关，因此我们希望保留特征的原貌。PCA和SVD的降维结果是不可解释的，因此一旦降维后，我们就无法解释特征和标签之间的关系了。当然，在不需要探究特征与标签之间关系的线性数据上，降维算法PCA和SVD也是可以使用的。</p>
+<h5 id="高效的嵌入法embedded"><a href="#高效的嵌入法embedded" class="headerlink" title="高效的嵌入法embedded"></a>高效的嵌入法embedded</h5><p>我们已经说明了，由于L1正则化会使得部分特征对应的参数为0，因此L1正则化可以用来做特征选择，结合嵌入法的模块SelectFromModel，我们可以很容易就筛选出让模型十分高效的特征。注意，此时我们的目的是，尽量保留原数据上的信息，让模型在降维后的数据上的拟合效果保持优秀，因此我们不考虑训练集测试集的问题，把所有的数据都放入模型进行降维。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导库</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span>  LogisticRegression <span class="keyword">as</span> LR</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span>  load_breast_cancer</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span>  cross_val_score</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span>  SelectFromModel</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data = load_breast_cancer()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data.data.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(569, 30)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LR_ = LR(solver=<span class="string">"liblinear"</span> ,C=<span class="number">0.8</span> ,random_state=<span class="number">777</span>)</span><br><span class="line">cross_val_score(LR_ ,data.data ,data.target ,cv=<span class="number">10</span>).mean()</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9508145363408522</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#threshold是代表一个基准，该基准是模型中数据或特征的重要性，是模型筛选特征的一个阈值</span></span><br><span class="line"><span class="comment">#nom_order是指范式，norm_order=1就是指使用L1范式，模型会会删掉在L1范式下被判断为无效的特征</span></span><br><span class="line">x_embedded = SelectFromModel(LR_ </span><br><span class="line">                             <span class="comment">#,threshold=float </span></span><br><span class="line">                             ,norm_order=<span class="number">1</span>).fit_transform(data.data ,data.target)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_embedded.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(569, 9)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cross_val_score(LR_ ,x_embedded ,data.target ,cv=<span class="number">10</span>).mean()</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9368107769423559</code></pre><p><strong>特征数量被减小到个位数，并且模型的效果却没有下降太多，如果我们要求不高，在这里其实就可以停下了。但是，能否让模型的拟合效果更好呢？</strong></p>
+<h5 id="对threshold画学习曲线"><a href="#对threshold画学习曲线" class="headerlink" title="对threshold画学习曲线"></a>对threshold画学习曲线</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LR_.fit(data.data ,data.target).coef_  <span class="comment">#值越大，说明对逻辑回归的贡献越大</span></span><br></pre></td></tr></table></figure>
+
+<pre><code>array([[ 1.97644864e+00,  1.12654971e-01, -3.56527765e-02,
+        -3.28084681e-03, -1.38704165e-01, -3.72727470e-01,
+        -5.95137714e-01, -3.11193086e-01, -2.01150233e-01,
+        -2.31617177e-02, -9.02124640e-03,  1.11458296e+00,
+         7.09733702e-02, -9.64417280e-02, -1.53232467e-02,
+        -2.75702594e-04, -4.82548695e-02, -3.69217205e-02,
+        -3.77225177e-02,  5.07270942e-03,  1.28642586e+00,
+        -3.29807208e-01, -1.40095413e-01, -2.38267599e-02,
+        -2.56791414e-01, -1.05339135e+00, -1.46692446e+00,
+        -5.97829566e-01, -6.13826633e-01, -1.04698001e-01]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">fullx = []                 <span class="comment">#完整的特征</span></span><br><span class="line">fsx = []                <span class="comment">#特征选择过后的</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#此时，我们使用的判断指标，已经不是L1范式，而是使用逻辑回归的系数</span></span><br><span class="line"><span class="comment">#因为coef_有正有负，所以我们使用abs()函数来取绝对值</span></span><br><span class="line">threshold = np.linspace(<span class="number">0</span> ,abs((LR_.fit(data.data ,data.target).coef_)).max() ,<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">k=<span class="number">0</span>   <span class="comment">#作为索引</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> threshold:</span><br><span class="line">    x_embedded = SelectFromModel(LR_ , threshold=i).fit_transform(data.data ,data.target)</span><br><span class="line">    fullx.append(cross_val_score(LR_ ,data.data ,data.target ,cv=<span class="number">5</span>).mean())</span><br><span class="line">    fsx.append(cross_val_score(LR_ ,x_embedded ,data.target ,cv=<span class="number">5</span>).mean())</span><br><span class="line">    print((threshold[k] ,x_embedded.shape[<span class="number">1</span>]))</span><br><span class="line">    k += <span class="number">1</span> </span><br><span class="line">    </span><br><span class="line">plt.figure(figsize=(<span class="number">20</span> ,<span class="number">5</span>))</span><br><span class="line">plt.plot(threshold ,fullx ,label=<span class="string">"full"</span>)</span><br><span class="line">plt.plot(threshold ,fsx ,label=<span class="string">"feature selection"</span>)</span><br><span class="line">plt.xticks(threshold)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>(0.0, 30)
+(0.1040236124018952, 17)
+(0.2080472248037904, 12)
+(0.3120708372056856, 10)
+(0.4160944496075808, 8)
+(0.520118062009476, 8)
+(0.6241416744113713, 5)
+(0.7281652868132664, 5)
+(0.8321888992151616, 5)
+(0.9362125116170568, 5)
+(1.040236124018952, 5)
+(1.144259736420847, 3)
+(1.2482833488227425, 3)
+(1.3523069612246377, 2)
+(1.4563305736265328, 2)
+(1.560354186028428, 1)
+(1.6643777984303232, 1)
+(1.7684014108322184, 1)
+(1.8724250232341135, 1)
+(1.9764486356360087, 1)</code></pre><p><img src="https://img-blog.csdnimg.cn/20200812111110697.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p>然而，这种方法其实是比较无效的，大家可以用学习曲线来跑一跑：当threshold越来越大，被删除的特征越来越多，模型的效果也越来越差，模型效果最好的情况下需要保证有17个以上的特征。实际上我画了细化的学习曲线，如果要保证模型的效果比降维前更好，我们需要保留25个特征，这对于现实情况来说，是一种无效的降维：需要30个指标来判断病情，和需要25个指标来判断病情，对医生来说区别不大。</p>
+<h5 id="调逻辑回归的类LR-，通过画C的学习曲线来实现"><a href="#调逻辑回归的类LR-，通过画C的学习曲线来实现" class="headerlink" title="调逻辑回归的类LR_，通过画C的学习曲线来实现"></a>调逻辑回归的类LR_，通过画C的学习曲线来实现</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">fullx = []</span><br><span class="line">fsx = []</span><br><span class="line"></span><br><span class="line">C=np.arange(<span class="number">0.01</span>,<span class="number">10.01</span>,<span class="number">0.5</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> C:</span><br><span class="line">    LR_ = LR(solver=<span class="string">"liblinear"</span>,C=i,random_state=<span class="number">420</span>)</span><br><span class="line">    fullx.append(cross_val_score(LR_,data.data,data.target,cv=<span class="number">10</span>).mean())</span><br><span class="line">    X_embedded = SelectFromModel(LR_,norm_order=<span class="number">1</span>).fit_transform(data.data,data.target)</span><br><span class="line">    fsx.append(cross_val_score(LR_,X_embedded,data.target,cv=<span class="number">10</span>).mean())</span><br><span class="line">    </span><br><span class="line">print(max(fsx),C[fsx.index(max(fsx))])          <span class="comment">#返回最大值和最大值对应的C的取值</span></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">5</span>))</span><br><span class="line">plt.plot(C ,fullx ,label=<span class="string">"full"</span>)</span><br><span class="line">plt.plot(C ,fsx ,label=<span class="string">"feature selection"</span>)</span><br><span class="line">plt.xticks(C)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9561090225563911 8.01</code></pre><p><img src="https://img-blog.csdnimg.cn/20200812111120202.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h5 id="细化学习曲线"><a href="#细化学习曲线" class="headerlink" title="细化学习曲线"></a>细化学习曲线</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">fullx = []</span><br><span class="line">fsx = []</span><br><span class="line"></span><br><span class="line">C=np.arange(<span class="number">7.71</span>,<span class="number">8.31</span>,<span class="number">0.05</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> C:</span><br><span class="line">    LR_ = LR(solver=<span class="string">"liblinear"</span>,C=i,random_state=<span class="number">420</span>)</span><br><span class="line">    fullx.append(cross_val_score(LR_,data.data,data.target,cv=<span class="number">10</span>).mean())</span><br><span class="line">    X_embedded = SelectFromModel(LR_,norm_order=<span class="number">1</span>).fit_transform(data.data,data.target)</span><br><span class="line">    fsx.append(cross_val_score(LR_,X_embedded,data.target,cv=<span class="number">10</span>).mean())</span><br><span class="line">    </span><br><span class="line">print(max(fsx),C[fsx.index(max(fsx))])          <span class="comment">#返回最大值和最大值对应的C的取值</span></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span>, <span class="number">5</span>))</span><br><span class="line">plt.plot(C ,fullx ,label=<span class="string">"full"</span>)</span><br><span class="line">plt.plot(C ,fsx ,label=<span class="string">"feature selection"</span>)</span><br><span class="line">plt.xticks(C)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<pre><code>0.9561090225563911 7.909999999999999</code></pre><p><img src="https://img-blog.csdnimg.cn/20200812111129864.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>C=7.91时达到最优</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_embedded.shape</span><br></pre></td></tr></table></figure>
+
+<pre><code>(569, 1)</code></pre><h2 id="梯度下降：重要参数max-iter"><a href="#梯度下降：重要参数max-iter" class="headerlink" title="梯度下降：重要参数max_iter"></a>梯度下降：重要参数max_iter</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导库</span></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span>  LogisticRegression <span class="keyword">as</span> LR</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span>  load_breast_cancer</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span>  cross_val_score</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span>  SelectFromModel</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression <span class="keyword">as</span> LR  <span class="comment">#线性模型中导入逻辑回归</span></span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span>  load_breast_cancer                  <span class="comment">#导入乳腺癌数据集</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span>  train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">l2 = []</span><br><span class="line">l2test = []</span><br><span class="line"></span><br><span class="line">Xtrain ,Xtest ,Ytrain ,Ytest = train_test_split(X ,y ,test_size=<span class="number">0.3</span> ,random_state=<span class="number">777</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> np.arange(<span class="number">1</span> ,<span class="number">201</span> ,<span class="number">10</span>):</span><br><span class="line">    lrl2 = LR(penalty=<span class="string">"l2"</span> ,solver=<span class="string">"liblinear"</span> ,C=<span class="number">0.8</span> ,max_iter=i)</span><br><span class="line">    lrl2 = lrl2.fit(Xtrain ,Ytrain)</span><br><span class="line">    l2.append(accuracy_score(lrl2.predict(Xtrain) ,Ytrain))</span><br><span class="line">    l2test.append(accuracy_score(lrl2.predict(Xtest) ,Ytest))</span><br><span class="line">    </span><br><span class="line">graph = [l2 ,l2test]</span><br><span class="line">color = [<span class="string">'black'</span> ,<span class="string">'gray'</span>]</span><br><span class="line">label = [<span class="string">"L2"</span> ,<span class="string">"L2test"</span>]</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">20</span> ,<span class="number">5</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(graph)):</span><br><span class="line">    plt.plot(np.arange(<span class="number">1</span> ,<span class="number">201</span> ,<span class="number">10</span>) ,graph[i] ,label=label[i])</span><br><span class="line"></span><br><span class="line">plt.legend(loc = <span class="number">4</span>)</span><br><span class="line">plt.xticks(np.arange(<span class="number">1</span> ,<span class="number">201</span> ,<span class="number">10</span>))</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#我们可以使用属性 .n_iter_ 来调用本次求解中真正实现的迭代次数</span></span><br><span class="line">lr = LR(penalty=<span class="string">"l2"</span> ,solver=<span class="string">"liblinear"</span> ,C=<span class="number">0.9</span> ,max_iter=<span class="number">300</span>).fit(Xtrain ,Ytrain)</span><br><span class="line"></span><br><span class="line">lr.n_iter_</span><br></pre></td></tr></table></figure>
+
+<pre><code>C:\Users\ALIENWARE\Anaconda3\lib\site-packages\sklearn\svm\_base.py:977: ConvergenceWarning: Liblinear failed to converge, increase the number of iterations.
+  &quot;the number of iterations.&quot;, ConvergenceWarning)
+C:\Users\ALIENWARE\Anaconda3\lib\site-packages\sklearn\svm\_base.py:977: ConvergenceWarning: Liblinear failed to converge, increase the number of iterations.
+  &quot;the number of iterations.&quot;, ConvergenceWarning)</code></pre><p><img src="https://img-blog.csdnimg.cn/20200812111139893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<pre><code>array([21], dtype=int32)</code></pre><h3 id="在鸢尾花数据集上探索multinomial和ovr的区别"><a href="#在鸢尾花数据集上探索multinomial和ovr的区别" class="headerlink" title="在鸢尾花数据集上探索multinomial和ovr的区别"></a>在鸢尾花数据集上探索multinomial和ovr的区别</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">iris = load_iris()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> multi_class <span class="keyword">in</span> (<span class="string">'multinomial'</span>, <span class="string">'ovr'</span>):</span><br><span class="line">    clf = LR(solver=<span class="string">'sag'</span>, max_iter=<span class="number">100</span>, random_state=<span class="number">42</span>,</span><br><span class="line">    multi_class=multi_class).fit(iris.data, iris.target)</span><br><span class="line"></span><br><span class="line"><span class="comment">#打印两种multi_class模式下的训练分数</span></span><br><span class="line"><span class="comment">#%的用法，用%来代替打印的字符串中，想由变量替换的部分。%.3f表示，保留三位小数的浮点数。%s表示，字符串。</span></span><br><span class="line"><span class="comment">#字符串后的%后使用元祖来容纳变量，字符串中有几个%，元祖中就需要有几个变量</span></span><br><span class="line">    print(<span class="string">"training score : %.3f (%s)"</span> % (clf.score(iris.data, iris.target),multi_class))</span><br></pre></td></tr></table></figure>
+
+<pre><code>training score : 0.987 (multinomial)
+training score : 0.960 (ovr)
+
+
+C:\Users\ALIENWARE\Anaconda3\lib\site-packages\sklearn\linear_model\_sag.py:330: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
+  &quot;the coef_ did not converge&quot;, ConvergenceWarning)
+C:\Users\ALIENWARE\Anaconda3\lib\site-packages\sklearn\linear_model\_sag.py:330: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
+  &quot;the coef_ did not converge&quot;, ConvergenceWarning)
+C:\Users\ALIENWARE\Anaconda3\lib\site-packages\sklearn\linear_model\_sag.py:330: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
+  &quot;the coef_ did not converge&quot;, ConvergenceWarning)
+C:\Users\ALIENWARE\Anaconda3\lib\site-packages\sklearn\linear_model\_sag.py:330: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
+  &quot;the coef_ did not converge&quot;, ConvergenceWarning)</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LogsticRegressor/" rel="tag"># LogsticRegressor</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/07/实战：PCA对手写数字数据集的降维/" rel="next" title="实战：PCA对手写数字数据集的降维">
+                <i class="fa fa-chevron-left"></i> 实战：PCA对手写数字数据集的降维
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Chen kun">
+            
+              <p class="site-author-name" itemprop="name">Chen kun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sklearn中的逻辑回归"><span class="nav-number">1.</span> <span class="nav-text">sklearn中的逻辑回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#linear-model-LogisticRegression"><span class="nav-number">1.1.</span> <span class="nav-text">linear_model.LogisticRegression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数的概念与解惑"><span class="nav-number">1.1.1.</span> <span class="nav-text">损失函数的概念与解惑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重要参数penalty-amp-C"><span class="nav-number">1.1.2.</span> <span class="nav-text">重要参数penalty &amp; C</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#建立两个逻辑回归，L1正则化和L2正则化的差别就一目了然了："><span class="nav-number">1.1.2.1.</span> <span class="nav-text">建立两个逻辑回归，L1正则化和L2正则化的差别就一目了然了：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归中的特征工程"><span class="nav-number">1.1.3.</span> <span class="nav-text">逻辑回归中的特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#业务选择"><span class="nav-number">1.1.3.0.1.</span> <span class="nav-text">业务选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PCA和SVD一般不用"><span class="nav-number">1.1.3.0.2.</span> <span class="nav-text">PCA和SVD一般不用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高效的嵌入法embedded"><span class="nav-number">1.1.3.0.3.</span> <span class="nav-text">高效的嵌入法embedded</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对threshold画学习曲线"><span class="nav-number">1.1.3.0.4.</span> <span class="nav-text">对threshold画学习曲线</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调逻辑回归的类LR-，通过画C的学习曲线来实现"><span class="nav-number">1.1.3.0.5.</span> <span class="nav-text">调逻辑回归的类LR_，通过画C的学习曲线来实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#细化学习曲线"><span class="nav-number">1.1.3.0.6.</span> <span class="nav-text">细化学习曲线</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度下降：重要参数max-iter"><span class="nav-number">1.2.</span> <span class="nav-text">梯度下降：重要参数max_iter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在鸢尾花数据集上探索multinomial和ovr的区别"><span class="nav-number">1.2.1.</span> <span class="nav-text">在鸢尾花数据集上探索multinomial和ovr的区别</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen kun</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
