@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bear.png?v=6.0.3">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="RNA-seq,">
+
+
+<meta name="description" content="此文章记载我在学习过程中遇到的概念性问题，希望通过反复阅读来加深理解，巩固基础">
+<meta name="keywords" content="RNA-seq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNA-seq那点事儿">
+<meta property="og:url" content="https://william-chen777.github.io/2020/09/11/RNA-seq那点事儿/index.html">
+<meta property="og:site_name" content="William Chen">
+<meta property="og:description" content="此文章记载我在学习过程中遇到的概念性问题，希望通过反复阅读来加深理解，巩固基础">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200910161259572.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200910161547127.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200910162624188.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911092122526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911163231819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911163913881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200911164644578.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2020-09-11T09:24:17.467Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RNA-seq那点事儿">
+<meta name="twitter:description" content="此文章记载我在学习过程中遇到的概念性问题，希望通过反复阅读来加深理解，巩固基础">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200910161259572.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+
+
+
+
+
+
+  <link rel="canonical" href="https://william-chen777.github.io/2020/09/11/RNA-seq那点事儿/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>RNA-seq那点事儿 | William Chen</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">William Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/09/11/RNA-seq那点事儿/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RNA-seq那点事儿</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-11T17:19:11+08:00">2020-09-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/生物信息学/" itemprop="url" rel="index"><span itemprop="name">生物信息学</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>此文章记载我在学习过程中遇到的概念性问题，希望通过反复阅读来加深理解，巩固基础</p>
+<hr>
+<a id="more"></a>
+
+<h2 id="单端测序和双端测序"><a href="#单端测序和双端测序" class="headerlink" title="单端测序和双端测序"></a>单端测序和双端测序</h2><p>单端测序只有一种测序引物，使得PCR只能沿着这个引物方向进行，所有的reads都只能按照一个方向进行读取。但是测序的质量会随着测序的进行而下降，所以reads越往后越不准确。一个解决的办法就是双端测序，对一个长为500bp的序列，<strong>单端测序下游质量会很差</strong>，但是从两个方向上分别测250bp-300bp然后再拼接起来，就可以大大提高测序的准确率。双端测序的接头序列要复杂一些，首先是为了两个方向上分别进行测序，就需要有两个不同方向的测序引物（Rd1 SP 和 Rd2 SP）；其次，为了区分两个方向的reads，其中一个测序引物前面要<strong>添加一小段的index序列进行标记</strong>。<br><img src="https://img-blog.csdnimg.cn/20200910161259572.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="双端测序"><br>双端测序中每一个单独的read其长度都超过整个待测序列的一半，所以可以根据两个reads重合部分进行拼接。<br><img src="https://img-blog.csdnimg.cn/20200910161547127.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="为什么我们需要Paired-end这样的技术呢？"><a href="#为什么我们需要Paired-end这样的技术呢？" class="headerlink" title="为什么我们需要Paired-end这样的技术呢？"></a>为什么我们需要Paired-end这样的技术呢？</h2><ul>
+<li>首先，假设一个DNA片段刚好跨越了重复序列（下图左侧）以及独特序列区域（下图右侧）。假如是Single-Read，我们只会获得红的实线的序列信息，也就是ATATATAT。接下来，当我们想要将这段read跟reference genome做比对的时候，就会出现问题：到底这段read是出自红色实线位置，还是红色虚线的位置呢？这个问题我们使用Paired-end技术加以解决。由于Paired-end reads之间的距离是已知的（假设是34bp），我们边可以先定位绿色read的位置，再正确定位出左边红色reads之间的AT的位置，而不至于将其误判再红色虚线位置。<br><img src="https://img-blog.csdnimg.cn/20200910162624188.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></li>
+<li>因为单端测序测太长错误率会提高，但是往后测序出来的质量会降低。</li>
+</ul>
+<hr>
+<h2 id="Junction"><a href="#Junction" class="headerlink" title="Junction"></a>Junction</h2><p>可能序列比较长有四五百bp，两边各测120-150bp，<strong>Junction就是双端测序中间没有测到的区域</strong>。</p>
+<hr>
+<h2 id="基因丰度和基因表达的丰度"><a href="#基因丰度和基因表达的丰度" class="headerlink" title="基因丰度和基因表达的丰度"></a>基因丰度和基因表达的丰度</h2><ul>
+<li><strong>基因丰度是指基因组中该基因的拷贝数量</strong>。基因丰度高，即这个基因的数量多，那么可能这个基因的表达量也会多（和基因启动子强弱有关，假设是强启动子，则基因数量和基因表达量成正相关。<strong>所以基因丰度高不代表表达丰度高</strong>）。</li>
+<li><strong>基因表达丰度高是指该基因转录成mRNA多</strong>，那么表达的蛋白也多，对于表型的影响也就大。</li>
+</ul>
+<hr>
+<h2 id="转录本"><a href="#转录本" class="headerlink" title="转录本"></a>转录本</h2><p><strong>转录本是由一条基因通过转录形成的一种或者多种可供编码蛋白质的成熟的mRNA</strong>，一条基因通过内含子的不同剪切可构成不同的转录本。<strong>转录组是由许多转录本拼接而成</strong>。</p>
+<hr>
+<h2 id="RNA和DNA测序之间的差异"><a href="#RNA和DNA测序之间的差异" class="headerlink" title="RNA和DNA测序之间的差异"></a>RNA和DNA测序之间的差异</h2><ul>
+<li>一个物种的<strong>DNA相对恒定</strong>，比较不同物种种间差异，比如检测SNP，InDel，或者SV等，或者比较物种之间的系统发育关系，都需要通过DNA测序完成。</li>
+<li>RNA是动态变化的，<strong>不同条件下基因表达差异可以通过RNA测序完成</strong>。</li>
+<li>某些特殊分子特征只能在RNA水平才能观察到可变剪切、基因融合、RNA编辑等</li>
+<li>RNAseq测序价格相对便宜</li>
+</ul>
+<hr>
+<h2 id="测序深度和覆盖深度"><a href="#测序深度和覆盖深度" class="headerlink" title="测序深度和覆盖深度"></a>测序深度和覆盖深度</h2><p>对长100bp的目标区域进行测序：采用单端测序，每个read长5bp；总共得到200个reads；把所有reads比对到目标区域之后，100bp的目标区域中有98bp的位置至少有1个read覆盖到，换言之，剩余的2bp没有一个read覆盖。</p>
+<ul>
+<li>深度：200*5/100 = 10 （我们说此测序的深度为10X）</li>
+<li>覆盖度：98/100*100% = 98%  （我们说这次覆盖度为98%）</li>
+</ul>
+<p><strong>测序深度越高，基因覆盖度越高</strong>。一般人的测序深度测到10X，基因覆盖度就到100%了，测序深度就饱和了，测序深度再升高没有什么效果了。</p>
+<hr>
+<h2 id="插入片段大小"><a href="#插入片段大小" class="headerlink" title="插入片段大小"></a>插入片段大小</h2><p>通过检测双端测序的起始位置，可以得到插入片段的长度，决定了测序的长度</p>
+<hr>
+<h2 id="引物和接头"><a href="#引物和接头" class="headerlink" title="引物和接头"></a>引物和接头</h2><p>&emsp;提取基因组DNA之后，用超声波打断或者酶切打断，然后跑胶得到300-5–bp的小片段，因为打断是随机打断的，可能有粘性末端，所以<strong>用酶切来形成平末端</strong>，再<strong>在平末端后面加上A碱基得到粘性末端</strong>，<strong>再加上adapter</strong>，加到flowcell上，<strong>进行几轮PCR扩增</strong>，就得到了测序文库。<strong>接头包括了三部分，依次是与flowcell上结合的寡聚体，区分样品的index，测序需要的引物premer</strong>。<br>&emsp;在测序时，首先是测序引物和序列结合，然后进行边合成边测序（连上一个碱基，测一次，然后进行化学反应，再连碱基，再测序，这样循环），测够长度之后，将合成的序列去掉，然后加上另一个premer来测index，这样每个reads都有一个index（用来识别样品来源），然后再进行一次桥式PCR，去掉以及测过序的那条链，再进行一次测序。<br>&emsp;有一点需要注意的是，当插入的序列（也就是超声波打断的小片段）如果比较短的话，或者文库插入的片段比测序读长还要短就可能测到premer或者index，所以得到数据后，要进行去接头。<br>&emsp;index：每个样品由一个index修饰，得到的reads中也包含了index，根据index可以得知双端测序是否来自于同一个样品。<br><img src="https://img-blog.csdnimg.cn/20200911092122526.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="链特异性建库"><a href="#链特异性建库" class="headerlink" title="链特异性建库"></a>链特异性建库</h2><ul>
+<li>正链/负链：对于一个基因来收，DNA的两条链中有一条链<strong>作为RNA合成的模板</strong>，这条链叫<strong>负链</strong>（<strong>模板链/反义链</strong>），另一条链叫做正链（非模板连/正义链。）</li>
+<li>反义链/正义链：<strong>在双链DNA中，用来转录的mRNA的DNA链成为模板链</strong>，不用于转录的链称为非模板链。根据碱基互补配对原则，<strong>转录出的mRNA链的碱基序列与非模板连的碱基序列一致</strong>，唯一不同的是，非模板链中的T再mRNA链中全部置换成了U，因此非模板链又被成为编码链或者正义链。</li>
+<li>链特异性：链特异性建库，<strong>可以确定转录本来自正链还是负链</strong>。以便更加准确地获得基因的结构以及基因表达信息。并且可以更好地发现新基因。（很多基因组区域具有正负链的转录本，<strong>反义转录是真核基因的一个特征</strong>，是一种重要的调控方式，是一种重要的调控方式。对于原核以及低等真核生物的基因组，常常具有重叠基因。）</li>
+</ul>
+<hr>
+<h2 id="为什么illumina会限制合成的链的长度呢，不能像Sanger法一样，最长测1k？"><a href="#为什么illumina会限制合成的链的长度呢，不能像Sanger法一样，最长测1k？" class="headerlink" title="为什么illumina会限制合成的链的长度呢，不能像Sanger法一样，最长测1k？"></a>为什么illumina会限制合成的链的长度呢，不能像Sanger法一样，最长测1k？</h2><p>原因就出在二代测序多出来的PCR过程：每一个位点都要测许多次，比如一段时间之后的PCR得到的每个cluster都包含200条完全相同的序列，那就需要对这200条序列的同一个位点进行测序。</p>
+<ul>
+<li><strong>第一轮</strong>我们测第一个位点（假设位点1是A）正常来讲，200条序列都应该加A碱基，但是不巧只有199个再位点1加了A碱基，有一条序列没有加上，所以出现了199个红色和1个灰色（当然目前还不构成影响）</li>
+<li><strong>第二轮</strong>我们测第二个位点（假设位点2是G）大家应该都加G测得绿色，但是之前的哪个没有加上A的，他要对之前的失误进行补偿，因此别的序列加G的时候，它加上了本该上次加上的A，它得到了红色，这个红色在一大群的绿色中就是作为杂信号存在的。依次向下，测序长度越长，杂信号越多，最后可能标准信号和杂信号各一半，这样系统无法判断，只能给N，而N多了对于后续的分析处理很麻烦。</li>
+</ul>
+<hr>
+<h2 id="基因注释"><a href="#基因注释" class="headerlink" title="基因注释"></a>基因注释</h2><ul>
+<li>RefSeq Gene注释：来自于NCBI，对gene的不同转录本进行注释，1个转录本对应1个编号成为RefSeq id，例如对于可以翻译成蛋白质的转录本，都会以NM_开头，如：NM_015658；对于不能翻译的转录本，都会以NR_开头，如：NR_027055（注释的数据库来源不一样，编号不一样）</li>
+<li>Ensembl注释：对gene的不同转录本进行注释，以ENSG开头的表示Ensembl gene_id如ENSG00000227232，以ENST开头的表示Ensemble transcript id</li>
+<li>UCSC gene注释：对gene的不同转录本进行注释，一般是类似uc004cpf这样的名称</li>
+</ul>
+<hr>
+<h2 id="反向互补序列的意义"><a href="#反向互补序列的意义" class="headerlink" title="反向互补序列的意义"></a>反向互补序列的意义</h2><p>&emsp;生物的DNA序列有两条链，虽然在查看基因组序列的时候，网站一般先提供正向链，但是不同基因在基因组序列中的转录起始方向是不同的，有的基因是正着呆着的，有的是反着呆着的。当你需要查看转录方向与正向链相反的基因序列时，你要找到该基因的启动子（ATG）就需要查看正向链的反向互补序列。<br>&emsp;还有从基因组上扩增序列时需要针对两条链同时设计引物，此时也需要正向序列以及反向互补序列。<br>&emsp;还有很多基因调控都是针对两条链同时发挥作用的，反向互补序列就是根据一条链的信息推算出另一条链的信息。</p>
+<hr>
+<h2 id="基因座"><a href="#基因座" class="headerlink" title="基因座"></a>基因座</h2><p>一个基因座可以是一个基因，一个基因的一个部分，或具有某种调控作用的DNA序列。基因座是染色体上的固定部位，在相同基因座上编码相同的DNA被称为等位基因。同一基因座上有相同的等位基因就是纯合子，相同基因座上是不同的等位基因就是杂合子。</p>
+<hr>
+<h2 id="gene-isoforms"><a href="#gene-isoforms" class="headerlink" title="gene isoforms"></a>gene isoforms</h2><p>亚型/异构体：可以理解为<strong>一个基因的不同形态</strong>，就是由同一个基因座产生的mRNA，在转录起始位点（TSS），编码蛋白质序列，非翻译区这些地方由差别，间接地改变了基因的功能。<br><img src="https://img-blog.csdnimg.cn/20200911163231819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>图中1、2、3是mRNA的三个外显子，由于连接方式不同，产生了3种isoforms</p>
+</blockquote>
+<hr>
+<h2 id="可变剪切"><a href="#可变剪切" class="headerlink" title="可变剪切"></a>可变剪切</h2><p>&emsp;大多数真核基因转录产生的mRNA前体一般按照一种方式剪接产生一种mRNA，结果只产生一种蛋白质，但是<strong>有些基因产生的mRNA前提可按照不同的方式进行剪接，产生多于两种的mRNA</strong>。<br>&emsp;编码蛋白的成熟mRNA前体经过剪切过的，外显子可以不按其线性次序剪接，内含子也可以不被切除而保留。因此成熟的mRNA中每一个外显子，内含子的存在与否都是不一定的。<br>&emsp;有五种类型：<strong>外显子跳跃</strong>，<strong>内含子保留</strong>，<strong>3’或5’端可变剪切</strong>，<strong>3’端可变剪切</strong>、<strong>特定外显子可变剪切</strong>（比如第一个或者最后一个外显子）<br><img src="https://img-blog.csdnimg.cn/20200911163913881.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<hr>
+<h2 id="分析的障碍"><a href="#分析的障碍" class="headerlink" title="分析的障碍"></a>分析的障碍</h2><ul>
+<li><p>测量标准：为了比较谁多谁少，一般都是采用相对定量的分析方法。但是同样的绝对数量对于不同的基数来讲，得到的相对值也是不同的。比如，第一次测A、B基因表达量是10，那么这一次中A基因的丰度就是10/（10+10）=50%；第二次测A、B、C基因表达量都是10，那么这一次，A的丰度就是33.3%的，但是能说第二次比第一次A基因的表达量丰度下降了吗？因此，只看表面的数字可能不能反映实际问题。</p>
+</li>
+<li><p>测量方法：目前转录组测序采用的是二代测序，还是测一段DNA的一小部分，由于可变剪切一般将内含子切除，而拼接成不同的外显子，但是毕竟它们“师出同门”，因此得到的转录本也是相似的，就像图中1、2组成的转录本a和1、3组成的转录本b都含有3。因此要将一小段比对到原始转录本就比较难。（比如，一条reads符合3的一小部分，那么这条reads是属于转录本a还是转录本b呢？）<br><img src="https://img-blog.csdnimg.cn/20200911164644578.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>测量对象：mRNA不像DNA那么稳定，它很容易被降解。因此它的丰度是时刻改变的。因此测转录组之前需要这个时间节点确保观察到了变化，并且这个变化与实验条件有关系。一般为了证明这一点，需要测定一个状态下的样本好几次，也就是所做的重复。差异基因的确定也必须通过重复来验证，也就是一个条件下几个重读得到的值如果都与标准条件下几个重复的值有差别，这样才认为这个差异基因有效。推荐至少设置3个重复，5个更好。</p>
+</li>
+</ul>
+<hr>
+<h2 id="剪切感知比对"><a href="#剪切感知比对" class="headerlink" title="剪切感知比对"></a>剪切感知比对</h2><p>有许多测序reads是来自两个外显子的连接处（也就是剪切位点），如果要比对到参考基因组，reads的中间肯定会被加入一段空白（也就是原来的内含子）。相当于原来reads是脚踏两条船，现在两条船要回家，reads的腿就要开始劈叉了。因此，比对软件需要考虑到这一点，容许reads比对回去后，中间含有大大的空隙。</p>
+<hr>
+<h2 id="批次效应"><a href="#批次效应" class="headerlink" title="批次效应"></a>批次效应</h2><p>在不同芯片、不同测序仪、不同测序通道或在不同时间点收集的mRNA进行测序，即便是相同的mRNA也会导致测序得到的基因表达量有较大的不同，这就是批次效应。</p>
+<hr>
+<h2 id="Short-read短读长"><a href="#Short-read短读长" class="headerlink" title="Short-read短读长"></a>Short-read短读长</h2><p>测序得到的长度最大时500bp的reads，常见的测序片段长度为100-300bp。</p>
+<hr>
+<h2 id="Long-read长读长"><a href="#Long-read长读长" class="headerlink" title="Long-read长读长"></a>Long-read长读长</h2><p>测序得到的超过1000bp的reads，代表全长或近乎全长的mRNA。</p>
+<hr>
+<h2 id="Direct-RNA-sequencing（dRNA-Seq）"><a href="#Direct-RNA-sequencing（dRNA-Seq）" class="headerlink" title="Direct RNA sequencing（dRNA-Seq）"></a>Direct RNA sequencing（dRNA-Seq）</h2><p>直接测序RNA而非cDNA的测序技术，通常用于测序全长或近全长的mRNA。</p>
+<hr>
+<h2 id="Multi-mapped-reads多重比对的reads"><a href="#Multi-mapped-reads多重比对的reads" class="headerlink" title="Multi-mapped reads多重比对的reads"></a>Multi-mapped reads多重比对的reads</h2><p>从转录组同源区域测序得到的reads，不能精确确认其转录本或基因组的来源</p>
+<hr>
+<h2 id="Synthetic-long-reads合成long-reads"><a href="#Synthetic-long-reads合成long-reads" class="headerlink" title="Synthetic long reads合成long reads"></a>Synthetic long reads合成long reads</h2><p>通过组装多个短读长得到长读长的方法</p>
+<hr>
+<h2 id="唯一分子标识符（UMIs）"><a href="#唯一分子标识符（UMIs）" class="headerlink" title="唯一分子标识符（UMIs）"></a>唯一分子标识符（UMIs）</h2><p>在扩增前，构建RNA-seq文库的时候加入的短序列或者barcodes，理想情况下，每条转录本结合一个唯一标识符，含有此标识符的reads都来源于此转录本，定量时只计算一次。可以用来降低RNA-seq定量的偏好性，在RNA起始量低的单细胞实验中尤为适合。</p>
+<hr>
+<h2 id="生物学重复"><a href="#生物学重复" class="headerlink" title="生物学重复"></a>生物学重复</h2><p>对生物来源不同的样本的多次检测，比如来自三个个体的组织，用于捕获生物个体自身的变化；这个变化要么是待研究的对象，要么是噪音。相较之下，技术重复是对同样的样本做重复的操作—比如，对一个组织做三次处理。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RNA-seq/" rel="tag"># RNA-seq</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/12/sklearn-LogsticRegressor/" rel="next" title="sklearn-LogsticRegressor">
+                <i class="fa fa-chevron-left"></i> sklearn-LogsticRegressor
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Chen kun">
+            
+              <p class="site-author-name" itemprop="name">Chen kun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单端测序和双端测序"><span class="nav-number">1.</span> <span class="nav-text">单端测序和双端测序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么我们需要Paired-end这样的技术呢？"><span class="nav-number">2.</span> <span class="nav-text">为什么我们需要Paired-end这样的技术呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Junction"><span class="nav-number">3.</span> <span class="nav-text">Junction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基因丰度和基因表达的丰度"><span class="nav-number">4.</span> <span class="nav-text">基因丰度和基因表达的丰度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转录本"><span class="nav-number">5.</span> <span class="nav-text">转录本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RNA和DNA测序之间的差异"><span class="nav-number">6.</span> <span class="nav-text">RNA和DNA测序之间的差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测序深度和覆盖深度"><span class="nav-number">7.</span> <span class="nav-text">测序深度和覆盖深度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入片段大小"><span class="nav-number">8.</span> <span class="nav-text">插入片段大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引物和接头"><span class="nav-number">9.</span> <span class="nav-text">引物和接头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链特异性建库"><span class="nav-number">10.</span> <span class="nav-text">链特异性建库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么illumina会限制合成的链的长度呢，不能像Sanger法一样，最长测1k？"><span class="nav-number">11.</span> <span class="nav-text">为什么illumina会限制合成的链的长度呢，不能像Sanger法一样，最长测1k？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基因注释"><span class="nav-number">12.</span> <span class="nav-text">基因注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向互补序列的意义"><span class="nav-number">13.</span> <span class="nav-text">反向互补序列的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基因座"><span class="nav-number">14.</span> <span class="nav-text">基因座</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gene-isoforms"><span class="nav-number">15.</span> <span class="nav-text">gene isoforms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可变剪切"><span class="nav-number">16.</span> <span class="nav-text">可变剪切</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析的障碍"><span class="nav-number">17.</span> <span class="nav-text">分析的障碍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#剪切感知比对"><span class="nav-number">18.</span> <span class="nav-text">剪切感知比对</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批次效应"><span class="nav-number">19.</span> <span class="nav-text">批次效应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Short-read短读长"><span class="nav-number">20.</span> <span class="nav-text">Short-read短读长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Long-read长读长"><span class="nav-number">21.</span> <span class="nav-text">Long-read长读长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Direct-RNA-sequencing（dRNA-Seq）"><span class="nav-number">22.</span> <span class="nav-text">Direct RNA sequencing（dRNA-Seq）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-mapped-reads多重比对的reads"><span class="nav-number">23.</span> <span class="nav-text">Multi-mapped reads多重比对的reads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Synthetic-long-reads合成long-reads"><span class="nav-number">24.</span> <span class="nav-text">Synthetic long reads合成long reads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#唯一分子标识符（UMIs）"><span class="nav-number">25.</span> <span class="nav-text">唯一分子标识符（UMIs）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生物学重复"><span class="nav-number">26.</span> <span class="nav-text">生物学重复</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen kun</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
