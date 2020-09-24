@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bear.png?v=6.0.3">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="分子生物学,">
+
+
+<meta name="description" content="实验与数据分析都是解决问题研究问题的手段，是辅助我们理解分子生物学的工具。">
+<meta name="keywords" content="分子生物学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT分子生物学课程：DNA复制与修复">
+<meta property="og:url" content="https://william-chen777.github.io/2020/09/22/MIT分子生物学课程：DNA复制与修复/index.html">
+<meta property="og:site_name" content="William Chen">
+<meta property="og:description" content="实验与数据分析都是解决问题研究问题的手段，是辅助我们理解分子生物学的工具。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922134149368.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922140800964.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922142652401.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922143756618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922150221527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922150433970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922151257117.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922210607875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922211207210.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922212337913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922213156477.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922215259333.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200922220000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923202930161.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020092320453461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923211123101.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923211728762.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020092321331181.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020092321333893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923213402278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020092321370780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923213729804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020092321375189.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923214433342.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923214457409.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923214519363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200923214608750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924193128273.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924194441783.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200924200221921.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2020-09-24T12:28:04.799Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MIT分子生物学课程：DNA复制与修复">
+<meta name="twitter:description" content="实验与数据分析都是解决问题研究问题的手段，是辅助我们理解分子生物学的工具。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200922134149368.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+
+
+
+
+
+
+  <link rel="canonical" href="https://william-chen777.github.io/2020/09/22/MIT分子生物学课程：DNA复制与修复/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>MIT分子生物学课程：DNA复制与修复 | William Chen</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">William Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/09/22/MIT分子生物学课程：DNA复制与修复/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MIT分子生物学课程：DNA复制与修复</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-22T13:26:44+08:00">2020-09-22</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>实验与数据分析都是解决问题研究问题的手段，是辅助我们理解分子生物学的工具。</p>
+<a id="more"></a>
+
+<hr>
+<h1 id="The-structure-of-DNA"><a href="#The-structure-of-DNA" class="headerlink" title="The structure of DNA"></a>The structure of DNA</h1><h2 id="DNA"><a href="#DNA" class="headerlink" title="DNA"></a>DNA</h2><p>DNA ： Deoxyribonucleic acid  即脱氧核糖核酸<br>dsDNA： double string DNA</p>
+<p>   注： <strong>通常是B-form，B型DNA</strong><br><img src="https://img-blog.csdnimg.cn/20200922134149368.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><br></p>
+<h2 id="核苷酸通过磷酸二酯键相连（phosphodiester）"><a href="#核苷酸通过磷酸二酯键相连（phosphodiester）" class="headerlink" title="核苷酸通过磷酸二酯键相连（phosphodiester）"></a>核苷酸通过磷酸二酯键相连（phosphodiester）</h2><ul>
+<li>磷酸基团连接邻位脱氧核苷酸3’的氧——5’的磷酸基团连接到3’，所以说是5’-3’方向</li>
+<li>脱氧核糖和磷酸基团组成了DNA的骨架</li>
+<li><strong>原子的编号决定了DNA 5’–3’的方向性</strong></li>
+</ul>
+<br>
+
+
+<h2 id="核苷酸通过共价键连接"><a href="#核苷酸通过共价键连接" class="headerlink" title="核苷酸通过共价键连接"></a>核苷酸通过共价键连接</h2><p>A-T、G-C这样正确的配对，碱基对几何形态相同，使双螺旋结构有对称性，碱基也可以堆积起来。而G-A这样的错配，不能够形成较强的氢键，这会阻碍双螺旋结构的形成。<br><br></p>
+<ul>
+<li><strong>双螺旋结构(double helix)</strong> 每圈螺旋10碱基对长（1 turn）<br>氢键、碱基相邻芳香环堆积，共享电子，形成Π-Π键相互作用（加固双螺旋结构）</li>
+<li>双螺旋结构形成大沟（major grooves）和小沟（minor grooves）<br>沟的作用是识别碱基对，以及作为蛋白质的结合位点<br>大沟：携带特殊信息的碱基对<br>小沟：非特异性碱基对<br><strong>蛋白质能作用的氢键受体和供体位于沟内</strong></li>
+</ul>
+<br>
+
+
+<h2 id="DNA-replication"><a href="#DNA-replication" class="headerlink" title="DNA replication"></a>DNA replication</h2><p>特点：</p>
+<ol>
+<li>速度快，100-1000 bp/sec</li>
+<li>每个碱基对都会被复制</li>
+<li>DNA复制是十分精确的</li>
+</ol>
+<br>
+
+
+
+<h2 id="The-chemistry-of-DNA"><a href="#The-chemistry-of-DNA" class="headerlink" title="The chemistry of DNA"></a>The chemistry of DNA</h2><p><img src="https://img-blog.csdnimg.cn/20200922140800964.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<center>primer-template junction</center>
+
+<p>dNTP 与 引物结合后脱去2个磷酸结合而成的焦磷酸盐，而在焦磷酸酶(pyrophosphotase)的作用上，▲G= -7kcal，没有酶的情况下，▲G= -3.5kcal，这是一个正向反应，所以细胞不仅释放焦磷酸酶，还会积极捕获焦磷酸。 </p>
+<p>DNA聚合酶（DNA polymerase）催化了反应<br> 条件：</p>
+<ol>
+<li>3’羟基端引物</li>
+<li>引物须与另一条更长的单链DNA退火</li>
+<li>4种dNTP</li>
+<li>加入的dNTP能与模板碱基配对</li>
+</ol>
+<p>5’——3’ : 通过合成DNA延伸（引物）3’羟基端<br><strong>始终是引物被延长，而引物是5’-3’</strong></p>
+<br>
+
+<h2 id="The-polymerase-active-site"><a href="#The-polymerase-active-site" class="headerlink" title="The polymerase active site"></a>The polymerase active site</h2><p>DNA聚合酶可以催化至少4种反应，但是只有1个活性位点（active site），如何催化多种dNTP？<br>DNA聚合酶不关心什么核苷酸在聚合（碱基互补配对导致碱基对规格相同）</p>
+<ul>
+<li><img src="https://img-blog.csdnimg.cn/20200922142652401.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></li>
+</ul>
+<center>dNTP处于正确位置</center>
+
+<p> 碱基配对是催化的前提，保证了反应物处于正确的位置，使催化发生。<br> <strong>关键是 α-磷酸和3’-OH的位置</strong>，要保证3’-OH离dNTP的α-磷酸最近。</p>
+<p>正确的配对结合紧密且发生速度快，以此保证反应不断高效进行。</p>
+<br>
+
+<h2 id="The-structure-of-DNA-polymerase"><a href="#The-structure-of-DNA-polymerase" class="headerlink" title="The structure of DNA polymerase"></a>The structure of DNA polymerase</h2><p><img src="https://img-blog.csdnimg.cn/20200922143756618.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><strong>与DNA的磷酸骨架在一定程度上结合，主要是与DNA大沟结合</strong></p>
+<p>在小沟中，其相互作用没有序列特异性，但是有碱基配对特异性，使得聚合酶不仅能无视碱基地识别DNA，还能够识别这，就是碱基对。</p>
+<br>
+
+<h2 id="Catalysis-by-the-fingers-of-DNA-polymerases"><a href="#Catalysis-by-the-fingers-of-DNA-polymerases" class="headerlink" title="Catalysis by the fingers of DNA polymerases"></a>Catalysis by the fingers of DNA polymerases</h2><p>指状结构域会在结合地dNTP周围<strong>开合</strong>：</p>
+<ol>
+<li>O-helix （α-helix）的一种</li>
+<li>络氨酸环状结构与碱基形成Π-Π共轭</li>
+<li>赖氨酸和精氨酸结构，形成三磷酸盐</li>
+</ol>
+<p>之后释放磷酸盐和O-helix（指状结构域松开结合）<br><strong>因为酶与DNA的结合是非序列特异性的，所以移动DNA链使DNA不断合成延伸只要消耗能量。</strong></p>
+<br>
+
+<h2 id="Mistakes-by-DNA-polymerase"><a href="#Mistakes-by-DNA-polymerase" class="headerlink" title="Mistakes by DNA polymerase"></a>Mistakes by DNA polymerase</h2><p>大约每合成10w对碱基会发生一个错误，大多是嘧啶代替嘧啶，嘌呤代替嘌呤的错误。<br>这是由于<strong>互变异构体</strong>(tautomer)的形成。（氨基变亚氨基，酮式变成烯醇式）<br>互变异构体导致了错配，但这是暂时的，错配会减慢随后的合成。DNA聚合酶识别错误，并用<strong>校读型核酸外切酶</strong>（proofreading exonuclease）修正。（是聚合酶上的退格键或删除键）</p>
+<br>
+
+<h2 id="Proofreading-Exonucleases"><a href="#Proofreading-Exonucleases" class="headerlink" title="Proofreading Exonucleases"></a>Proofreading Exonucleases</h2><ol>
+<li>一个核酸外切酶可以从一端讲解DNA<br>（替代物为限制性核酸内切酶）<ol start="2">
+<li>校读型核酸外切酶沿 3’-5’工作</li>
+<li>通常外切酶活性与聚合酶活性位于同一条多肽链</li>
+</ol>
+</li>
+</ol>
+<p>错配DNA与聚合酶的亲和力很弱，但是它有引物的单链DNA末端（3’羟基）,于是与核酸外切酶位点有很高的亲和力。<br><img src="https://img-blog.csdnimg.cn/20200922150221527.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200922150433970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<br>
+
+<h1 id="DNA复制的检测"><a href="#DNA复制的检测" class="headerlink" title="DNA复制的检测"></a>DNA复制的检测</h1><h2 id="incorporation-assay-掺入法"><a href="#incorporation-assay-掺入法" class="headerlink" title="incorporation assay 掺入法"></a>incorporation assay 掺入法</h2><ol>
+<li>把聚合物（DNA）从原料（dNTP）中分离</li>
+<li>引物-模板接头的引物，通常是噬菌体m13<br><img src="https://img-blog.csdnimg.cn/20200922151257117.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></li>
+</ol>
+<center>M13：单链DNA基因组，5000b</center>
+
+<ol start="3">
+<li>加入缓冲液（通常是中性）+  DNA聚合酶</li>
+<li>加入dNTP开始反应</li>
+</ol>
+<p><strong>至少有一种被标记的dNTP，通常是荧光标记或同位素标记</strong></p>
+<ol start="5">
+<li>持续反应的过程可以加入SDS/EDTA终止反应</li>
+<li>分离出红色的DNA和红色的小核苷酸</li>
+</ol>
+<h2 id="如何从dNTP中分离DNA？"><a href="#如何从dNTP中分离DNA？" class="headerlink" title="如何从dNTP中分离DNA？"></a>如何从dNTP中分离DNA？</h2><h3 id="filter-binding-assay-滤纸结合分析"><a href="#filter-binding-assay-滤纸结合分析" class="headerlink" title="filter binding assay 滤纸结合分析"></a>filter binding assay 滤纸结合分析</h3><p> 1.用一张带正电的滤纸（DE-81滤纸），把反应物点到纸上<br> 2.用含盐缓冲液漂洗，盐浓度应该能够洗脱dNTP，而不能洗脱DNA</p>
+<blockquote>
+<p>1个dNTP有3个负电荷<br>DNA有至少上千个负电荷<br>用盐溶液去结合滤纸上的正电，就可以释放dNTP，只要同时结合3个就可以释放dNTP，但是同时结合上千个的可能性为0.（加入50mmol）</p>
+</blockquote>
+<p> 3.测量滤纸上吸附的荧光或者放射性强度</p>
+<blockquote>
+<p>优点：迅速，8分钟就可以完成；定量<br>缺点：无法提供长度信息。1000个10bp和1个1000bp的序列无法分别</p>
+</blockquote>
+<h3 id="Electrophoresis-凝胶（把DNA变性）"><a href="#Electrophoresis-凝胶（把DNA变性）" class="headerlink" title="Electrophoresis 凝胶（把DNA变性）"></a>Electrophoresis 凝胶（把DNA变性）</h3><p>1.加热（95°） +   琼脂糖凝胶（NaOH）/   聚丙烯酰胺（尿素）。</p>
+<blockquote>
+<p>NaOH和尿素可以有效阻止分离的DNA分子退火</p>
+</blockquote>
+<p>2.分离： 用溴化乙锭染胶（EB）</p>
+<blockquote>
+<p>优点：反映长度信息<br>缺点：慢；定量效果差</p>
+</blockquote>
+<h3 id="Primary-extension-assay-引物延伸分析实验"><a href="#Primary-extension-assay-引物延伸分析实验" class="headerlink" title="Primary extension assay 引物延伸分析实验"></a>Primary extension assay 引物延伸分析实验</h3><p>1.合成标记的引物-模板接头<br>2.标记通常必须位于引物上，并不标记dNTPs<br>3.不能用滤纸滤纸结合分析但是可以使用凝胶分离法</p>
+<br>
+
+<h2 id="DNA聚合酶的特性：持续合成（processivity）"><a href="#DNA聚合酶的特性：持续合成（processivity）" class="headerlink" title="DNA聚合酶的特性：持续合成（processivity）"></a>DNA聚合酶的特性：持续合成（processivity）</h2><p>持续合成能力（processivity）：在每次酶结合引物-模板接头时，加入的dNTP的个数</p>
+<blockquote>
+<p>在溶液中，DNA聚合酶结合引物-模板接头需要约1秒钟，这是一个扩散控制反应。<br>一旦结合DNA聚合酶只需要1毫秒来添加dNTP</p>
+</blockquote>
+<h3 id="DNA聚合酶的功能"><a href="#DNA聚合酶的功能" class="headerlink" title="DNA聚合酶的功能"></a>DNA聚合酶的功能</h3><ol>
+<li>DNA修复聚合酶的持续合成能力很低，通常只需要修复很短的DNA片段。因为每次结合引物-模板接头的时候，合成10-20个碱基对。</li>
+<li>DNA复制聚合酶有很强的持续合成能力，每次结合引物-模板接头时，合成高于5w个碱基对。</li>
+</ol>
+<br>
+
+<h3 id="如何判断DNA聚合酶的合成能力？"><a href="#如何判断DNA聚合酶的合成能力？" class="headerlink" title="如何判断DNA聚合酶的合成能力？"></a>如何判断DNA聚合酶的合成能力？</h3><h4 id="template-challenge-assay-模板竞争分析"><a href="#template-challenge-assay-模板竞争分析" class="headerlink" title="template challenge assay 模板竞争分析"></a>template challenge assay 模板竞争分析</h4><ol>
+<li>制备两种引物-模板接头，其中一种的引物经过标记，而另一种没有标记，我们称之为P*TJ和PTJ</li>
+<li>加入超过P*TJ两倍的DNA聚合酶</li>
+<li>加入未标记的dNTP启动反应，同时还加入1000倍的未标记的引物-模板接头</li>
+<li>让反应时间足够长，足以合成完整的模板（一个全长产物）</li>
+<li>终止合成反应，并在变性凝胶（denaturing gel）中分离产物</li>
+</ol>
+<blockquote>
+<p>一开始，所有标记过的引物-模板接头都结合了聚合酶，我们加入核苷酸启动反应，同时我们还加入了完全相同但是没有标记的引物-模板接头，加入的量是聚合酶的1000倍，聚合酶不会区分模板上是否连接了荧光或放射性标记物，所以他就开始合成了。根据酶的特性，它会以一定速率脱落，如果是一个持续合成能力超强的酶，可能一直到模板的终点都不会脱落。但是如果这个酶的合成能力是20-25个碱基对，到了这个长度它就从这个模板上脱落，它得花一秒钟时间去找一个新模板，一旦从模板上脱落，它就不一定只会重新结合原来的模板，还有同样的可能结合任何其他模板，它再一次结合一个放射性标记模板的几率只有千分之一。因此一般来说，它会结合一个未标记的模板，但是我们只能在首次结合的模板上看到它。</p>
+</blockquote>
+<hr>
+<hr>
+<h1 id="Replication-in-living-cells"><a href="#Replication-in-living-cells" class="headerlink" title="Replication in living cells"></a>Replication in living cells</h1><p><strong>冈崎片段</strong>是相对比较短的DNA链(大约1000核苷酸残基),是在DNA的滞后链的不连续合成期间生成的片段</p>
+<h2 id="the-replication-fork-and-associated-protein-复制叉和相关蛋白质"><a href="#the-replication-fork-and-associated-protein-复制叉和相关蛋白质" class="headerlink" title="the replication fork and associated protein 复制叉和相关蛋白质"></a>the replication fork and associated protein 复制叉和相关蛋白质</h2><h3 id="前导链合成酶"><a href="#前导链合成酶" class="headerlink" title="前导链合成酶"></a>前导链合成酶</h3><p><img src="https://img-blog.csdnimg.cn/20200922210607875.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<ul>
+<li>前导链合成酶移动的方向和整个复制的方向一致</li>
+<li>向着未被复制的DNA的方向移动</li>
+</ul>
+<br>
+
+<h3 id="后随链聚合酶"><a href="#后随链聚合酶" class="headerlink" title="后随链聚合酶"></a>后随链聚合酶</h3><p><img src="https://img-blog.csdnimg.cn/20200922211207210.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<ul>
+<li>合成的方向是当它向3’端延伸时，向着背离未复制双链DNA的方向移动；与此相反，当你往这个引物的3’端延伸，会向着DNA复制的方向移动。这个现象的原因是DNA链反向平行的性质</li>
+<li>不能让两条链的复制方向都朝向未复制的DNA</li>
+</ul>
+<p>后随链的复制需要一小块一小块的进行，聚合酶a是持续移动的，而聚合酶b一个片段一个片段地复制，这些片段被称为冈崎片段（Okazaki fragments),即后随链DNA片段，当这个片段遇到引物的时候，就会终止。随后聚合酶b就会解离，然后会有一个新的引物，开始一个新的冈崎片段的合成。<br><img src="https://img-blog.csdnimg.cn/20200922212337913.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<br>
+
+<h3 id="primase-引物酶"><a href="#primase-引物酶" class="headerlink" title="primase 引物酶"></a>primase 引物酶</h3><p>引物酶是前导链聚合酶和后随链聚合酶都需要的引物酶。<br><strong>引物酶其实不是DNA聚合酶，而是RNA聚合酶。</strong><br>这是一种特异的RNA聚合酶，在复制叉出合成6-8个碱基长的RNA引物。它在复制叉处合成引物的原因是什么呢？</p>
+<p><img src="https://img-blog.csdnimg.cn/20200922213156477.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<ul>
+<li>DNA聚合酶必须要有引物，不能从两个核苷酸处开始合成。所以我们需要引物-模板接头，模板既可以是RNA也可以是DNA</li>
+<li>RNA聚合酶可以直接将两个核苷酸连在一起，这样就可以开始合成一条链。平均来说合成6-8个碱基，由此可见，RNA聚合酶的合成能力比较低。</li>
+<li>细菌中：<strong>引物酶在复制叉处起作用的原因是</strong>它通过与另一个复制叉上的酶的相互作用而激活，这个酶是DNA解旋酶。</li>
+<li><img src="https://img-blog.csdnimg.cn/20200922215259333.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></li>
+</ul>
+<h3 id="DNA-helicase-DNA解旋酶"><a href="#DNA-helicase-DNA解旋酶" class="headerlink" title="DNA helicase DNA解旋酶"></a>DNA helicase DNA解旋酶</h3><p>DNA解旋酶的作用是使复制叉处的DNA解旋<br><img src="https://img-blog.csdnimg.cn/20200922220000429.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>PCR中没有加入任何的解旋酶，但是双链任然被成功分离，之所以需要解旋酶是因为如果仅仅依靠DNA聚合酶来提供解旋的能量，所需要的时间会增加十倍，解旋酶每秒能够解旋1000个碱基对，而PCR反应中聚合酶移动速度是1000个碱基对每分钟。这还是在DNA完全变性的时候，所以在合成期间，都是在解除这个小的二级结构。（加热到95°，退火引物，用聚合酶延伸一般都是在50°以上进行，所以两条链不会完全退火）</p>
+</blockquote>
+<h4 id="解旋酶是怎么工作的？"><a href="#解旋酶是怎么工作的？" class="headerlink" title="解旋酶是怎么工作的？"></a>解旋酶是怎么工作的？</h4><p>细胞中有上百种解旋酶，此处我们说的是<strong>复制解旋酶</strong>（replication helicase）,即<strong>作用于复制叉位置的解旋酶</strong>。它通过环绕其中的一条链来发挥作用，同时利用ATP来分离DNA。</p>
+<ul>
+<li>复制解旋酶是一个环状六聚体，它环绕DNA的一条链替换第二条链。</li>
+<li>解旋酶对分子环内部的事情不关心，只要穿过环的必须是DNA，它在那里识别DNA。</li>
+</ul>
+<p><strong>细菌中解旋酶围绕着后随链，而真核细胞中解旋酶围绕前导链</strong></p>
+<h4 id="解旋酶的重要性质"><a href="#解旋酶的重要性质" class="headerlink" title="解旋酶的重要性质"></a>解旋酶的重要性质</h4><p>解旋酶在单链DNA上的移动是定向的，他们不仅仅需要移走DNA，还只往一个方向移动，这叫做”极性”（polarity），所以它们需要能量。</p>
+<ul>
+<li>可以是5’到3’，也可以是3’到5’</li>
+<li>解旋酶只能结合单链DNA</li>
+</ul>
+<p>那么如何确定解旋酶是从3’-5’还是5’-3’呢？<br>我们需要一个能够根据酶移动的方向，产生不同表现的底物。用平末端限制性酶切它（只能切开双链DNA），这个酶会在引物内部不对称地切割，由此得到一个长的单链无标记区域。引物被分割成两个不对称地片段，通过跑胶可以区分。<br><img src="https://img-blog.csdnimg.cn/20200923202930161.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<br>
+
+<h4 id="SSB"><a href="#SSB" class="headerlink" title="SSB"></a>SSB</h4><p><strong>单链DNA结合蛋白（single-stranded DNA-binding protein）</strong><br>如果是将双链打开，他们还是完美配对的，这整个部分的碱基还是会互相配对，他们会马上重新结合，SSB就是防止这一点的。</p>
+<h4 id="为什么链不会马上复性呢？"><a href="#为什么链不会马上复性呢？" class="headerlink" title="为什么链不会马上复性呢？"></a>为什么链不会马上复性呢？</h4><ul>
+<li>前导链聚合酶紧跟着解旋酶，并复制单链DNA<br><img src="https://img-blog.csdnimg.cn/2020092320453461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></li>
+<li>后随链模板会迅速被SSB包裹。在大肠杆菌（细菌）中称为SSB，在真核生物中叫做RPA，但是都有高度的相似性<br>1.以高亲和力结合单链DNA，但是不结合双链DNA<br>2.阻止DNA链退火<br>3.SSB以协同结合的方式结合单链DNA<br>4.SSB不仅不能妨碍DNA的复制，还要迅速响应复制并脱离DNA。所以SSB结合的DNA很容易被聚合酶复制。<br>5.SSB结合DNA链时，碱基部分任然暴露在外</li>
+</ul>
+<hr>
+<h1 id="拓扑结构"><a href="#拓扑结构" class="headerlink" title="拓扑结构"></a>拓扑结构</h1><p>复制叉运作需要的另一个酶叫<strong>拓扑异构酶</strong>（topoisomerase）。<br>拓扑异构酶需要解决的问题是当你打开两条DNA链的时候，在复制叉的前方DNA区域中聚集了太多的环状结构。（拉开链的时候，螺旋结构会被压缩到更小的区域）<br><img src="https://img-blog.csdnimg.cn/20200923211123101.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>理想的DNA结构时每一圈螺旋有10.4个碱基对，这使得DNA处于不受力的状态。如果过度螺旋或者正超螺旋，每圈螺旋少于10.4个碱基对。<br><img src="https://img-blog.csdnimg.cn/20200923211728762.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="拓扑异构酶是做什么的？"><a href="#拓扑异构酶是做什么的？" class="headerlink" title="拓扑异构酶是做什么的？"></a>拓扑异构酶是做什么的？</h2><p>拓扑异构酶使解旋时压缩的螺旋结构放松，他们会解开过度螺旋的DNA，或者重新缠绕螺旋不足的DNA。</p>
+<p>拓扑异构酶一次切断了DNA的一条链，但它连接着被切断的DNA链的两端。拓扑异构酶与DNA上的一个点结合，然后利用酪氨酸里的羟基来连接DNA两端，酶的酪氨酸与链的5’磷酸形成共价键，另一端与链的3’羟基形成非共价键。当他完成工作之后，会使DNA重新连接。这个过程能量守恒，所以不需要ATP或者其他能量源，完全时受DNA里的能量驱动。<br><img src="https://img-blog.csdnimg.cn/2020092321331181.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020092321333893.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200923213402278.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="I型拓扑异构酶"><a href="#I型拓扑异构酶" class="headerlink" title="I型拓扑异构酶"></a>I型拓扑异构酶</h2><p><strong>拓扑异构酶切断DNA链做了什么？</strong><br>I型拓扑异构酶切断一条链之后，把另一条链穿过断开的链，然后把断链重现连接。<br><img src="https://img-blog.csdnimg.cn/2020092321370780.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200923213729804.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/2020092321375189.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>这个过程使环绕数增加了一圈，当然，这个过程也可以反过来，就会使环绕数目减少一圈，这样就使得DNA过度压缩的结构得到放松。</p>
+<br>
+
+<h2 id="II型拓扑异构酶"><a href="#II型拓扑异构酶" class="headerlink" title="II型拓扑异构酶"></a>II型拓扑异构酶</h2><p><strong>II型拓扑异构酶切断并传递双链</strong><br>它环绕在一条链上，打开另一条链，然后使这条链穿出断口，最后再将断链连接。</p>
+<p><img src="https://img-blog.csdnimg.cn/20200923214433342.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200923214457409.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200923214519363.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br><img src="https://img-blog.csdnimg.cn/20200923214608750.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="I型和II型有什么区别"><a href="#I型和II型有什么区别" class="headerlink" title="I型和II型有什么区别"></a>I型和II型有什么区别</h2><ul>
+<li>II型拓扑异构酶切断双链，并固定住。在锻炼的接口处产生了一对5’和3’端，产生了两个活性位点，而I型只有一个。随后把另一条完整的链拉过来穿过端口，再将断口连接。这样可以增加或者减少<strong>两个</strong>环绕数。</li>
+<li>II型拓扑异构酶还能解开两个相连的环状DNA</li>
+</ul>
+<h2 id="旋转酶（gyrase）"><a href="#旋转酶（gyrase）" class="headerlink" title="旋转酶（gyrase）"></a>旋转酶（gyrase）</h2><p>在细菌中的一类特殊的II型拓扑异构酶，它可以增加负超螺旋或者使DNA变得螺旋不足。它切断了DNA内的连环，使其螺旋不足，或者使其负超螺旋。这是因为螺旋不足的DNA更容易解旋，一旦解旋，每单位长度的DNA上的连环就增加了，却不会增加DNA上的张力。</p>
+<h2 id="怎么检测拓扑异构酶的活性？"><a href="#怎么检测拓扑异构酶的活性？" class="headerlink" title="怎么检测拓扑异构酶的活性？"></a>怎么检测拓扑异构酶的活性？</h2><p><img src="https://img-blog.csdnimg.cn/20200924193128273.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"><br>上图中分别是环状DNA、链状DNA、负超螺旋DNA（环状DNA通过螺旋酶形成负超螺旋），由于DNA带负电所以电泳时会从上往下移动。环状DNA由于受阻力大所以移动最慢。<br><img src="https://img-blog.csdnimg.cn/20200924194441783.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20200924200221921.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分子生物学/" rel="tag"># 分子生物学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/21/生物统计学习/" rel="next" title="生物统计学习">
+                <i class="fa fa-chevron-left"></i> 生物统计学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Chen kun">
+            
+              <p class="site-author-name" itemprop="name">Chen kun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-structure-of-DNA"><span class="nav-number">1.</span> <span class="nav-text">The structure of DNA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DNA"><span class="nav-number">1.1.</span> <span class="nav-text">DNA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核苷酸通过磷酸二酯键相连（phosphodiester）"><span class="nav-number">1.2.</span> <span class="nav-text">核苷酸通过磷酸二酯键相连（phosphodiester）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核苷酸通过共价键连接"><span class="nav-number">1.3.</span> <span class="nav-text">核苷酸通过共价键连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNA-replication"><span class="nav-number">1.4.</span> <span class="nav-text">DNA replication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-chemistry-of-DNA"><span class="nav-number">1.5.</span> <span class="nav-text">The chemistry of DNA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-polymerase-active-site"><span class="nav-number">1.6.</span> <span class="nav-text">The polymerase active site</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-structure-of-DNA-polymerase"><span class="nav-number">1.7.</span> <span class="nav-text">The structure of DNA polymerase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Catalysis-by-the-fingers-of-DNA-polymerases"><span class="nav-number">1.8.</span> <span class="nav-text">Catalysis by the fingers of DNA polymerases</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mistakes-by-DNA-polymerase"><span class="nav-number">1.9.</span> <span class="nav-text">Mistakes by DNA polymerase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proofreading-Exonucleases"><span class="nav-number">1.10.</span> <span class="nav-text">Proofreading Exonucleases</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNA复制的检测"><span class="nav-number">2.</span> <span class="nav-text">DNA复制的检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#incorporation-assay-掺入法"><span class="nav-number">2.1.</span> <span class="nav-text">incorporation assay 掺入法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何从dNTP中分离DNA？"><span class="nav-number">2.2.</span> <span class="nav-text">如何从dNTP中分离DNA？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#filter-binding-assay-滤纸结合分析"><span class="nav-number">2.2.1.</span> <span class="nav-text">filter binding assay 滤纸结合分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Electrophoresis-凝胶（把DNA变性）"><span class="nav-number">2.2.2.</span> <span class="nav-text">Electrophoresis 凝胶（把DNA变性）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Primary-extension-assay-引物延伸分析实验"><span class="nav-number">2.2.3.</span> <span class="nav-text">Primary extension assay 引物延伸分析实验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNA聚合酶的特性：持续合成（processivity）"><span class="nav-number">2.3.</span> <span class="nav-text">DNA聚合酶的特性：持续合成（processivity）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DNA聚合酶的功能"><span class="nav-number">2.3.1.</span> <span class="nav-text">DNA聚合酶的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何判断DNA聚合酶的合成能力？"><span class="nav-number">2.3.2.</span> <span class="nav-text">如何判断DNA聚合酶的合成能力？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#template-challenge-assay-模板竞争分析"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">template challenge assay 模板竞争分析</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Replication-in-living-cells"><span class="nav-number">3.</span> <span class="nav-text">Replication in living cells</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-replication-fork-and-associated-protein-复制叉和相关蛋白质"><span class="nav-number">3.1.</span> <span class="nav-text">the replication fork and associated protein 复制叉和相关蛋白质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前导链合成酶"><span class="nav-number">3.1.1.</span> <span class="nav-text">前导链合成酶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后随链聚合酶"><span class="nav-number">3.1.2.</span> <span class="nav-text">后随链聚合酶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#primase-引物酶"><span class="nav-number">3.1.3.</span> <span class="nav-text">primase 引物酶</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNA-helicase-DNA解旋酶"><span class="nav-number">3.1.4.</span> <span class="nav-text">DNA helicase DNA解旋酶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#解旋酶是怎么工作的？"><span class="nav-number">3.1.4.1.</span> <span class="nav-text">解旋酶是怎么工作的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解旋酶的重要性质"><span class="nav-number">3.1.4.2.</span> <span class="nav-text">解旋酶的重要性质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSB"><span class="nav-number">3.1.4.3.</span> <span class="nav-text">SSB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么链不会马上复性呢？"><span class="nav-number">3.1.4.4.</span> <span class="nav-text">为什么链不会马上复性呢？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拓扑结构"><span class="nav-number">4.</span> <span class="nav-text">拓扑结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑异构酶是做什么的？"><span class="nav-number">4.1.</span> <span class="nav-text">拓扑异构酶是做什么的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I型拓扑异构酶"><span class="nav-number">4.2.</span> <span class="nav-text">I型拓扑异构酶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#II型拓扑异构酶"><span class="nav-number">4.3.</span> <span class="nav-text">II型拓扑异构酶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I型和II型有什么区别"><span class="nav-number">4.4.</span> <span class="nav-text">I型和II型有什么区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#旋转酶（gyrase）"><span class="nav-number">4.5.</span> <span class="nav-text">旋转酶（gyrase）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么检测拓扑异构酶的活性？"><span class="nav-number">4.6.</span> <span class="nav-text">怎么检测拓扑异构酶的活性？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen kun</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
