@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bear.png?v=6.0.3">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="基础课程,">
+
+
+<meta name="description" content="此文章记录研一时基础课程《分子生物学》，与MIT分子生物学相互印证，一为主线，理清学科框架；一为补充，打实学科基础。">
+<meta name="keywords" content="基础课程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分子生物学">
+<meta property="og:url" content="https://william-chen777.github.io/2020/10/05/分子生物学/index.html">
+<meta property="og:site_name" content="William Chen">
+<meta property="og:description" content="此文章记录研一时基础课程《分子生物学》，与MIT分子生物学相互印证，一为主线，理清学科框架；一为补充，打实学科基础。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005200336320.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005201914335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005202648362.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201005203444304.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2020-10-05T12:55:16.634Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分子生物学">
+<meta name="twitter:description" content="此文章记录研一时基础课程《分子生物学》，与MIT分子生物学相互印证，一为主线，理清学科框架；一为补充，打实学科基础。">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201005200336320.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+
+
+
+
+
+
+  <link rel="canonical" href="https://william-chen777.github.io/2020/10/05/分子生物学/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>分子生物学 | William Chen</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">William Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/10/05/分子生物学/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">分子生物学</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-05T19:36:17+08:00">2020-10-05</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>此文章记录研一时基础课程《分子生物学》，与MIT分子生物学相互印证，一为主线，理清学科框架；一为补充，打实学科基础。</p>
+<a id="more"></a>
+
+
+
+<h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>生物学的三个问题：</p>
+<ul>
+<li>生命怎样<strong>起源</strong>的？——<strong>进化</strong></li>
+<li>为何有其父必有其子？——<strong>遗传</strong></li>
+<li>动植物个体怎样从一个受精卵<strong>发育</strong>而来？——<strong>发育</strong></li>
+</ul>
+<br>
+
+<h2 id="发展"><a href="#发展" class="headerlink" title="发展"></a>发展</h2><p>生物进化：</p>
+<ul>
+<li>1859</li>
+<li>达尔文</li>
+<li>《物种起源》</li>
+</ul>
+<p>细胞学说：</p>
+<ul>
+<li>生命单元——细胞——动植物个体</li>
+<li>包含生命的全部信息</li>
+</ul>
+<p>生物化学：</p>
+<ul>
+<li>分析细胞组分</li>
+<li>组分与生命现象的联系</li>
+</ul>
+<blockquote>
+<p>孟德尔——遗传学之父<br>约翰森——首先用gene一词，表示遗传学的基本单位<br>摩尔根——第一个用实验证明基因学说<br>Oswald Avery——证明基因就是DNA分子（核酸）</p>
+</blockquote>
+<h2 id="分子生物学简史"><a href="#分子生物学简史" class="headerlink" title="分子生物学简史"></a>分子生物学简史</h2><h2 id="分子生物学的主要研究内容"><a href="#分子生物学的主要研究内容" class="headerlink" title="分子生物学的主要研究内容"></a>分子生物学的主要研究内容</h2><ul>
+<li>构成生物大分子的各类有机大分子<strong>基本单元</strong>在不同生物中都是相同的</li>
+<li>生物体内一切有机大分子的<strong>构成</strong>都遵循相同的规则</li>
+<li>某一特定生物体所拥有的<strong>核酸</strong>及<strong>蛋白质</strong>分子决定它的属性</li>
+</ul>
+<ol>
+<li>DNA重组技术：基因工程技术</li>
+<li>基因表达调控：转录、翻译、调控</li>
+<li>生物大分子的结构与功能研究：结构分子生物学</li>
+<li>基因组、功能基因组、生物信息学</li>
+</ol>
+<h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><ol>
+<li>简述孟德尔、摩尔根、沃森等人对分子生物学发展的主要贡献。<blockquote>
+<p>孟德尔——发现并提出遗传学定律，通过豌豆杂交实验揭示了遗传的物质性<br>摩尔根——第一个用实验证明基因学说<br>沃森——发现了双螺旋结构</p>
+</blockquote>
+</li>
+</ol>
+<ol start="2">
+<li>早期主要由哪些实验证实DNA是遗传物质？写出实验的主要步骤。<blockquote>
+<p>Avery——格里菲斯实验。<br>此實驗是利用兩個不同的肺炎鏈球菌（可感染老鼠）品系，一種是III-S型（平滑型，有毒性），另一種是II-R型（粗糙型，無毒性）。其中III-S型具有以多糖構成的荚膜 ，可保護自身，抵抗宿主的免疫系統，進而使宿主死亡。II-R則無此構造，因此無法倖免於免疫系統的攻擊。</p>
+<table>
+<thead>
+<tr>
+<th>注入宿主的細菌類型</th>
+<th>細菌特徵</th>
+<th>宿主感染後反應</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>II-R（粗糙型）</td>
+<td>無荚膜</td>
+<td>存活</td>
+</tr>
+<tr>
+<td>III-S（平滑型）</td>
+<td>有荚膜</td>
+<td>死亡</td>
+</tr>
+<tr>
+<td>死的III-S</td>
+<td></td>
+<td>存活</td>
+</tr>
+<tr>
+<td>死的III-S + 活的II-R</td>
+<td></td>
+<td>死亡</td>
+</tr>
+</tbody></table>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>噬菌体感染实验<br>用分别被35S，或32P标记的噬菌体去感染没有被放射性同位素标记的宿主菌，然后测定宿主菌细胞带有的同位素。被35S标记的噬菌体所感染的宿主菌细胞内很少有35S，而大多数35S出现在宿主菌细胞的外面。也就是说，35S标记的噬菌体蛋白质外壳在感染宿主菌细胞后，并未进入宿主菌细胞内部而是留在细胞外面。被32P标记的噬菌体感染宿主菌细胞后，测定宿主菌的同位素，发现32P主要集中在宿主菌细胞内。所以噬菌体感染宿主菌细胞时进入细胞内的主要是DNA。<br>|亲代噬菌体|同位素的去向|子代噬菌体|实验结论<br>|–|–|–|–|<br>|32P标记DNA|32P标记DNA进入细菌体内|DNA部分有32P标记|DNA分子在亲代和子代之间具有连续性，是遗传物质<br>|35S标记蛋白质|35S标记蛋白质在上清液中（留在细菌外部）|外壳蛋白质无35S标记|DNA分子在亲代和子代之间具有连续性，是遗传物质</p>
+</blockquote>
+<ol start="3">
+<li>为什么说一部分子生物学简史，就是一部获取诺贝尔生理学与医学奖、化学奖的传奇史？</li>
+</ol>
+<ol start="4">
+<li>为什么说构成生物体各类有机大分子的基本单元在不同生物中都是相同的？</li>
+</ol>
+<ol start="5">
+<li>生物体内一切有机大分子的构成都遵循共同的规则是什么？</li>
+</ol>
+<ol start="6">
+<li>什么是non-coding RNAs？目前已发现的non-coding RNA有哪些类型？<blockquote>
+<p>非編碼核糖核酸（英語：non-coding RNA），縮寫ncRNA，是指各種不轉譯成蛋白質的RNA分子。過去也稱此類RNA為小核糖核酸（sRNA）。不過有些ncRNA分子其實相當大。其他較少使用的同義詞還有非信使核糖核酸（nmRNA）、小非信使核糖核酸（snmRNA）或功能性核糖核酸（fRNA）等。<br>DNA序列中專門轉錄成非編碼RNA的部分稱為RNA基因或是非編碼RNA基因。非編碼RNA基因用來生產tRNA（轉移RNA）與rRNA（核糖體RNA），以及一些小RNA，如snoRNAs、microRNAs、siRNAs與piRNAs；較大的則有Xist、Evf、Air、CTN與PINK等。<br>基因組中可生產非編碼RNA的DNA比例目前仍未明瞭，最近的轉錄組及微陣列研究顯示，在老鼠基因組中，可能有超過3萬個長ncRNA。mRNA（信使RNA）末端也含有一些非編碼區域（non-coding regions；UTRs），雖然這些部分並非蛋白質編碼，但mRNA並不歸類於非編碼RNA。</p>
+</blockquote>
+</li>
+</ol>
+<hr>
+<h1 id="染色体和DNA"><a href="#染色体和DNA" class="headerlink" title="染色体和DNA"></a>染色体和DNA</h1><h2 id="生物遗传的基础是什么？"><a href="#生物遗传的基础是什么？" class="headerlink" title="生物遗传的基础是什么？"></a>生物遗传的基础是什么？</h2><ul>
+<li>DNA——生物性状遗传</li>
+<li>RNA——部分病毒和类病毒</li>
+</ul>
+<h2 id="染色体——DNA和蛋白质"><a href="#染色体——DNA和蛋白质" class="headerlink" title="染色体——DNA和蛋白质"></a>染色体——DNA和蛋白质</h2><ul>
+<li>DNA主要在染色体上</li>
+<li>染色体是遗传物质的主要载体</li>
+</ul>
+<p>DNA除了在细胞核中，在动物中还存在于线粒体中，植物中存在于线粒体和叶绿体，细菌中存在于质粒。</p>
+<h3 id="染色体的特征"><a href="#染色体的特征" class="headerlink" title="染色体的特征"></a>染色体的特征</h3><ul>
+<li>结构相对稳定（遗传的基础）</li>
+<li>自我复制（遗传的条件）</li>
+<li>指导蛋白质的合成（功能）</li>
+<li>产生可遗传变异（变异与适应）</li>
+</ul>
+<h3 id="染色体的组成"><a href="#染色体的组成" class="headerlink" title="染色体的组成"></a>染色体的组成</h3><p><img src="https://img-blog.csdnimg.cn/20201005200336320.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h4 id="蛋白质：组蛋白"><a href="#蛋白质：组蛋白" class="headerlink" title="蛋白质：组蛋白"></a>蛋白质：组蛋白</h4><table>
+<thead>
+<tr>
+<th>种类</th>
+<th>相对分子质量</th>
+<th>氨基酸数目</th>
+<th>保守性</th>
+<th>染色体位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>H1</td>
+<td>21000</td>
+<td>223</td>
+<td>×</td>
+<td>接头</td>
+</tr>
+<tr>
+<td>H2A</td>
+<td>14500</td>
+<td>129</td>
+<td>√</td>
+<td>核心</td>
+</tr>
+<tr>
+<td>H2B</td>
+<td>13800</td>
+<td>125</td>
+<td>√</td>
+<td>核心</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>15300</td>
+<td>135</td>
+<td>√√</td>
+<td>核心</td>
+</tr>
+<tr>
+<td>H4</td>
+<td>11300</td>
+<td>102</td>
+<td>√√</td>
+<td>核心</td>
+</tr>
+</tbody></table>
+<p>组蛋白的特性：</p>
+<ul>
+<li>进化上的极端保守性</li>
+<li>无组织特异性</li>
+<li>肽链上氨基酸分布的不对称性</li>
+<li>组蛋白的修饰作用</li>
+<li>富含赖氨酸的组蛋白H5</li>
+</ul>
+<p>还存在大量的非组蛋白</p>
+<h4 id="真核生物DNA"><a href="#真核生物DNA" class="headerlink" title="真核生物DNA"></a>真核生物DNA</h4><ul>
+<li>大量重复序列</li>
+<li>功能DNA序列是断裂的</li>
+</ul>
+<h5 id="C值（C-value）"><a href="#C值（C-value）" class="headerlink" title="C值（C-value）"></a>C值（C-value）</h5><ul>
+<li>单倍体基因组DNA的总量</li>
+</ul>
+<p>C值谬误</p>
+<ul>
+<li>“C值反常现象（C-value paradox）” </li>
+<li>C值与物种进化的复杂程度不一样</li>
+<li>某些低等生物具有较大的C值</li>
+</ul>
+<h4 id="染色质与核小体"><a href="#染色质与核小体" class="headerlink" title="染色质与核小体"></a>染色质与核小体</h4><ul>
+<li>染色质：核小体——念珠状结构（串联的线是DNA，珠是组蛋白）</li>
+<li>核小体<br>200bp的DNA<br>八聚体：H2A,H2B,H3,H4成对存在</li>
+</ul>
+<h3 id="真核基因组的结构"><a href="#真核基因组的结构" class="headerlink" title="真核基因组的结构"></a>真核基因组的结构</h3><p><img src="https://img-blog.csdnimg.cn/20201005201914335.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<center>真核细胞基因结构示意图</center>
+
+
+
+<ul>
+<li>庞大——远远大于原核生物</li>
+<li>大量<strong>重复序列</strong></li>
+<li>大部分为<strong>非编码序列</strong></li>
+<li>转录产物为<strong>单顺反子</strong></li>
+<li>断裂基因，有内含子</li>
+<li>大量<strong>顺式作用原件</strong></li>
+<li>DNA<strong>多态性</strong>丰富</li>
+<li><strong>端粒</strong>结构</li>
+</ul>
+<blockquote>
+<p><strong>单顺反子</strong>：顺反子是比基因更小的遗传学单位，一个基因可以包含多个顺反子，称为多顺反子，如果一个基因只有一个顺反子就称为单顺反子。<br><br><br>多顺反子见于原核生物（但原核生物也有单顺反子作用单位），意指<strong>一个mRNA分子编码多个多肽链</strong>。这些多肽链对应的DNA片段则位于同一转录单位内，享有同一对起点和终点。</p>
+<p>而单顺反子则见于真核生物，一个转录完毕的mRNA内含有外显子对应的转录产物，该mRNA只编码一条多肽链。<img src="https://img-blog.csdnimg.cn/20201005202648362.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+</blockquote>
+<br>
+
+<h4 id="端粒"><a href="#端粒" class="headerlink" title="端粒"></a>端粒</h4><p><strong>端粒</strong>：DNA末端的一种特殊结构，随着岁月的增长端粒会变得越来越短。</p>
+<p>端粒是存在於真核細胞線狀染色體末端的一小段DNA-蛋白質複合體，它與端粒結合蛋白一起構成了特殊的“帽子”結構，能夠維持染色體的完整和控制細胞分裂週期。</p>
+<p>端粒DNA是由簡單的DNA高度重複序列組成的，染色體末端沿著5’到3’ 方向的鏈富含 GT。在酵母和人中，端粒序列分別為C1－3A/TG1－3和TTAGGG/CCCTAA，並有許多蛋白與端粒DNA結合。端粒DNA主要功能有：第一，保護染色體不被核酸酶降解；第二，防止染色體相互融合；第三，為端粒酶提供底物，解決DNA複製的末端隱縮，保證染色體的完全複製。端粒、著絲粒和復制原點是染色體保持完整和穩定的三大要素。同時，端粒又是基因調控的特殊位點, 常可抑制位於端粒附近基因的轉錄活性（稱為端粒的位置效應，TPE）。在大多真核生物中，端粒的延長是由端粒酶催化的，另外，重組機制也介導端粒的延長。</p>
+<p><img src="https://img-blog.csdnimg.cn/20201005203444304.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/基础课程/" rel="tag"># 基础课程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/28/真菌生物学/" rel="next" title="真菌生物学">
+                <i class="fa fa-chevron-left"></i> 真菌生物学
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Chen kun">
+            
+              <p class="site-author-name" itemprop="name">Chen kun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#绪论"><span class="nav-number">1.</span> <span class="nav-text">绪论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发展"><span class="nav-number">1.2.</span> <span class="nav-text">发展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分子生物学简史"><span class="nav-number">1.3.</span> <span class="nav-text">分子生物学简史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分子生物学的主要研究内容"><span class="nav-number">1.4.</span> <span class="nav-text">分子生物学的主要研究内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考题"><span class="nav-number">1.5.</span> <span class="nav-text">思考题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#染色体和DNA"><span class="nav-number">2.</span> <span class="nav-text">染色体和DNA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生物遗传的基础是什么？"><span class="nav-number">2.1.</span> <span class="nav-text">生物遗传的基础是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#染色体——DNA和蛋白质"><span class="nav-number">2.2.</span> <span class="nav-text">染色体——DNA和蛋白质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#染色体的特征"><span class="nav-number">2.2.1.</span> <span class="nav-text">染色体的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#染色体的组成"><span class="nav-number">2.2.2.</span> <span class="nav-text">染色体的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#蛋白质：组蛋白"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">蛋白质：组蛋白</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#真核生物DNA"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">真核生物DNA</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#C值（C-value）"><span class="nav-number">2.2.2.2.1.</span> <span class="nav-text">C值（C-value）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#染色质与核小体"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">染色质与核小体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#真核基因组的结构"><span class="nav-number">2.2.3.</span> <span class="nav-text">真核基因组的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#端粒"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">端粒</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen kun</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
