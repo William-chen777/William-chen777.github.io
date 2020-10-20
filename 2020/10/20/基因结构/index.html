@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/bear.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/bear.png?v=6.0.3">
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="分子生物学,">
+
+
+<meta name="description" content="记录基因结构相关内容">
+<meta name="keywords" content="分子生物学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基因结构">
+<meta property="og:url" content="https://william-chen777.github.io/2020/10/20/基因结构/index.html">
+<meta property="og:site_name" content="William Chen">
+<meta property="og:description" content="记录基因结构相关内容">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020174914801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020175827670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020175855948.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2020102017494145.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020175427614.png#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201020175614497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="og:updated_time" content="2020-10-20T09:59:16.104Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基因结构">
+<meta name="twitter:description" content="记录基因结构相关内容">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201020174914801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center">
+
+
+
+
+
+
+  <link rel="canonical" href="https://william-chen777.github.io/2020/10/20/基因结构/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>基因结构 | William Chen</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">William Chen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://william-chen777.github.io/2020/10/20/基因结构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen kun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="William Chen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基因结构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-20T17:45:31+08:00">2020-10-20</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录基因结构相关内容</p>
+<a id="more"></a>
+
+
+<hr>
+<p><img src="https://img-blog.csdnimg.cn/20201020174914801.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201020175827670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/20201020175855948.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<hr>
+<h1 id="DNA"><a href="#DNA" class="headerlink" title="DNA"></a>DNA</h1><p><img src="https://img-blog.csdnimg.cn/2020102017494145.png#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="编码区-Coding-region"><a href="#编码区-Coding-region" class="headerlink" title="编码区 Coding region"></a>编码区 <em>Coding region</em></h2><p>基因在结构上，分为编码区和非编码区两部分。真核生物的编码区是不连续的，分为外显子和内含子，在转录过程中会修剪内含子，并拼合外显子来形成转录产物。在原核生物中，基因是连续的，也就是说无外显子和内含子之分。</p>
+<br>
+
+<h2 id="外显子-Exon"><a href="#外显子-Exon" class="headerlink" title="外显子 Exon"></a>外显子 <em>Exon</em></h2><p>外显子是在 preRNA 经过剪切或修饰后，被保留的DNA部分，并最终出现在成熟RNA的基因序列中。</p>
+<br>
+
+
+<h2 id="内含子-Intron"><a href="#内含子-Intron" class="headerlink" title="内含子 Intron"></a>内含子 <em>Intron</em></h2><p>在真核生物中，内含子作为阻断基因的线性表达的一段DNA序列，是在 preRNA 经过剪切或修饰后，被切除的DNA序列</p>
+<br>
+
+
+
+<h2 id="非编码区-Non-coding-region"><a href="#非编码区-Non-coding-region" class="headerlink" title="非编码区 Non-coding region"></a>非编码区 <em>Non-coding region</em></h2><p>非编码区在对基因的表达调控中发挥重要作用，如启动子，增强子，终止子等都位于该区域，有意思的是在人类基因中非编码区的占比超过90%。它们中的一部分可以转录为功能性RNA，比如tRNA（transfer RNA）, rRNA（ribosomal RNA）等；可以作为DNA复制，转录起始来对复制，转录和翻译起到调控作用；也可能是着丝粒与端粒的重要组成部分。</p>
+<br>
+
+
+<h2 id="启动子-Promoter"><a href="#启动子-Promoter" class="headerlink" title="启动子 Promoter"></a>启动子 <em>Promoter</em></h2><p>启动子是特定基因转录的DNA区域，启动子一般位于基因的转录起始位点，5‘端上游，启动子长约100-1000bp。在转录过程中，RNA聚合酶与转录因子可以识别并特异性结合到启动子特有的DNA序列（一般为保守序列），从而启动转录。启动子本身并不转录而且也不控制基因活动，而是通过转录因子结合来调控转录过程。在细胞核中，似乎启动子优先分布在染色体区域的边缘，可能是在不同染色体上共同表达基因。 此外，在人类中，启动子显示出每个染色体特有的某些结构特征。</p>
+<h3 id="CAAT-Box-与-Sextama-box"><a href="#CAAT-Box-与-Sextama-box" class="headerlink" title="CAAT Box 与 Sextama box"></a>CAAT Box 与 Sextama box</h3><p>CCAAT box（有时也缩写为CAAT box或CAT box）：具有GGCCAATCT 共有序列的不同核苷酸序列 ，是真核生物基因常有的调节区，位于转录起始点上游约-80bp处，可能也是RNA聚合酶的一个结合处，控制着转录起始的频率。与之相似的是，在原核生物启动子上-35bp处的TTGACA区，又称-35区</p>
+<blockquote>
+<p>保守序列与共有序列的概念含义基本相同。保守序列间相似度高，但不一定相同，而共有序列是相同的，共有序列可以理解为一种特殊的保守序列。</p>
+</blockquote>
+<p>CAAT框是最早被人们描述的常见启动子元件之一，常位于接近-80的位置，但是它可以在离起始点较远的距离仍能起作用，且在两种取向均可发挥作用。CAAT框的突变敏感性提示了它在决定转录效率上有很强的作用，但是突变对启动子的特异性没有影响。</p>
+<h3 id="TATA-Box-与-Pribnow-box"><a href="#TATA-Box-与-Pribnow-box" class="headerlink" title="TATA Box 与 Pribnow box"></a>TATA Box 与 Pribnow box</h3><p>TATA 框（TATA box / Goldberg-Hogness box），存在于古细菌和真核生物的核心启动子区域的一段DNA序列，TATA 框的原核同源物称为Pribnow 框（Pribnow box），其具有较短的共有序列TATAATAAT。 它约在多数真核生物基因转录起始点上游约-30bp（-25~-32bp）处，基本上由A-T碱基对组成，是决定基因转录始的选择，为RNA聚合酶的结合处之一，RNA聚合酶与TATA框牢固结合之后才能起始转录。</p>
+<br>
+
+<h2 id="增强子-Enhancer"><a href="#增强子-Enhancer" class="headerlink" title="增强子 Enhancer"></a>增强子 <em>Enhancer</em></h2><p>增强子是位于转录起始位点或下游基因1Mbp的位置，长度50-1500bp的序列，其可以被转录激活因子结合从而增加特定基因转录发生的可能性，广泛的存在于原核与真核生物基因结构中。</p>
+<p>增强子能大大增强启动子的活性。增强子有别于启动子处有两点:增强子对于启动子的位置不固定，而能有很大的变动;它能在两个方向产生相互作用。一个增强子并不限于促进某一特殊启动子的转录，它能刺激在它附近的任一启动子。</p>
+<br>
+
+<h2 id="终止子-Terminator"><a href="#终止子-Terminator" class="headerlink" title="终止子 Terminator"></a>终止子 <em>Terminator</em></h2><p>终止子处于基因或操纵子的末端，给RNA聚合酶提供转录终止信号的DNA序列。</p>
+<blockquote>
+<p>终止子与终止密码子的概念区分：二者在名称上相似，但是含义是截然不同的。终止子是处于基因的非编码区的一段DNA序列，用于终止转录。而终止密码子是在翻译过程中终止肽链合成的mRNA中的三联体碱基序列，一般情况下为UAA，UAG和UGA，不编码为氨基酸。</p>
+</blockquote>
+<h3 id="ATAAA"><a href="#ATAAA" class="headerlink" title="ATAAA"></a>ATAAA</h3><p>ATAAA 是 preRNA 在通过修剪后形成成熟mRNA 时在3’UTR产生ployA 是的加尾信号。但是这段序列并不是绝对保守，也可能为其他A富集的序列，比如AATAAA等。</p>
+<h3 id="回文序列-palindrome-sequence"><a href="#回文序列-palindrome-sequence" class="headerlink" title="回文序列 palindrome sequence"></a>回文序列 <em>palindrome sequence</em></h3><p>回文序列是双链DNA中的一段倒置重复序列，这段序列有个特点，它的碱基序列与其互补链之间正读和反读都相同。当该序列的双链被打开后，如果这段序列较短，有可能是限制性内切酶的识别序列，如果比较长，有可能形成发卡结构，这种结构的形成有助于DNA与特异性DNA与蛋白质的结合。</p>
+<blockquote>
+<p>5’ GGTACC 3’<br>3’ CCATGG 5’</p>
+</blockquote>
+<hr>
+<hr>
+<h1 id="preRNA"><a href="#preRNA" class="headerlink" title="preRNA"></a>preRNA</h1><p><img src="https://img-blog.csdnimg.cn/20201020175427614.png#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="转录起始位点-Transcription-start-sites-TSS"><a href="#转录起始位点-Transcription-start-sites-TSS" class="headerlink" title="转录起始位点 Transcription start sites (TSS)"></a>转录起始位点 <em>Transcription start sites (TSS)</em></h2><p>转录起始位点是指与新生RNA链第一个核苷酸相对应的DNA链上的碱基，通常为一个嘌呤（A 或G），即5’UTR的上游第一个碱基。</p>
+<blockquote>
+<p>5’末端的序列称为上游,而把其后面即3‘末端的序列称为下游.</p>
+</blockquote>
+<br>
+
+<h2 id="转录终止位点-Transcription-termination-sites-TTS"><a href="#转录终止位点-Transcription-termination-sites-TTS" class="headerlink" title="转录终止位点 Transcription termination sites (TTS)"></a>转录终止位点 <em>Transcription termination sites (TTS)</em></h2><p>转录起始位点是指新生RNA链最后一个核苷酸相对应的DNA链上的碱基。当RNA链延伸到转录终止位点时，RNA聚合酶不再形成新的磷酸二酯键，RNA-DNA杂合物分离，转录泡瓦解，DNA恢复成双链状态，而RNA聚合酶和RNA链都被从模板上释放出来。</p>
+<br>
+
+
+<h2 id="开放阅读框-Open-reading-frame-ORF"><a href="#开放阅读框-Open-reading-frame-ORF" class="headerlink" title="开放阅读框 Open reading frame(ORF)"></a>开放阅读框 <em>Open reading frame(ORF)</em></h2><p>ORF 是连续的一段密码子，其含有起始密码子（通常是AUG）和终止密码子（通常是UAA，UAG或UGA）。在真核基因中，ORF跨越内含子/外显子区域，其可以在 ORF 转录后拼接在一起以产生蛋白质翻译的最终mRNA。 由于读写位置不同（对应不同的起始位点），ORF 可能翻译为不同的多肽链。</p>
+<hr>
+<hr>
+<h1 id="mRNA"><a href="#mRNA" class="headerlink" title="mRNA"></a>mRNA</h1><p><img src="https://img-blog.csdnimg.cn/20201020175614497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTA0NDc1OA==,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="5’UTR-与-3’UTR"><a href="#5’UTR-与-3’UTR" class="headerlink" title="5’UTR 与 3’UTR"></a>5’UTR 与 3’UTR</h2><blockquote>
+<p>这里需要注意的是外显子包含UTR区，也就是说外显子不只有可编码的序列，而且包含非编码序列</p>
+</blockquote>
+<p>UTR (Untranslated Region )，如果这段序列位于5’端，就称作5’UTR（5‘-untranslated region），也叫前导序列（leader）。相反若位于3’端，我们就叫它3’UTR（3‘-untranslated region），也叫尾随序列（trailer）。1978年，人类γ球蛋白mRNA的5′非翻译区被成功完全测序 。1980年，又开启了人类α-珠蛋白基因中3′非翻译区的研究。有趣的是，虽然叫非编码区，但是5′非翻译区内的上游可读框却可以被翻译成多肽1 。</p>
+<p>5’UTR 位于从mRNA起点的甲基化鸟嘌呤核苷酸帽延伸至起始密码子AUG，3’UTR从编码区末端的终止密码子延伸至多聚A尾巴（Poly-A）的前端</p>
+<p>原核生物和真核生物都可以看到UTR，但它们的长度和组成都有所不同。原核生物中，5′非翻译区通常为3至10个核苷酸的长度。但在真核生物中，5′非翻译区有成百上千个核苷酸的长度。与原核生物相比，真核生物的基因组的复杂性更高，3′非翻译区的长度也不同。虽然5′非翻译区和3′非翻译区在长度上有差异，但5′非翻译区的长度在演化过程中比3′非翻译区显得更保守2。</p>
+<br>
+
+<h2 id="5‘Cap"><a href="#5‘Cap" class="headerlink" title="5‘Cap"></a>5‘Cap</h2><p>5‘Cap也被称为7-甲基鸟苷酸帽，缩写为m7G。这种结构在RNA进出细胞核起到识别作用；可以抗5’-核酸外切酶的截切；促进5’端内含子的切除；在翻译过程中有助于核糖体对mRNA的识别和结合。</p>
+<br>
+
+<h2 id="3’-PolyA-tail"><a href="#3’-PolyA-tail" class="headerlink" title="3’ PolyA tail"></a>3’ PolyA tail</h2><p>Poly A tail 由多个腺苷一磷酸组成 ，也就是说它是一段仅含有腺嘌呤碱基的RNA 。这种结构可以避免细胞质中的酶促降解，并有助于转录终止，mRNA从细胞核中的输出和翻译。</p>
+<br>
+
+
+<h2 id="CDS-coding-dna-sequence"><a href="#CDS-coding-dna-sequence" class="headerlink" title="CDS (coding dna sequence)"></a>CDS (coding dna sequence)</h2><p>CDS 是基因中DNA或RNA为蛋白质编码区域，该区域通常开始于5‘末端的起始密码子并结束于3’端的终止密码子。生物体基因组编码区的总和称为外显子组。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分子生物学/" rel="tag"># 分子生物学</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/12/DNA-Methylation-and-Demethylation-in-Plant-Immunity/" rel="next" title="DNA Methylation and Demethylation in Plant Immunity">
+                <i class="fa fa-chevron-left"></i> DNA Methylation and Demethylation in Plant Immunity
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Chen kun">
+            
+              <p class="site-author-name" itemprop="name">Chen kun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">28</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DNA"><span class="nav-number">1.</span> <span class="nav-text">DNA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编码区-Coding-region"><span class="nav-number">1.1.</span> <span class="nav-text">编码区 Coding region</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外显子-Exon"><span class="nav-number">1.2.</span> <span class="nav-text">外显子 Exon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内含子-Intron"><span class="nav-number">1.3.</span> <span class="nav-text">内含子 Intron</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非编码区-Non-coding-region"><span class="nav-number">1.4.</span> <span class="nav-text">非编码区 Non-coding region</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动子-Promoter"><span class="nav-number">1.5.</span> <span class="nav-text">启动子 Promoter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CAAT-Box-与-Sextama-box"><span class="nav-number">1.5.1.</span> <span class="nav-text">CAAT Box 与 Sextama box</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TATA-Box-与-Pribnow-box"><span class="nav-number">1.5.2.</span> <span class="nav-text">TATA Box 与 Pribnow box</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增强子-Enhancer"><span class="nav-number">1.6.</span> <span class="nav-text">增强子 Enhancer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终止子-Terminator"><span class="nav-number">1.7.</span> <span class="nav-text">终止子 Terminator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ATAAA"><span class="nav-number">1.7.1.</span> <span class="nav-text">ATAAA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回文序列-palindrome-sequence"><span class="nav-number">1.7.2.</span> <span class="nav-text">回文序列 palindrome sequence</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#preRNA"><span class="nav-number">2.</span> <span class="nav-text">preRNA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#转录起始位点-Transcription-start-sites-TSS"><span class="nav-number">2.1.</span> <span class="nav-text">转录起始位点 Transcription start sites (TSS)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转录终止位点-Transcription-termination-sites-TTS"><span class="nav-number">2.2.</span> <span class="nav-text">转录终止位点 Transcription termination sites (TTS)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开放阅读框-Open-reading-frame-ORF"><span class="nav-number">2.3.</span> <span class="nav-text">开放阅读框 Open reading frame(ORF)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mRNA"><span class="nav-number">3.</span> <span class="nav-text">mRNA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5’UTR-与-3’UTR"><span class="nav-number">3.1.</span> <span class="nav-text">5’UTR 与 3’UTR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5‘Cap"><span class="nav-number">3.2.</span> <span class="nav-text">5‘Cap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3’-PolyA-tail"><span class="nav-number">3.3.</span> <span class="nav-text">3’ PolyA tail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDS-coding-dna-sequence"><span class="nav-number">3.4.</span> <span class="nav-text">CDS (coding dna sequence)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen kun</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
